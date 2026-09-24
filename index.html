@@ -99,22 +99,36 @@ button{font-family:inherit;cursor:pointer;background:none;border:none;color:inhe
   max-width:1400px;margin:0 auto;
   display:flex;align-items:flex-start;gap:0;
   min-height:100vh;
-  padding:38px 28px 60px;
+  padding:clamp(10px, 4vh, 38px) clamp(14px, 2.2vw, 28px) 60px;
 }
 
 /* ---- separadores tipo carpeta (nav desktop) ---- */
 .binder{
-  flex:none;width:64px;position:sticky;top:38px;
-  display:flex;flex-direction:column;gap:10px;
-  padding-top:64px;
+  --b-top:clamp(10px, 4vh, 38px);
+  flex:none;width:64px;position:sticky;top:var(--b-top);
+  display:flex;flex-direction:column;gap:clamp(4px, 1vh, 10px);
+  padding-top:clamp(6px, 4.5vh, 64px);padding-bottom:10px;
+  max-height:calc(100vh - var(--b-top));max-height:calc(100dvh - var(--b-top));
+  overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;
+  scrollbar-width:none;
 }
+.binder::-webkit-scrollbar{display:none}
+.binder > *{flex:none}
 .binder .grupo-label{
   font-family:var(--font-hand);font-size:.72rem;color:rgba(255,255,255,.38);
   writing-mode:vertical-rl;text-orientation:mixed;transform:rotate(180deg);
   margin:6px 0 2px 6px;letter-spacing:.02em;
 }
+@media (max-height:880px){
+  .binder .grupo-label{font-size:.62rem;margin:2px 0 0 6px}
+  .tab{font-size:.95rem}
+}
+@media (max-height:620px){
+  .binder .grupo-label{display:none}
+  .tab .mk-count{top:3px;right:3px;min-width:15px;height:15px;line-height:15px}
+}
 .tab{
-  position:relative;height:52px;width:64px;
+  position:relative;height:clamp(30px, 5.3vh, 52px);width:64px;
   display:flex;align-items:center;justify-content:center;
   border:none;
   clip-path:polygon(0 14%, 100% 0, 100% 100%, 0 86%);
@@ -525,6 +539,134 @@ table.enun-table th{background:var(--paper-soft)}
   line-height:1.65;font-size:.93rem;background:var(--tape);
 }
 .exam-hint b{font-family:var(--font-hand);color:var(--ink)}
+
+/* ===================== MARCADOS (resaltador + pestañas adhesivas) ===================== */
+:root{
+  --mk:#e3b62a;
+  --mk-deep:#8a6400;
+  --mk-wash:rgba(240,205,74,.5);
+  --mk-soft:rgba(240,205,74,.18);
+}
+/* botón resaltador */
+.mk-btn{
+  display:inline-flex;align-items:center;gap:6px;flex:none;
+  font-family:var(--font-hand);font-size:.86rem;line-height:1;color:var(--ink-faint);
+  padding:5px 11px 5px 8px;border-radius:999px;border:1.4px dashed var(--ink-faint);
+  background:transparent;
+  transition:color 160ms var(--ease-out), border-color 160ms var(--ease-out), background 160ms var(--ease-out), transform 120ms var(--ease-out);
+}
+.mk-btn svg{width:16px;height:16px;flex:none;transition:transform 260ms var(--ease-out)}
+.mk-btn:hover{color:var(--mk-deep);border-color:var(--mk)}
+.mk-btn:hover svg{transform:rotate(-12deg)}
+.mk-btn:active{transform:scale(.95)}
+.mk-btn .mk-lbl::after{content:'Marcar'}
+.is-marked .mk-btn{background:var(--highlighter);border:1.4px solid var(--mk);color:#3b2c00}
+.is-marked .mk-btn .mk-lbl::after{content:'Marcado'}
+.is-marked .mk-btn svg{transform:rotate(-12deg)}
+.ej-stamp .mk-btn{margin-left:auto}
+.item-actions{display:flex;align-items:center;gap:8px;flex:none}
+.item-header > div:first-child{flex:1 1 auto;min-width:0}
+@media (max-width:560px){ .item-actions .mk-btn .mk-lbl{display:none} .item-actions .mk-btn{padding:5px 7px} .item-actions{flex-direction:column;align-items:flex-end} }
+
+/* subrayado con resaltador (barrido línea por línea) */
+.hl-txt{
+  background-image:linear-gradient(transparent 56%, var(--mk-wash) 56%, var(--mk-wash) 92%, transparent 92%);
+  background-repeat:no-repeat;background-size:0% 100%;
+  transition:background-size 750ms var(--ease-in-out);
+}
+.is-marked .hl-txt{background-size:100% 100%}
+
+/* pestaña adhesiva que asoma del borde */
+.mk-flag{
+  position:absolute;top:24px;right:-13px;width:15px;height:42px;pointer-events:none;
+  background:linear-gradient(90deg, rgba(255,255,255,.35) 0 2px, transparent 2px), linear-gradient(var(--highlighter), #e8bd2c);
+  border-radius:0 3px 3px 0;box-shadow:2px 2px 4px rgba(60,45,0,.25);
+  transform-origin:left center;transform:scaleX(0) rotate(2deg);opacity:0;
+  transition:transform 280ms var(--ease-out), opacity 200ms;
+}
+.is-marked > .clip > .mk-flag, .is-marked > .mk-flag{transform:scaleX(1) rotate(2deg);opacity:1}
+.item-card{position:relative}
+.item-card > .mk-flag{right:auto;left:-26px;top:4px;width:12px;height:34px;border-radius:3px 0 0 3px;transform-origin:right center}
+@media (max-width:760px){ .item-card > .mk-flag{left:-20px;width:9px} }
+
+/* pestaña de la carpeta */
+.tab.mk{background:var(--mk-soft);color:var(--mk-deep)}
+.tab.active.mk{background:var(--paper);border-right:3px solid var(--mk)}
+.mk-count{
+  position:absolute;top:6px;right:5px;min-width:17px;height:17px;padding:0 4px;border-radius:999px;
+  font-family:var(--font-mono);font-size:.62rem;font-weight:700;line-height:17px;text-align:center;
+  background:var(--mk-deep);color:#fff8dc;
+}
+.mk-count:empty{display:none}
+.mk-count.bump{animation:mkBump 360ms var(--ease-out)}
+@keyframes mkBump{0%{transform:scale(1)}40%{transform:scale(1.35)}100%{transform:scale(1)}}
+.chip-tab.mk{border-color:rgba(240,205,74,.5);color:var(--highlighter)}
+.chip-tab.mk.active{background:var(--highlighter);color:#3b2c00;border-color:var(--highlighter)}
+
+/* hoja de marcados */
+.u-title .accent-mk{color:var(--ink);background:linear-gradient(transparent 55%, var(--mk-wash) 55%, var(--mk-wash) 92%, transparent 92%);padding:0 4px}
+.mk-panel{
+  display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;
+  border:1.5px dashed var(--ink-faint);border-radius:4px;padding:14px 16px;margin:0 0 30px;background:rgba(255,255,255,.35);
+}
+.mk-stats{display:flex;gap:22px;margin-right:auto}
+.mk-stat b{display:block;font-family:var(--font-hand);font-size:1.7rem;line-height:1;color:var(--ink)}
+.mk-stat span{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.05em;color:var(--ink-faint);text-transform:uppercase}
+.mk-stat.hot b{color:var(--mk-deep)}
+.mk-tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.mk-act{
+  font-family:var(--font-hand);font-size:.95rem;padding:6px 14px;border-radius:999px;
+  border:1.5px solid var(--ink);color:var(--paper);background:var(--ink);
+  transition:transform 120ms var(--ease-out), opacity 160ms;
+}
+.mk-act:active{transform:scale(.96)}
+.mk-act.ghost{background:transparent;color:var(--pen-red);border-color:var(--pen-red-line)}
+.mk-act:disabled{opacity:.35;cursor:default}
+.mk-group{
+  font-family:var(--font-hand);font-weight:700;font-size:1.3rem;color:var(--ink);
+  margin:34px 0 16px;display:flex;align-items:baseline;gap:10px;
+  padding-bottom:6px;border-bottom:2px solid var(--ink);
+}
+.mk-group:first-child{margin-top:0}
+.mk-group .gn{font-family:var(--font-mono);font-size:.7rem;color:#fff;padding:2px 8px;border-radius:2px;background:var(--ink-soft)}
+.mk-group.pp .gn{background:var(--tab-p1)} .mk-group.sp .gn{background:var(--tab-p2)} .mk-group.star .gn{background:var(--tab-star)}
+.mk-group .cnt{margin-left:auto;font-family:var(--font-mono);font-size:.72rem;color:var(--ink-faint);font-weight:400}
+.mk-entry{transition:opacity 240ms var(--ease-out), transform 240ms var(--ease-out)}
+.mk-entry.leaving{opacity:0;transform:translateX(18px)}
+.mk-origin{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 8px 4px;
+  font-family:var(--font-mono);font-size:.7rem;color:var(--ink-faint);letter-spacing:.03em;
+}
+.mk-origin button{
+  font-family:var(--font-hand);font-size:.86rem;color:var(--pen-blue);
+  border-bottom:1px dashed var(--pen-blue-line);padding:0 1px;
+}
+.mk-origin button:hover{border-bottom-style:solid}
+.mk-examcard{margin:0 0 30px}
+.mk-examcard .context-box{font-size:.92rem}
+.mk-examcard .item-card{margin-bottom:0}
+.mk-exhead{font-family:var(--font-hand);font-weight:700;color:var(--pen-blue);font-size:1rem;margin:0 0 10px;
+  border-bottom:1px dashed var(--ink-faint);padding-bottom:8px}
+.mk-exhead i{font-family:var(--font-print);font-weight:400;color:var(--ink);font-size:.98rem}
+.mk-empty{margin-top:10px}
+.mk-empty p{max-width:46ch;margin:18px auto 0;line-height:1.7;font-size:.95rem}
+.mk-empty .demo{display:inline-flex;vertical-align:middle;margin:0 3px;pointer-events:none}
+.mk-pulse{animation:mkPulse 1.6s var(--ease-out)}
+@keyframes mkPulse{0%,40%{box-shadow:0 0 0 4px var(--highlighter), 0 10px 22px -8px var(--clip-shadow)}100%{box-shadow:0 0 0 0 rgba(240,205,74,0), 0 10px 22px -8px var(--clip-shadow)}}
+
+/* aviso flotante */
+.mk-toast{
+  position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom, 0px));z-index:60;
+  transform:translate(-50%, 20px);opacity:0;pointer-events:none;
+  display:flex;align-items:center;gap:14px;
+  background:var(--ink);color:var(--paper);padding:10px 12px 10px 16px;border-radius:6px;
+  font-family:var(--font-hand);font-size:1rem;box-shadow:0 14px 30px -10px rgba(0,0,0,.6);
+  transition:transform 260ms var(--ease-out), opacity 200ms;
+}
+.mk-toast.show{transform:translate(-50%,0);opacity:1;pointer-events:auto}
+.mk-toast .sw{width:12px;height:12px;border-radius:2px;background:var(--highlighter);flex:none}
+.mk-toast button{font-family:var(--font-hand);font-size:.95rem;color:var(--highlighter);padding:3px 8px;border-radius:4px}
+.mk-toast button:hover{background:rgba(255,255,255,.08)}
 </style>
 </head>
 <body>
@@ -4951,12 +5093,13 @@ table.enun-table th{background:var(--paper-soft)}
       <section class="unidad" id="px1" data-parcial="pp">
         <span class="u-tape">PARCIALES RESUELTOS · PRIMER PARCIAL</span>
         <h2 class="u-title">★ Parciales <span class="accent">reales</span> resueltos</h2>
-        <p class="u-sub">Tres tomas reales de la cátedra (verano 2026, su recuperatorio y mayo 2026), resueltas ítem por ítem con el método completo.</p>
+        <p class="u-sub">Tres tomas reales de la cátedra (verano 2026, su recuperatorio y mayo 2026) y un modelo de parcial de UNAHUR (22/09/2025), resueltos ítem por ítem con el método completo.</p>
         <div class="exam-hint"><b>Cómo usarlos:</b> hacé el examen entero contra reloj antes de abrir una sola solución. Al corregirte, miré primero los paneles de sucesos / variables / distribuciones: si tu planteo difiere ahí, el error fue de modelado y no de cuentas — y ese es justamente el que más puntos cuesta.</div>
         <div class="exam-tabs"><div class="tabs" id="tabs-p1">
     <button class="tab-btn active" onclick="switchTab('p1','parcial-v',this)">Parcial · 13/02/2026</button>
     <button class="tab-btn" onclick="switchTab('p1','recup-v',this)">Recup · 04/03/2026</button>
     <button class="tab-btn" onclick="switchTab('p1','parcial-m',this)">Parcial · 13/05/2026</button>
+    <button class="tab-btn" onclick="switchTab('p1','modelo-sep25',this)">Modelo · 22/09/2025</button>
   </div></div>
 
 
@@ -5745,13 +5888,580 @@ table.enun-table th{background:var(--paper-soft)}
     </div><!-- ej 2 mayo -->
   </div><!-- tab parcial-m -->
 
-</div><!-- view-p1 -->
+  <!-- ═══ TAB: MODELO UNAHUR 22/09/2025 ═══ -->
+  <div id="p1-modelo-sep25" class="tab-content">
 
+    <div class="exam-info">
+      <span class="badge badge-gold">Modelo de parcial</span>
+      <span class="badge badge-purple">22 septiembre 2025</span>
+      <span class="badge badge-accent">UNAHUR</span>
+      <span class="badge badge-green">3 ejercicios · 10 ítems</span>
+    </div>
 
-<!-- ═══════════════════════════════════════════════
-     VIEW: SEGUNDO PARCIAL
-═══════════════════════════════════════════════ -->
-<div
+    <!-- ─── EJERCICIO 1 ─── -->
+    <div class="exercise-block">
+      <div class="exercise-header">
+        <span class="exercise-number">Ejercicio 1</span>
+        <span class="exercise-title">V.A. continuas — Altura de olas en dos zonas</span>
+      </div>
+      <div class="context-box">
+        En un estudio sobre la altura de las olas durante tormentas moderadas se consideran dos sectores de la costa: <strong>zona A</strong> y <strong>zona B</strong>.
+        Sea \(X\) la altura (m) de las olas en la zona A, con f.d.p.
+        \[f(x)=\begin{cases}\dfrac{x-1}{4} &amp; 1\le x\le 3\\[4pt] \dfrac{5-x}{4} &amp; 3&lt;x\le 5\\[4pt] 0 &amp; \text{otro caso}\end{cases}\]
+        La altura en la zona B es \(Y\sim U[1{,}1\,;\,3{,}5]\). Ambas variables se miden en metros.
+      </div>
+
+      <div class="item-card">
+        <div class="item-header">
+          <div>
+            <div class="item-label">ÍTEM a)</div>
+            <div class="item-question">El <em>63%</em> de las mediciones provienen de la zona A y el resto de la B. Si se selecciona al azar una ola registrada, ¿cuál es la probabilidad de que su altura <em>supere los 2,8 m</em>?</div>
+          </div>
+          <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
+        </div>
+        <div class="solution-panel">
+          <div class="sol-inner">
+            <div class="sol-section sec-sucesos">
+              <div class="sol-section-header">🎯 SUCESOS</div>
+              <div class="sol-section-body">
+                <ul>
+                  <li><span class="hl-blue">A</span> = "la ola proviene de la zona A" → \(P(A)=0{,}63\)</li>
+                  <li><span class="hl-blue">B</span> = "la ola proviene de la zona B" → \(P(B)=0{,}37\)</li>
+                  <li><span class="hl-red">S</span> = "la altura de la ola supera los 2,8 m"</li>
+                </ul>
+                <p>\(A\) y \(B\) forman una partición. Pide \(P(S)\) → <strong>probabilidad total</strong>.</p>
+              </div>
+            </div>
+            <div class="sol-section sec-vars">
+              <div class="sol-section-header">📐 VARIABLES ALEATORIAS</div>
+              <div class="sol-section-body">
+                <ul>
+                  <li>\(X\) = altura (m) de una ola de la zona A</li>
+                  <li>\(Y\) = altura (m) de una ola de la zona B</li>
+                </ul>
+              </div>
+            </div>
+            <div class="sol-section sec-dist">
+              <div class="sol-section-header">📊 DISTRIBUCIONES</div>
+              <div class="sol-section-body">
+                <ul>
+                  <li>\(X\): f.d.p. triangular dada en \([1;5]\), con pico en \(x=3\)</li>
+                  <li>\(Y\sim U[1{,}1;\,3{,}5]\) → \(f_Y(y)=\dfrac{1}{2{,}4}\)</li>
+                </ul>
+                <p>Traducción: \(P(S\mid A)=P(X&gt;2{,}8)\) y \(P(S\mid B)=P(Y&gt;2{,}8)\).</p>
+              </div>
+            </div>
+            <div class="sol-section sec-resol">
+              <div class="sol-section-header">🔢 RESOLUCIÓN</div>
+              <div class="sol-section-body">
+                <div class="formula-block">\[P(S)=P(S\mid A)\,P(A)+P(S\mid B)\,P(B)\]</div>
+                <div class="step">
+                  <div class="step-n">Paso 1 – Zona A (el intervalo cruza el cambio de tramo en x = 3 → partir la integral)</div>
+                  \[P(X&gt;2{,}8)=\int_{2{,}8}^{3}\frac{x-1}{4}\,dx+\int_{3}^{5}\frac{5-x}{4}\,dx=\left[\frac{(x-1)^2}{8}\right]_{2{,}8}^{3}+0{,}5\]
+                  \[=\frac{4-3{,}24}{8}+0{,}5=0{,}095+0{,}5=0{,}595\]
+                </div>
+                <div class="note">El segundo tramo vale exactamente 0,5 por simetría: la f.d.p. es simétrica respecto de \(x=3\).</div>
+                <div class="step">
+                  <div class="step-n">Paso 2 – Zona B (uniforme: longitud favorable / longitud total)</div>
+                  \[P(Y&gt;2{,}8)=\frac{3{,}5-2{,}8}{3{,}5-1{,}1}=\frac{0{,}7}{2{,}4}=0{,}2917\]
+                </div>
+                <div class="step">
+                  <div class="step-n">Paso 3 – Probabilidad total</div>
+                  \[P(S)=0{,}595\cdot 0{,}63+0{,}2917\cdot 0{,}37=0{,}3749+0{,}1079\]
+                </div>
+                <div class="result-box">✔ P(S) ≈ 0,4828</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="item-card">
+        <div class="item-header">
+          <div>
+            <div class="item-label">ÍTEM b)</div>
+            <div class="item-question">Si se seleccionan <em>5 mediciones de la zona B</em> y todas superan los 2,5 m, ¿cuál es la probabilidad de que <em>alguna</em> sea mayor a 3 m?</div>
+          </div>
+          <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
+        </div>
+        <div class="solution-panel">
+          <div class="sol-inner">
+            <div class="sol-section sec-sucesos">
+              <div class="sol-section-header">🎯 SUCESOS</div>
+              <div class="sol-section-body">
+                <ul>
+                  <li><span class="hl-blue">E</span> = "una medición de la zona B supera los 2,5 m" (condición conocida)</li>
+                  <li><span class="hl-red">M</span> = "una medición de la zona B supera los 3 m"</li>
+                </ul>
+                <p>Cada medición es un ensayo de Bernoulli con éxito = \(M\) dado \(E\). Las 5 mediciones son independientes.</p>
+              </div>
+            </div>
+            <div class="sol-section sec-vars">
+              <div class="sol-section-header">📐 VARIABLES ALEATORIAS</div>
+              <div class="sol-section-body">
+                <ul>
+                  <li>\(Y\) = altura (m) de una ola de la zona B</li>
+                  <li>\(N\) = cantidad de mediciones, de las 5, que superan los 3 m (sabiendo que todas superan 2,5 m)</li>
+                </ul>
+              </div>
+            </div>
+            <div class="sol-section sec-dist">
+              <div class="sol-section-header">📊 DISTRIBUCIONES</div>
+              <div class="sol-section-body">
+                <ul>
+                  <li>\(Y\sim U[1{,}1;\,3{,}5]\) → condicionada: \(Y\mid Y&gt;2{,}5\sim U[2{,}5;\,3{,}5]\)</li>
+                  <li>\(N\sim \text{Bin}(n=5;\;p)\) con \(p=P(Y&gt;3\mid Y&gt;2{,}5)\)</li>
+                </ul>
+              </div>
+            </div>
+            <div class="sol-section sec-resol">
+              <div class="sol-section-header">🔢 RESOLUCIÓN</div>
+              <div class="sol-section-body">
+                <div class="step">
+                  <div class="step-n">Paso 1 – Probabilidad de éxito (condicional)</div>
+                  \[p=P(Y&gt;3\mid Y&gt;2{,}5)=\frac{P(Y&gt;3)}{P(Y&gt;2{,}5)}=\frac{0{,}5/2{,}4}{1/2{,}4}=0{,}5\]
+                </div>
+                <div class="note">Condicionar una uniforme a un subintervalo da otra uniforme en ese subintervalo: \(U[2{,}5;3{,}5]\), y 3 es justo el punto medio.</div>
+                <div class="step">
+                  <div class="step-n">Paso 2 – "Alguna" = al menos una → complemento</div>
+                  \[P(N\ge 1)=1-P(N=0)=1-\binom{5}{0}(0{,}5)^0(0{,}5)^5=1-0{,}03125\]
+                </div>
+                <div class="result-box">✔ P(N ≥ 1) = 0,96875</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="item-card">
+        <div class="item-header">
+          <div>
+            <div class="item-label">ÍTEM c)</div>
+            <div class="item-question">Se aplica un ajuste en la zona A: las mediciones que originalmente <em>superan los 4 m se incrementan un 15%</em> y el resto queda igual. ¿Cuál es la altura esperada luego del ajuste?</div>
+          </div>
+          <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
+        </div>
+        <div class="solution-panel">
+          <div class="sol-inner">
+            <div class="sol-section sec-sucesos">
+              <div class="sol-section-header">🎯 SUCESOS</div>
+              <div class="sol-section-body">
+                <ul>
+                  <li><span class="hl-blue">G</span> = "la medición original supera los 4 m" → se multiplica por 1,15</li>
+                  <li><span class="hl-blue">\(\overline{G}\)</span> = "la medición original no supera los 4 m" → queda igual</li>
+                </ul>
+              </div>
+            </div>
+            <div class="sol-section sec-vars">
+              <div class="sol-section-header">📐 VARIABLES ALEATORIAS</div>
+              <div class="sol-section-body">
+                <ul>
+                  <li>\(X\) = altura original (m) en la zona A</li>
+                  <li>\(W\) = altura ajustada (m): \(W=g(X)=\begin{cases}X &amp; X\le 4\\ 1{,}15\,X &amp; X&gt;4\end{cases}\)</li>
+                </ul>
+              </div>
+            </div>
+            <div class="sol-section sec-dist">
+              <div class="sol-section-header">📊 DISTRIBUCIONES</div>
+              <div class="sol-section-body">
+                <p>\(X\) con la f.d.p. triangular del enunciado. No hace falta la distribución de \(W\): usamos \(E[g(X)]=\int g(x)\,f(x)\,dx\).</p>
+              </div>
+            </div>
+            <div class="sol-section sec-resol">
+              <div class="sol-section-header">🔢 RESOLUCIÓN</div>
+              <div class="sol-section-body">
+                <div class="formula-block">\[E(W)=\int_1^4 x\,f(x)\,dx+\int_4^5 1{,}15\,x\,f(x)\,dx=E(X)+0{,}15\int_4^5 x\,f(x)\,dx\]</div>
+                <div class="step">
+                  <div class="step-n">Paso 1 – E(X)</div>
+                  \[E(X)=\int_1^3 x\,\frac{x-1}{4}\,dx+\int_3^5 x\,\frac{5-x}{4}\,dx=1{,}1667+1{,}8333=3\]
+                  <p>(También sale directo por simetría respecto de \(x=3\).)</p>
+                </div>
+                <div class="step">
+                  <div class="step-n">Paso 2 – Parte que se ajusta</div>
+                  \[\int_4^5 x\,\frac{5-x}{4}\,dx=\frac14\left[\frac{5x^2}{2}-\frac{x^3}{3}\right]_4^5=\frac14\left(20{,}8333-18{,}6667\right)=0{,}5417\]
+                </div>
+                <div class="step">
+                  <div class="step-n">Paso 3 – Esperanza ajustada</div>
+                  \[E(W)=3+0{,}15\cdot 0{,}5417=3+0{,}0813\]
+                </div>
+                <div class="note">Error típico: hacer \(1{,}15\cdot E(X)\) o multiplicar por \(P(X&gt;4)\). El incremento afecta a los <em>valores</em> mayores a 4, así que se integra \(x\,f(x)\) en ese tramo, no sólo \(f(x)\).</div>
+                <div class="result-box">✔ E(W) ≈ 3,0813 m</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── EJERCICIO 2 ─── -->
+    <div class="exercise-block">
+      <div class="exercise-header">
+        <span class="exercise-number">Ejercicio 2</span>
+        <span class="exercise-title">Proceso Bernoulli — "Los guerreros del estado dorado"</span>
+      </div>
+      <div class="context-box">
+        El porcentaje de victorias del equipo es históricamente del <strong>90%</strong>. Consideramos cada partido como un ensayo de Bernoulli independiente con \(p=0{,}9\).
+      </div>
+
+      <div class="item-card">
+        <div class="item-header">
+          <div>
+            <div class="item-label">ÍTEM a)</div>
+            <div class="item-question">Si en los primeros 3 partidos obtuvieron 3 victorias, ¿cuál es la probabilidad de que en los <em>próximos 4</em> obtengan <em>al menos 3 victorias</em>?</div>
+          </div>
+          <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
+        </div>
+        <div class="solution-panel">
+          <div class="sol-inner">
+            <div class="sol-section sec-sucesos">
+              <div class="sol-section-header">🎯 SUCESOS</div>
+              <div class="sol-section-body">
+                <ul>
+                  <li><span class="hl-green">V<sub>i</sub></span> = "el equipo gana el partido \(i\)" → \(P(V_i)=0{,}9\), independientes</li>
+                </ul>
+                <p>Por independencia, el dato "ganaron los 3 primeros" <strong>no modifica</strong> nada de lo que pasa después.</p>
+              </div>
+            </div>
+            <div class="sol-section sec-vars">
+              <div class="sol-section-header">📐 VARIABLES ALEATORIAS</div>
+              <div class="sol-section-body">
+                <ul><li>\(R\) = cantidad de victorias en los próximos 4 partidos</li></ul>
+              </div>
+            </div>
+            <div class="sol-section sec-dist">
+              <div class="sol-section-header">📊 DISTRIBUCIONES</div>
+              <div class="sol-section-body">
+                <p>\(R\sim \text{Bin}(n=4;\;p=0{,}9)\)</p>
+              </div>
+            </div>
+            <div class="sol-section sec-resol">
+              <div class="sol-section-header">🔢 RESOLUCIÓN</div>
+              <div class="sol-section-body">
+                \[P(R\ge 3)=P(R=3)+P(R=4)=\binom{4}{3}0{,}9^3\,0{,}1+\binom{4}{4}0{,}9^4\]
+                \[=0{,}2916+0{,}6561\]
+                <div class="result-box">✔ P(R ≥ 3) = 0,9477</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="item-card">
+        <div class="item-header">
+          <div>
+            <div class="item-label">ÍTEM b)</div>
+            <div class="item-question">Si el equipo acumula una racha de <em>5 derrotas consecutivas</em>, ¿cuál es la probabilidad de que deban jugar <em>más de 2 partidos adicionales</em> hasta lograr su <em>segunda victoria</em>?</div>
+          </div>
+          <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
+        </div>
+        <div class="solution-panel">
+          <div class="sol-inner">
+            <div class="sol-section sec-sucesos">
+              <div class="sol-section-header">🎯 SUCESOS</div>
+              <div class="sol-section-body">
+                <ul><li><span class="hl-green">V<sub>i</sub></span> = "gana el partido \(i\)" (contando desde el fin de la racha)</li></ul>
+                <p>La racha de 5 derrotas es un distractor: el proceso de Bernoulli <strong>no tiene memoria</strong>, se reinicia desde ahí.</p>
+              </div>
+            </div>
+            <div class="sol-section sec-vars">
+              <div class="sol-section-header">📐 VARIABLES ALEATORIAS</div>
+              <div class="sol-section-body">
+                <ul>
+                  <li>\(N\) = cantidad de partidos adicionales hasta obtener la 2ª victoria</li>
+                  <li>(equivalente) \(R'\) = victorias en los próximos 2 partidos</li>
+                </ul>
+              </div>
+            </div>
+            <div class="sol-section sec-dist">
+              <div class="sol-section-header">📊 DISTRIBUCIONES</div>
+              <div class="sol-section-body">
+                <ul>
+                  <li>\(N\sim \text{Pascal}(r=2;\;p=0{,}9)\), con \(N\in\{2,3,\dots\}\)</li>
+                  <li>\(R'\sim\text{Bin}(n=2;\;p=0{,}9)\)</li>
+                </ul>
+                <p>Relación: \(N&gt;2 \iff R'\le 1\) ("necesito más de 2 partidos" = "en 2 partidos no llego a 2 victorias").</p>
+              </div>
+            </div>
+            <div class="sol-section sec-resol">
+              <div class="sol-section-header">🔢 RESOLUCIÓN</div>
+              <div class="sol-section-body">
+                \[P(N&gt;2)=1-P(N=2)=1-\binom{1}{1}0{,}9^2=1-0{,}81\]
+                <div class="step">
+                  <div class="step-n">Verificación por Binomial</div>
+                  \[P(R'\le 1)=0{,}1^2+2\cdot0{,}9\cdot0{,}1=0{,}01+0{,}18=0{,}19\;\checkmark\]
+                </div>
+                <div class="result-box">✔ P(N &gt; 2) = 0,19</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="item-card">
+        <div class="item-header">
+          <div>
+            <div class="item-label">ÍTEM c)</div>
+            <div class="item-question">Por cada victoria el equipo recibe un premio de <em>30.000 USD</em>. ¿Cuál es la probabilidad de haber recaudado <em>al menos 210.000 USD en 10 partidos</em>?</div>
+          </div>
+          <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
+        </div>
+        <div class="solution-panel">
+          <div class="sol-inner">
+            <div class="sol-section sec-sucesos">
+              <div class="sol-section-header">🎯 SUCESOS</div>
+              <div class="sol-section-body">
+                <ul><li><span class="hl-green">V<sub>i</sub></span> = "gana el partido \(i\)", \(i=1,\dots,10\)</li></ul>
+              </div>
+            </div>
+            <div class="sol-section sec-vars">
+              <div class="sol-section-header">📐 VARIABLES ALEATORIAS</div>
+              <div class="sol-section-body">
+                <ul>
+                  <li>\(R\) = cantidad de victorias en 10 partidos</li>
+                  <li>\(G\) = recaudación (USD) en 10 partidos: \(G=30\,000\,R\)</li>
+                </ul>
+              </div>
+            </div>
+            <div class="sol-section sec-dist">
+              <div class="sol-section-header">📊 DISTRIBUCIONES</div>
+              <div class="sol-section-body">
+                <p>\(R\sim\text{Bin}(n=10;\;p=0{,}9)\). \(G\) es una transformación lineal de \(R\): se traduce el suceso a \(R\).</p>
+              </div>
+            </div>
+            <div class="sol-section sec-resol">
+              <div class="sol-section-header">🔢 RESOLUCIÓN</div>
+              <div class="sol-section-body">
+                \[G\ge 210\,000\iff 30\,000\,R\ge 210\,000\iff R\ge 7\]
+                \[P(R\ge7)=\sum_{k=7}^{10}\binom{10}{k}0{,}9^k\,0{,}1^{10-k}\]
+                <div class="step">
+                  <div class="step-n">Términos</div>
+                  \[P(R=7)=0{,}0574\quad P(R=8)=0{,}1937\quad P(R=9)=0{,}3874\quad P(R=10)=0{,}3487\]
+                </div>
+                <div class="result-box">✔ P(G ≥ 210.000) ≈ 0,9872</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── EJERCICIO 3 ─── -->
+    <div class="exercise-block">
+      <div class="exercise-header">
+        <span class="exercise-number">Ejercicio 3</span>
+        <span class="exercise-title">Poisson / Exponencial y Normal — Eventos meteorológicos</span>
+      </div>
+      <div class="context-box">
+        El tiempo hasta el próximo evento meteorológico en la región <strong>A</strong> es Exponencial de <strong>media 7 días</strong>.
+        En la región <strong>B</strong> el tiempo es Normal de <strong>media 10 días</strong> y <strong>desvío 2 días</strong>.
+      </div>
+
+      <div class="item-card">
+        <div class="item-header">
+          <div>
+            <div class="item-label">ÍTEM a)</div>
+            <div class="item-question">Región A: ¿cuál es la probabilidad de que en <em>8 días</em> se produzca <em>1 evento</em> y en los <em>siguientes 10</em> al menos uno?</div>
+          </div>
+          <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
+        </div>
+        <div class="solution-panel">
+          <div class="sol-inner">
+            <div class="sol-section sec-sucesos">
+              <div class="sol-section-header">🎯 SUCESOS</div>
+              <div class="sol-section-body">
+                <ul>
+                  <li><span class="hl-blue">E<sub>1</sub></span> = "ocurre exactamente 1 evento en los días \((0;8]\)"</li>
+                  <li><span class="hl-blue">E<sub>2</sub></span> = "ocurre al menos 1 evento en los días \((8;18]\)"</li>
+                </ul>
+                <p>Intervalos <strong>disjuntos</strong> → por incrementos independientes: \(P(E_1\cap E_2)=P(E_1)\,P(E_2)\).</p>
+              </div>
+            </div>
+            <div class="sol-section sec-vars">
+              <div class="sol-section-header">📐 VARIABLES ALEATORIAS</div>
+              <div class="sol-section-body">
+                <ul>
+                  <li>\(T\) = tiempo (días) hasta el próximo evento en A</li>
+                  <li>\(K_1\) = cantidad de eventos en 8 días</li>
+                  <li>\(K_2\) = cantidad de eventos en los 10 días siguientes</li>
+                </ul>
+              </div>
+            </div>
+            <div class="sol-section sec-dist">
+              <div class="sol-section-header">📊 DISTRIBUCIONES</div>
+              <div class="sol-section-body">
+                <ul>
+                  <li>\(T\sim\text{Exp}(\lambda)\) con \(E(T)=7\Rightarrow \lambda=\tfrac17\) eventos/día</li>
+                  <li>\(K_1\sim\text{Poisson}(\lambda t=\tfrac87=1{,}1429)\)</li>
+                  <li>\(K_2\sim\text{Poisson}(\lambda t=\tfrac{10}{7}=1{,}4286)\)</li>
+                </ul>
+              </div>
+            </div>
+            <div class="sol-section sec-resol">
+              <div class="sol-section-header">🔢 RESOLUCIÓN</div>
+              <div class="sol-section-body">
+                <div class="step">
+                  <div class="step-n">Paso 1 – Exactamente 1 en 8 días</div>
+                  \[P(K_1=1)=e^{-8/7}\,\frac{(8/7)^1}{1!}=0{,}3189\cdot1{,}1429=0{,}3645\]
+                </div>
+                <div class="step">
+                  <div class="step-n">Paso 2 – Al menos 1 en los 10 siguientes</div>
+                  \[P(K_2\ge1)=1-e^{-10/7}=1-0{,}2397=0{,}7603\]
+                </div>
+                <div class="step">
+                  <div class="step-n">Paso 3 – Independencia de incrementos</div>
+                  \[P(E_1\cap E_2)=0{,}3645\cdot0{,}7603\]
+                </div>
+                <div class="result-box">✔ P ≈ 0,2771</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="item-card">
+        <div class="item-header">
+          <div>
+            <div class="item-label">ÍTEM b)</div>
+            <div class="item-question">Región A: ¿cuál es la probabilidad de que el <em>cuarto evento</em> se produzca <em>luego de los 40 días</em>?</div>
+          </div>
+          <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
+        </div>
+        <div class="solution-panel">
+          <div class="sol-inner">
+            <div class="sol-section sec-sucesos">
+              <div class="sol-section-header">🎯 SUCESOS</div>
+              <div class="sol-section-body">
+                <p>"El 4º evento ocurre después del día 40" \(\iff\) "en los primeros 40 días ocurren a lo sumo 3 eventos".</p>
+              </div>
+            </div>
+            <div class="sol-section sec-vars">
+              <div class="sol-section-header">📐 VARIABLES ALEATORIAS</div>
+              <div class="sol-section-body">
+                <ul>
+                  <li>\(T_4\) = tiempo (días) hasta el 4º evento</li>
+                  <li>\(K\) = cantidad de eventos en 40 días</li>
+                </ul>
+              </div>
+            </div>
+            <div class="sol-section sec-dist">
+              <div class="sol-section-header">📊 DISTRIBUCIONES</div>
+              <div class="sol-section-body">
+                <ul>
+                  <li>\(T_4\sim\text{Gamma}(k=4;\;\lambda=\tfrac17)\)</li>
+                  <li>\(K\sim\text{Poisson}(\lambda t=\tfrac{40}{7}=5{,}7143)\)</li>
+                </ul>
+                <p>Equivalencia: \(P(T_4&gt;40)=P(K\le 3)\).</p>
+              </div>
+            </div>
+            <div class="sol-section sec-resol">
+              <div class="sol-section-header">🔢 RESOLUCIÓN</div>
+              <div class="sol-section-body">
+                \[P(K\le3)=e^{-5{,}7143}\left(1+5{,}7143+\frac{5{,}7143^2}{2}+\frac{5{,}7143^3}{6}\right)\]
+                <div class="step">
+                  <div class="step-n">Términos</div>
+                  \[=0{,}0033\,(1+5{,}7143+16{,}3265+31{,}0981)=0{,}0033\cdot54{,}1389\]
+                  \[P(K=0)=0{,}0033\quad P(K=1)=0{,}0188\quad P(K=2)=0{,}0539\quad P(K=3)=0{,}1026\]
+                </div>
+                <div class="result-box">✔ P(T₄ &gt; 40) ≈ 0,1786</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="item-card">
+        <div class="item-header">
+          <div>
+            <div class="item-label">ÍTEM c)</div>
+            <div class="item-question">Región B: ¿cuál es la probabilidad de que transcurran <em>más de 12 días</em>, si <em>van 9 y aún no pasó nada</em>?</div>
+          </div>
+          <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
+        </div>
+        <div class="solution-panel">
+          <div class="sol-inner">
+            <div class="sol-section sec-sucesos">
+              <div class="sol-section-header">🎯 SUCESOS</div>
+              <div class="sol-section-body">
+                <ul>
+                  <li><span class="hl-blue">C</span> = "transcurren más de 9 días sin evento" (condición)</li>
+                  <li><span class="hl-red">D</span> = "transcurren más de 12 días sin evento"</li>
+                </ul>
+                <p>\(D\subset C\), por lo tanto \(D\cap C=D\).</p>
+              </div>
+            </div>
+            <div class="sol-section sec-vars">
+              <div class="sol-section-header">📐 VARIABLES ALEATORIAS</div>
+              <div class="sol-section-body">
+                <ul><li>\(X\) = tiempo (días) hasta el próximo evento en la región B</li></ul>
+              </div>
+            </div>
+            <div class="sol-section sec-dist">
+              <div class="sol-section-header">📊 DISTRIBUCIONES</div>
+              <div class="sol-section-body">
+                <p>\(X\sim N(\mu=10;\;\sigma=2)\). La normal <strong>no</strong> tiene falta de memoria: hay que hacer la condicional completa (no vale "\(P(X&gt;3)\)").</p>
+              </div>
+            </div>
+            <div class="sol-section sec-resol">
+              <div class="sol-section-header">🔢 RESOLUCIÓN</div>
+              <div class="sol-section-body">
+                \[P(X&gt;12\mid X&gt;9)=\frac{P(X&gt;12)}{P(X&gt;9)}=\frac{P\!\left(Z&gt;\frac{12-10}{2}\right)}{P\!\left(Z&gt;\frac{9-10}{2}\right)}=\frac{P(Z&gt;1)}{P(Z&gt;-0{,}5)}\]
+                \[=\frac{1-0{,}8413}{1-0{,}3085}=\frac{0{,}1587}{0{,}6915}\]
+                <div class="result-box">✔ P ≈ 0,2295</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="item-card">
+        <div class="item-header">
+          <div>
+            <div class="item-label">ÍTEM d)</div>
+            <div class="item-question">Región B: ¿cuál es la probabilidad de que transcurran <em>menos de 110 días en total</em> hasta la ocurrencia del <em>décimo evento consecutivo</em>?</div>
+          </div>
+          <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
+        </div>
+        <div class="solution-panel">
+          <div class="sol-inner">
+            <div class="sol-section sec-sucesos">
+              <div class="sol-section-header">🎯 SUCESOS</div>
+              <div class="sol-section-body">
+                <p>"El 10º evento ocurre antes del día 110" = "la suma de los 10 tiempos entre eventos es menor a 110".</p>
+              </div>
+            </div>
+            <div class="sol-section sec-vars">
+              <div class="sol-section-header">📐 VARIABLES ALEATORIAS</div>
+              <div class="sol-section-body">
+                <ul>
+                  <li>\(X_i\) = tiempo (días) entre el evento \(i-1\) y el \(i\), \(i=1,\dots,10\), independientes</li>
+                  <li>\(S=\sum_{i=1}^{10}X_i\) = tiempo total hasta el 10º evento</li>
+                </ul>
+              </div>
+            </div>
+            <div class="sol-section sec-dist">
+              <div class="sol-section-header">📊 DISTRIBUCIONES</div>
+              <div class="sol-section-body">
+                <ul>
+                  <li>\(X_i\sim N(10;\;2)\)</li>
+                  <li>Suma de normales independientes: \(S\sim N\!\left(\mu_S=10\cdot10=100;\;\sigma_S=\sqrt{10\cdot 2^2}=\sqrt{40}=6{,}3246\right)\)</li>
+                </ul>
+                <div class="note">Suma de \(n\) copias independientes → la <strong>varianza</strong> se multiplica por \(n\) (el desvío por \(\sqrt n\)). No confundir con \(10X\), que tendría \(\sigma=20\).</div>
+              </div>
+            </div>
+            <div class="sol-section sec-resol">
+              <div class="sol-section-header">🔢 RESOLUCIÓN</div>
+              <div class="sol-section-body">
+                \[P(S&lt;110)=P\!\left(Z&lt;\frac{110-100}{6{,}3246}\right)=P(Z&lt;1{,}58)\]
+                <div class="result-box">✔ P(S &lt; 110) ≈ 0,9429</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- tab modelo-sep25 -->
+
       </section>
     </div>
     <div class="hoja" id="hoja-px2">
@@ -6980,6 +7690,24 @@ table.enun-table th{background:var(--paper-soft)}
   </div>
       </section>
     </div>
+    <div class="hoja" id="hoja-mk">
+      <section class="unidad" id="mk" data-parcial="mk">
+        <span class="u-tape">REPASO · MIS MARCADOS</span>
+        <h2 class="u-title">⚑ Ejercicios <span class="accent-mk">marcados</span></h2>
+        <p class="u-sub">Todo lo que resaltaste mientras estudiabas, juntado en una sola hoja para repasar antes del parcial. Las marcas quedan guardadas en este navegador.</p>
+        <div class="mk-panel">
+          <div class="mk-stats" id="mk-stats"></div>
+          <div class="mk-tools">
+            <button class="filtro on" data-mkf="all">Todos</button>
+            <button class="filtro" data-mkf="pp">1er parcial</button>
+            <button class="filtro" data-mkf="sp">2do parcial</button>
+            <button class="mk-act" id="mk-random" title="Elegir uno al azar para practicar">🎲 Sortear uno</button>
+            <button class="mk-act ghost" id="mk-clear">Borrar marcas</button>
+          </div>
+        </div>
+        <div id="mk-list"></div>
+      </section>
+    </div>
   </main>
 </div>
 
@@ -6994,6 +7722,7 @@ const UNIDADES = [
   {id:'u6', n:'6', titulo:'V.A. bidimensionales', parcial:'sp', lista:true},
   {id:'u7', n:'7', titulo:'Inferencia estadística', parcial:'sp', lista:true},
   {id:'px2', n:'★', titulo:'Parciales resueltos', parcial:'sp', lista:true, star:true},
+  {id:'mk', n:'⚑', titulo:'Mis marcados', parcial:'mk', lista:false, mark:true},
 ];
 
 const mem = {};
@@ -7012,22 +7741,22 @@ UNIDADES.forEach(u => {
     lastLabel = u.parcial;
     const lab = document.createElement('div');
     lab.className = 'grupo-label';
-    lab.textContent = u.parcial === 'pp' ? '1er parcial' : '2do parcial';
+    lab.textContent = u.parcial === 'pp' ? '1er parcial' : u.parcial === 'sp' ? '2do parcial' : 'repaso';
     binder.appendChild(lab);
   }
-  const cls = u.star ? 'star' : u.parcial;
+  const cls = u.star ? 'star' : u.mark ? 'mk' : u.parcial;
   const b = document.createElement('button');
   b.className = 'tab ' + cls + (u.id==='u1' ? ' active' : '');
   b.dataset.target = u.id;
-  b.innerHTML = '<span class="tab-n">'+u.n+'</span><span class="prog-fill" data-prog="'+u.id+'"></span>';
-  b.title = u.titulo + (u.lista ? '' : ' (próximamente)');
+  b.innerHTML = '<span class="tab-n">'+u.n+'</span>' + (u.mark ? '<span class="mk-count" data-mk-count></span>' : '<span class="prog-fill" data-prog="'+u.id+'"></span>');
+  b.title = u.titulo + (u.lista || u.mark ? '' : ' (próximamente)');
   b.addEventListener('click', () => go(u.id));
   binder.appendChild(b);
 
   const c = document.createElement('button');
-  c.className = 'chip-tab' + (u.id==='u1' ? ' active' : '');
+  c.className = 'chip-tab' + (u.mark ? ' mk' : '') + (u.id==='u1' ? ' active' : '');
   c.dataset.target = u.id;
-  c.textContent = (u.star ? '★' : 'U') + u.n;
+  c.textContent = u.mark ? '⚑ Marcados' : (u.star ? '★' : 'U') + u.n;
   c.addEventListener('click', () => go(u.id));
   topstrip.appendChild(c);
 });
@@ -7041,31 +7770,15 @@ function go(id){
   document.querySelectorAll('.hoja').forEach(h => h.classList.toggle('visible', h.id === 'hoja-'+id));
   document.querySelectorAll('[data-target]').forEach(b => b.classList.toggle('active', b.dataset.target===id));
   store.set('cuaderno-last', id);
+  const activeTab = binder.querySelector('.tab.active');
+  if (activeTab){
+    const top = activeTab.offsetTop, bot = top + activeTab.offsetHeight;
+    if (top < binder.scrollTop) binder.scrollTop = top - 12;
+    else if (bot > binder.scrollTop + binder.clientHeight) binder.scrollTop = bot - binder.clientHeight + 12;
+  }
+  if (id === 'mk') renderMarcados();
   window.scrollTo({top:0, behavior:'auto'});
 }
-
-document.querySelectorAll('.ej').forEach(ej => {
-  if (doneSet.has(ej.dataset.key)) ej.classList.add('done');
-  const chk = ej.querySelector('.ej-check');
-  if (chk) chk.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const k = ej.dataset.key;
-    if (doneSet.has(k)) { doneSet.delete(k); ej.classList.remove('done'); }
-    else { doneSet.add(k); ej.classList.add('done'); }
-    saveDone(); refreshProgress();
-  });
-  const t = ej.querySelector('.sol-toggle');
-  if (t) t.addEventListener('click', () => {
-    const opening = !ej.classList.contains('open');
-    ej.classList.toggle('open');
-    t.querySelector('span').textContent = opening ? 'Tapar resolución' : 'Ver resolución';
-    if (opening && window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([ej]);
-  });
-});
-
-document.querySelectorAll('.corrector').forEach(c => {
-  c.addEventListener('click', () => c.classList.toggle('open'));
-});
 
 function refreshProgress(){
   UNIDADES.filter(u=>u.lista).forEach(u=>{
@@ -7076,6 +7789,266 @@ function refreshProgress(){
   });
 }
 refreshProgress();
+
+/* ---- estado "hecho": sincroniza original y copias en Marcados ---- */
+const syncDone = () => document.querySelectorAll('.ej[data-key]').forEach(ej => ej.classList.toggle('done', doneSet.has(ej.dataset.key)));
+syncDone();
+
+/* ============================================================
+   MARCADOS — resaltador + hoja de repaso
+   ============================================================ */
+const markSet = new Set(JSON.parse(store.get('cuaderno-marcados') || '[]'));
+const saveMarks = () => store.set('cuaderno-marcados', JSON.stringify([...markSet]));
+const MK_ICON = '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M12.6 2.8l4.6 4.6-7.4 7.4-3.6.9.9-3.6 7.4-7.4z" fill="currentColor" fill-opacity=".18" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M6.2 13.9L4 16.1h3.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 18.2h14" stroke="#f0cd4a" stroke-width="2.4" stroke-linecap="round"/></svg>';
+const mkButton = () => {
+  const b = document.createElement('button');
+  b.className = 'mk-btn'; b.type = 'button';
+  b.title = 'Marcar para repasar (aparece en ⚑ Mis marcados)';
+  b.innerHTML = MK_ICON + '<span class="mk-lbl"></span>';
+  return b;
+};
+const mkFlag = () => { const f = document.createElement('span'); f.className = 'mk-flag'; return f; };
+const wrapHL = el => {
+  if (!el || el.querySelector(':scope > .hl-txt')) return;
+  const s = document.createElement('span'); s.className = 'hl-txt';
+  while (el.firstChild) s.appendChild(el.firstChild);
+  el.appendChild(s);
+};
+
+/* nombres de cada toma de parcial, leídos de sus pestañas */
+const examName = {};
+document.querySelectorAll('.tab-btn').forEach(b => {
+  const m = (b.getAttribute('onclick') || '').match(/switchTab\('([^']+)','([^']+)'/);
+  if (m) examName[m[1] + '-' + m[2]] = b.textContent.trim();
+});
+
+/* registrar todo lo marcable (ejercicios de guía + ítems de parciales) */
+const MARKABLES = [];
+document.querySelectorAll('.unidad:not(#mk) .ej[data-key]').forEach(ej => {
+  const k = ej.dataset.key;
+  ej.dataset.mk = k;
+  const stamp = ej.querySelector('.ej-stamp');
+  if (stamp) stamp.appendChild(mkButton());
+  const clip = ej.querySelector('.clip');
+  if (clip) clip.appendChild(mkFlag());
+  ej.querySelectorAll('.ej-enun > p').forEach(wrapHL);
+  const ref = [...(stamp ? stamp.querySelectorAll(':scope > span:not([class])') : [])].map(s => s.textContent.trim()).join(' ');
+  MARKABLES.push({ key:k, el:ej, kind:'ej', unit:ej.closest('.unidad').id, ref });
+});
+document.querySelectorAll('.unidad .tab-content').forEach(tab => {
+  tab.querySelectorAll('.item-card').forEach((card, i) => {
+    const k = 'x:' + tab.id + ':' + i;
+    card.dataset.mk = k;
+    const head = card.querySelector('.item-header');
+    const tog = head && head.querySelector('.toggle-btn');
+    if (tog){
+      const box = document.createElement('div'); box.className = 'item-actions';
+      tog.replaceWith(box); box.appendChild(mkButton()); box.appendChild(tog);
+    }
+    card.appendChild(mkFlag());
+    wrapHL(card.querySelector('.item-question'));
+    const blk = card.closest('.exercise-block');
+    const lab = card.querySelector('.item-label');
+    MARKABLES.push({
+      key:k, el:card, kind:'item', unit:tab.closest('.unidad').id, tab:tab.id, block:blk,
+      ref:(examName[tab.id] || 'Parcial') + ' · ' + (blk ? (blk.querySelector('.exercise-number')||{}).textContent : '') + ' · ' + (lab ? lab.textContent.split('·')[0].trim() : '')
+    });
+  });
+});
+const mkByKey = Object.fromEntries(MARKABLES.map(m => [m.key, m]));
+/* limpia marcas huérfanas (ejercicios que ya no existen) */
+[...markSet].forEach(k => { if (!mkByKey[k]) markSet.delete(k); });
+
+function syncMarks(){
+  document.querySelectorAll('[data-mk]').forEach(el => {
+    const on = markSet.has(el.dataset.mk);
+    el.classList.toggle('is-marked', on);
+    const b = el.querySelector('.mk-btn'); if (b) b.setAttribute('aria-pressed', on);
+  });
+  const n = markSet.size;
+  document.querySelectorAll('[data-mk-count]').forEach(c => c.textContent = n ? n : '');
+  document.querySelectorAll('.chip-tab.mk').forEach(c => c.textContent = '⚑ Marcados' + (n ? ' · ' + n : ''));
+}
+syncMarks();
+
+/* aviso flotante */
+const toast = document.createElement('div');
+toast.className = 'mk-toast'; toast.setAttribute('role','status');
+toast.innerHTML = '<span class="sw"></span><span class="tx"></span><button type="button">Ver marcados →</button>';
+document.body.appendChild(toast);
+let toastT;
+toast.querySelector('button').addEventListener('click', () => { toast.classList.remove('show'); go('mk'); });
+function showToast(msg, withLink){
+  toast.querySelector('.tx').textContent = msg;
+  toast.querySelector('button').style.display = withLink ? '' : 'none';
+  toast.classList.add('show'); clearTimeout(toastT);
+  toastT = setTimeout(() => toast.classList.remove('show'), 2600);
+}
+
+function toggleMark(k, fromEl){
+  const adding = !markSet.has(k);
+  adding ? markSet.add(k) : markSet.delete(k);
+  saveMarks();
+  const entry = fromEl && fromEl.closest('.mk-entry');
+  if (!adding && entry){
+    entry.classList.add('leaving');
+    setTimeout(() => { syncMarks(); renderMarcados(); }, 240);
+  } else {
+    syncMarks();
+    if (document.getElementById('hoja-mk').classList.contains('visible')) renderMarcados();
+  }
+  document.querySelectorAll('[data-mk-count]').forEach(c => { c.classList.remove('bump'); void c.offsetWidth; c.classList.add('bump'); });
+  const onMk = document.getElementById('hoja-mk').classList.contains('visible');
+  showToast(adding ? 'Marcado para repasar' : 'Marca quitada', adding && !onMk);
+}
+
+/* ---- hoja de marcados ---- */
+let mkFilter = 'all';
+const unitInfo = id => UNIDADES.find(u => u.id === id) || {};
+function renderMarcados(){
+  const list = document.getElementById('mk-list');
+  const marked = MARKABLES.filter(m => markSet.has(m.key));
+  const nEj = marked.filter(m => m.kind === 'ej');
+  const hechos = nEj.filter(m => doneSet.has(m.key)).length;
+  document.getElementById('mk-stats').innerHTML =
+    '<div class="mk-stat hot"><b>' + marked.length + '</b><span>marcados</span></div>' +
+    '<div class="mk-stat"><b>' + nEj.length + '</b><span>de la guía</span></div>' +
+    '<div class="mk-stat"><b>' + (marked.length - nEj.length) + '</b><span>de parciales</span></div>' +
+    '<div class="mk-stat"><b>' + hechos + '/' + nEj.length + '</b><span>resueltos</span></div>';
+  document.getElementById('mk-random').disabled = !marked.length;
+  document.getElementById('mk-clear').disabled = !marked.length;
+
+  const shown = marked.filter(m => mkFilter === 'all' || unitInfo(m.unit).parcial === mkFilter);
+  list.innerHTML = '';
+  if (!shown.length){
+    list.innerHTML = '<div class="blank mk-empty"><span class="stamp">' +
+      (marked.length ? 'Nada marcado en este parcial' : 'Todavía no marcaste nada') +
+      '</span><p>Mientras recorrés las unidades o los parciales resueltos, tocá <span class="mk-btn demo">' + MK_ICON +
+      '<span>Marcar</span></span> en cualquier ejercicio que te parezca bueno para practicar. Se subraya con resaltador, le aparece una pestañita amarilla y queda juntado acá.</p></div>';
+    return;
+  }
+  let lastUnit = null, groupHead = null, groupCount = 0;
+  const closeGroup = () => { if (groupHead) groupHead.querySelector('.cnt').textContent = groupCount + (groupCount === 1 ? ' ejercicio' : ' ejercicios'); };
+  shown.forEach(m => {
+    if (m.unit !== lastUnit){
+      closeGroup();
+      const u = unitInfo(m.unit);
+      groupHead = document.createElement('h3');
+      groupHead.className = 'mk-group ' + (u.star ? 'star' : u.parcial);
+      groupHead.innerHTML = '<span class="gn">' + (u.star ? '★' : 'U' + u.n) + '</span>' + (u.star ? u.titulo + ' · ' + (u.parcial === 'pp' ? '1er' : '2do') + ' parcial' : u.titulo) + '<span class="cnt"></span>';
+      list.appendChild(groupHead);
+      lastUnit = m.unit; groupCount = 0;
+    }
+    groupCount++;
+    const entry = document.createElement('div');
+    entry.className = 'mk-entry'; entry.dataset.for = m.key;
+    const origin = document.createElement('div');
+    origin.className = 'mk-origin';
+    origin.innerHTML = '<span>' + m.ref + '</span>';
+    const goBtn = document.createElement('button'); goBtn.type = 'button'; goBtn.textContent = '↗ ir al original';
+    goBtn.addEventListener('click', () => jumpTo(m));
+    origin.appendChild(goBtn);
+    entry.appendChild(origin);
+
+    if (m.kind === 'ej'){
+      const c = m.el.cloneNode(true);
+      c.classList.remove('open');
+      c.dataset.clone = '1';
+      const t = c.querySelector('.sol-toggle span'); if (t) t.textContent = 'Ver resolución';
+      c.querySelectorAll('.corrector.open').forEach(x => x.classList.remove('open'));
+      entry.appendChild(c);
+    } else {
+      const card = document.createElement('div');
+      card.className = 'mk-examcard clip';
+      if (m.block){
+        const num = (m.block.querySelector('.exercise-number')||{}).textContent || '';
+        const tit = (m.block.querySelector('.exercise-title')||{}).textContent || '';
+        const h = document.createElement('div'); h.className = 'mk-exhead';
+        h.innerHTML = (examName[m.tab] || '') + ' — ' + num + ' <i>' + tit + '</i>';
+        card.appendChild(h);
+        const ctx = m.block.querySelector('.context-box');
+        if (ctx) card.appendChild(ctx.cloneNode(true));
+      }
+      const ic = m.el.cloneNode(true);
+      const p = ic.querySelector('.solution-panel'); if (p) p.classList.remove('open');
+      const tb = ic.querySelector('.toggle-btn'); if (tb){ tb.classList.remove('open'); tb.textContent = '▶ Solución'; }
+      card.appendChild(ic);
+      entry.appendChild(card);
+    }
+    list.appendChild(entry);
+  });
+  closeGroup();
+  syncDone(); syncMarks();
+  if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([list]).catch(()=>{});
+}
+
+function jumpTo(m){
+  go(m.unit);
+  if (m.kind === 'item'){
+    const btn = [...document.querySelectorAll('#' + m.unit + ' .tab-btn')].find(b => (b.getAttribute('onclick')||'').includes("'" + m.tab.replace(/^p[12]-/, '') + "'"));
+    if (btn) btn.click();
+  }
+  requestAnimationFrame(() => {
+    m.el.scrollIntoView({ behavior:'smooth', block:'center' });
+    const tgt = m.kind === 'ej' ? m.el.querySelector('.clip') : m.el;
+    tgt.classList.remove('mk-pulse'); void tgt.offsetWidth; tgt.classList.add('mk-pulse');
+  });
+}
+
+document.querySelectorAll('[data-mkf]').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('[data-mkf]').forEach(x => x.classList.toggle('on', x === b));
+  mkFilter = b.dataset.mkf; renderMarcados();
+}));
+document.getElementById('mk-random').addEventListener('click', () => {
+  const entries = [...document.querySelectorAll('#mk-list .mk-entry')];
+  if (!entries.length) return;
+  const e = entries[Math.floor(Math.random() * entries.length)];
+  e.querySelectorAll('.ej.open').forEach(x => { x.classList.remove('open'); const s = x.querySelector('.sol-toggle span'); if (s) s.textContent = 'Ver resolución'; });
+  e.querySelectorAll('.solution-panel.open').forEach(p => p.classList.remove('open'));
+  e.querySelectorAll('.toggle-btn.open').forEach(t => { t.classList.remove('open'); t.textContent = '▶ Solución'; });
+  e.scrollIntoView({ behavior:'smooth', block:'center' });
+  const tgt = e.querySelector('.clip'); if (tgt){ tgt.classList.remove('mk-pulse'); void tgt.offsetWidth; tgt.classList.add('mk-pulse'); }
+});
+document.getElementById('mk-clear').addEventListener('click', () => {
+  if (!markSet.size) return;
+  if (!confirm('¿Borrar las ' + markSet.size + ' marcas? No se puede deshacer.')) return;
+  markSet.clear(); saveMarks(); syncMarks(); renderMarcados();
+});
+
+/* ---- clicks delegados: funcionan igual en el original y en las copias ---- */
+document.addEventListener('click', e => {
+  const mk = e.target.closest('.mk-btn');
+  if (mk && !mk.classList.contains('demo')){
+    e.stopPropagation();
+    const host = mk.closest('[data-mk]');
+    if (host) toggleMark(host.dataset.mk, mk);
+    return;
+  }
+  const chk = e.target.closest('.ej-check');
+  if (chk){
+    e.stopPropagation();
+    const k = chk.closest('.ej').dataset.key;
+    doneSet.has(k) ? doneSet.delete(k) : doneSet.add(k);
+    saveDone(); syncDone(); refreshProgress();
+    if (document.getElementById('hoja-mk').classList.contains('visible')) {
+      const st = document.querySelectorAll('#mk-stats .mk-stat b')[3];
+      const ejs = MARKABLES.filter(m => m.kind === 'ej' && markSet.has(m.key));
+      if (st) st.textContent = ejs.filter(m => doneSet.has(m.key)).length + '/' + ejs.length;
+    }
+    return;
+  }
+  const t = e.target.closest('.sol-toggle');
+  if (t){
+    const ej = t.closest('.ej');
+    const opening = !ej.classList.contains('open');
+    ej.classList.toggle('open');
+    t.querySelector('span').textContent = opening ? 'Tapar resolución' : 'Ver resolución';
+    if (opening && window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([ej]);
+    return;
+  }
+  const c = e.target.closest('.corrector');
+  if (c) c.classList.toggle('open');
+});
 
 document.querySelectorAll('.ej-toolbar').forEach(bar=>{
   const scope = bar.closest('.unidad');
