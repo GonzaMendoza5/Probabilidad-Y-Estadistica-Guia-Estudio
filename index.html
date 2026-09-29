@@ -667,6 +667,155 @@ table.enun-table th{background:var(--paper-soft)}
 .mk-toast .sw{width:12px;height:12px;border-radius:2px;background:var(--highlighter);flex:none}
 .mk-toast button{font-family:var(--font-hand);font-size:.95rem;color:var(--highlighter);padding:3px 8px;border-radius:4px}
 .mk-toast button:hover{background:rgba(255,255,255,.08)}
+
+/* ===================== HOJA DE EXAMEN (enunciado limpio) ===================== */
+.exam-sheet .exercise-header{border-bottom:none;padding-bottom:0;margin-bottom:10px}
+.exam-sheet .exercise-number{font-family:var(--font-print);font-weight:700;font-size:1.02rem;color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+.exam-sheet .exercise-number::after{content:':'}
+.exam-sheet .context-box{
+  background:transparent;border:none;border-radius:0;padding:0 2px;margin:0 0 16px;
+  font-family:var(--font-print);font-size:1rem;line-height:1.8;color:var(--ink);text-align:justify;hyphens:auto;
+}
+.exam-sheet .item-card{padding-left:2px}
+.exam-sheet .item-label{font-family:var(--font-print);font-weight:700;font-size:.9rem;letter-spacing:0;color:var(--ink);text-transform:none}
+.exam-sheet .item-question{font-family:var(--font-print);font-size:1rem;line-height:1.75;text-align:justify}
+@media (max-width:560px){
+  .exam-sheet .context-box,.exam-sheet .item-question{text-align:left;hyphens:manual}
+  .item-header{flex-wrap:wrap}
+  .item-header > div:first-child{flex-basis:100%}
+  .item-actions,.item-actions{flex-direction:row;margin-left:auto}
+  .item-actions .mk-btn .mk-lbl{display:inline}
+}
+.item-card.done .item-label::after{content:'  ✓ realizado';font-family:var(--font-hand);font-weight:700;color:var(--pen-green);font-size:.9rem}
+
+/* ===================== RELOJ DE EXAMEN ===================== */
+.et-btn.armed,.et-seg button.armed{background:#c0473f !important;border-color:#c0473f !important;color:#fff !important;animation:armPulse 1s ease-in-out infinite}
+.mk-act.ghost.armed{background:var(--pen-red);color:#fff;border-color:var(--pen-red)}
+@keyframes armPulse{50%{opacity:.75}}
+.exam-timer{
+  position:sticky;top:calc(10px + env(safe-area-inset-top, 0px));z-index:15;
+  margin:0 0 22px;border-radius:6px;
+  background:var(--ink);color:var(--paper);
+  box-shadow:0 14px 28px -14px rgba(0,0,0,.55);
+  overflow:hidden;
+  transition:box-shadow 200ms var(--ease-out);
+}
+@media (max-width:760px){ .exam-timer{top:calc(56px + env(safe-area-inset-top, 0px))} }
+.et-row{display:flex;align-items:center;gap:10px 14px;flex-wrap:wrap;padding:10px 12px}
+.et-seg{display:inline-flex;background:rgba(255,255,255,.08);border-radius:999px;padding:3px}
+.et-seg button{
+  font-family:var(--font-hand);font-size:.9rem;color:rgba(241,237,224,.62);
+  padding:5px 12px;border-radius:999px;transition:background 160ms var(--ease-out), color 160ms;
+}
+.et-seg button.on{background:var(--paper);color:var(--ink)}
+.et-seg button:disabled{cursor:not-allowed}
+.et-display{display:flex;align-items:baseline;gap:10px;margin-right:auto;min-width:0}
+.et-time{
+  font-family:var(--font-mono);font-weight:700;font-size:1.65rem;letter-spacing:.02em;
+  font-variant-numeric:tabular-nums;line-height:1;
+}
+.et-state{font-family:var(--font-hand);font-size:.88rem;color:rgba(241,237,224,.55)}
+.et-ctrl{display:flex;gap:6px;align-items:center}
+.et-btn{
+  font-family:var(--font-hand);font-size:.95rem;min-height:34px;min-width:34px;padding:5px 11px;border-radius:999px;
+  color:var(--paper);border:1.4px solid rgba(241,237,224,.28);background:transparent;
+  transition:background 160ms var(--ease-out), border-color 160ms, transform 120ms var(--ease-out);
+}
+.et-btn:hover{background:rgba(255,255,255,.08)}
+.et-btn:active{transform:scale(.95)}
+.et-btn.et-main{background:var(--highlighter);border-color:var(--highlighter);color:#2b2100;font-weight:700;padding:5px 16px}
+.et-btn.et-main:hover{background:#f4d65f}
+.et-btn[hidden]{display:none}
+.et-btn[aria-expanded="true"]{background:rgba(255,255,255,.12)}
+.et-bar{height:4px;background:rgba(255,255,255,.08)}
+.et-bar i{display:block;height:100%;width:100%;background:var(--highlighter);transform-origin:left;transition:transform 400ms linear, background 300ms}
+.exam-timer[data-mode="stopwatch"] .et-bar i{background:rgba(241,237,224,.35)}
+.exam-timer.warn .et-time{color:#f2b35a}
+.exam-timer.warn .et-bar i{background:#e0913a}
+.exam-timer.crit .et-time{color:#ff8a7a;animation:etBlink 1s steps(2,start) infinite}
+.exam-timer.crit .et-bar i{background:#e0584a}
+@keyframes etBlink{to{opacity:.45}}
+.exam-timer.ended{animation:etRing 900ms var(--ease-out) 3;background:#7c2422}
+.exam-timer.ended .et-time,.exam-timer.ended .et-state{color:#fff}
+.exam-timer[data-mode="stopwatch"] [data-only="timer"]{display:none}
+@keyframes etRing{0%,100%{transform:none}15%{transform:translateX(-5px) rotate(-.4deg)}30%{transform:translateX(5px) rotate(.4deg)}45%{transform:translateX(-4px)}60%{transform:translateX(3px)}75%{transform:translateX(-1px)}}
+.et-cfg{
+  display:grid;grid-template-rows:0fr;transition:grid-template-rows 280ms var(--ease-in-out);
+  border-top:1px dashed transparent;
+}
+.exam-timer.cfg-open .et-cfg{grid-template-rows:1fr;border-top-color:rgba(241,237,224,.18)}
+.et-cfg > div{overflow:hidden}
+.et-cfg-in{padding:12px 14px 14px;display:flex;flex-wrap:wrap;gap:12px 22px;align-items:flex-start}
+.et-field{display:flex;flex-direction:column;gap:7px}
+.et-field > span{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:rgba(241,237,224,.5)}
+.et-presets{display:flex;flex-wrap:wrap;gap:6px}
+.et-chip{
+  font-family:var(--font-mono);font-size:.76rem;padding:5px 11px;border-radius:999px;
+  border:1.3px solid rgba(241,237,224,.25);color:var(--paper);
+}
+.et-chip.on{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+.et-custom{display:flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:.8rem}
+.et-custom input{
+  width:54px;padding:5px 6px;border-radius:5px;border:1.3px solid rgba(241,237,224,.3);
+  background:rgba(255,255,255,.06);color:var(--paper);font-family:var(--font-mono);font-size:.9rem;text-align:center;
+}
+.et-custom input:focus{outline:none;border-color:var(--highlighter)}
+.et-checks{display:flex;flex-direction:column;gap:6px}
+.et-checks label{display:flex;align-items:center;gap:8px;font-family:var(--font-hand);font-size:.95rem;cursor:pointer}
+.et-checks input{accent-color:var(--highlighter);width:15px;height:15px}
+.et-test{font-family:var(--font-hand);font-size:.9rem;color:var(--highlighter);padding:4px 0;border-bottom:1px dashed rgba(240,205,74,.5);align-self:flex-start}
+.et-laps{display:none;padding:0 14px 12px;gap:6px;flex-wrap:wrap}
+.exam-timer.has-laps .et-laps{display:flex}
+.et-lap{font-family:var(--font-mono);font-size:.72rem;padding:4px 9px;border-radius:4px;background:rgba(255,255,255,.07);color:rgba(241,237,224,.8)}
+.et-lap b{color:var(--highlighter);font-weight:600;margin-right:5px}
+body.exam-lock .unidad[data-parcial] .tab-content .toggle-btn{opacity:.4;border-style:dashed}
+body.exam-lock .unidad[data-parcial] .tab-content .toggle-btn::before{content:'🔒 '}
+@media (max-width:560px){
+  .et-row{gap:8px}
+  .et-display{order:-1;width:100%;justify-content:space-between}
+  .et-time{font-size:1.45rem}
+  .et-seg button{padding:5px 9px;font-size:.85rem}
+}
+
+/* ===================== MARCADOS: estado realizado ===================== */
+.mk-progress{flex-basis:100%;height:6px;border-radius:999px;background:rgba(35,38,45,.08);overflow:hidden}
+.mk-progress i{display:block;height:100%;width:0;background:var(--pen-green);border-radius:999px;transition:width 420ms var(--ease-out)}
+.mk-filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;flex-basis:100%}
+.mk-filters .sep{width:1px;height:20px;background:var(--ink-faint);opacity:.5;margin:0 4px}
+.mk-origin{justify-content:flex-start}
+.mk-origin .mk-done-btn{
+  margin-left:auto;display:inline-flex;align-items:center;gap:7px;
+  font-family:var(--font-hand);font-size:.95rem;font-weight:700;color:var(--ink-soft);
+  padding:5px 14px 5px 8px;border-radius:999px;border:1.6px dashed var(--ink-faint);background:rgba(255,255,255,.4);
+  transition:all 180ms var(--ease-out);
+}
+.mk-done-btn .box{
+  width:20px;height:20px;border-radius:50%;border:1.6px solid currentColor;display:flex;align-items:center;justify-content:center;flex:none;
+}
+.mk-done-btn svg{width:12px;height:12px}
+.mk-done-btn path{stroke-dasharray:20;stroke-dashoffset:20;transition:stroke-dashoffset 300ms var(--ease-out)}
+.mk-origin .mk-done-btn:hover{color:var(--pen-green);border-color:var(--pen-green-line)}
+.mk-done-btn:active{transform:scale(.96)}
+.mk-done-btn .lbl::after{content:'Marcar como realizado'}
+.mk-entry.is-done .mk-origin .mk-done-btn{background:var(--pen-green);border:1.6px solid var(--pen-green);color:#fff}
+.mk-entry.is-done .mk-done-btn .lbl::after{content:'Realizado'}
+.mk-entry.is-done .mk-done-btn path{stroke-dashoffset:0}
+.mk-card-wrap{position:relative}
+.mk-entry .clip{transition:filter 300ms var(--ease-out), opacity 300ms}
+.mk-entry.is-done .clip{opacity:.62;filter:saturate(.4)}
+.mk-entry.is-done .clip:hover{opacity:1;filter:none}
+.mk-stamp{
+  position:absolute;z-index:3;top:34px;right:34px;pointer-events:none;
+  font-family:var(--font-mono);font-weight:700;font-size:1.05rem;letter-spacing:.18em;color:var(--pen-green);
+  border:3px double var(--pen-green);border-radius:6px;padding:6px 14px 5px;background:rgba(250,247,236,.7);
+  transform:rotate(-9deg) scale(1.6);opacity:0;
+  mask-image:repeating-linear-gradient(45deg, #000 0 3px, rgba(0,0,0,.78) 3px 5px);
+  -webkit-mask-image:repeating-linear-gradient(45deg, #000 0 3px, rgba(0,0,0,.78) 3px 5px);
+  transition:transform 260ms cubic-bezier(.3,1.6,.5,1), opacity 160ms;
+}
+.mk-stamp small{display:block;font-size:.58rem;letter-spacing:.08em;text-align:center;opacity:.85;margin-top:2px}
+.mk-entry.is-done .mk-stamp{transform:rotate(-9deg) scale(1);opacity:.95}
+@media (max-width:560px){ .mk-stamp{top:30px;right:14px;font-size:.85rem} .mk-done-btn .lbl::after{content:'Realizado?'} .mk-entry.is-done .mk-done-btn .lbl::after{content:'Realizado'} }
 </style>
 </head>
 <body>
@@ -5094,7 +5243,43 @@ table.enun-table th{background:var(--paper-soft)}
         <span class="u-tape">PARCIALES RESUELTOS · PRIMER PARCIAL</span>
         <h2 class="u-title">★ Parciales <span class="accent">reales</span> resueltos</h2>
         <p class="u-sub">Tres tomas reales de la cátedra (verano 2026, su recuperatorio y mayo 2026) y un modelo de parcial de UNAHUR (22/09/2025), resueltos ítem por ítem con el método completo.</p>
-        <div class="exam-hint"><b>Cómo usarlos:</b> hacé el examen entero contra reloj antes de abrir una sola solución. Al corregirte, miré primero los paneles de sucesos / variables / distribuciones: si tu planteo difiere ahí, el error fue de modelado y no de cuentas — y ese es justamente el que más puntos cuesta.</div>
+        <div class="exam-hint"><b>Cómo usarlos:</b> los enunciados están tal como se toman, sin pistas. Poné el reloj, hacé el examen entero y recién ahí abrí las soluciones. Al corregirte, mirá primero los paneles de sucesos / variables / distribuciones: si tu planteo difiere ahí, el error fue de modelado y no de cuentas — y ese es justamente el que más puntos cuesta.</div>
+        <div class="exam-timer" data-timer data-mode="timer">
+          <div class="et-row">
+            <div class="et-seg" role="group" aria-label="Modo del reloj">
+              <button type="button" data-et-mode="timer" class="on">⏳ Temporizador</button>
+              <button type="button" data-et-mode="stopwatch">⏱ Cronómetro</button>
+            </div>
+            <div class="et-display"><span class="et-time">1:30:00</span><span class="et-state">listo para empezar</span></div>
+            <div class="et-ctrl">
+              <button type="button" class="et-btn et-main" data-et="toggle">▶ Empezar</button>
+              <button type="button" class="et-btn" data-et="lap" title="Marcar vuelta (cuánto tardaste en cada ejercicio)" hidden>⚑ Vuelta</button>
+              <button type="button" class="et-btn" data-et="reset" title="Reiniciar">↺</button>
+              <button type="button" class="et-btn" data-et="cfg" title="Ajustes del reloj" aria-expanded="false">⚙</button>
+            </div>
+          </div>
+          <div class="et-bar"><i></i></div>
+          <div class="et-cfg"><div><div class="et-cfg-in">
+            <div class="et-field et-dur"><span>Duración del examen</span>
+              <div class="et-presets">
+                <button type="button" class="et-chip" data-min="60">1 h</button>
+                <button type="button" class="et-chip" data-min="90">1 h 30</button>
+                <button type="button" class="et-chip" data-min="120">2 h</button>
+                <button type="button" class="et-chip" data-min="150">2 h 30</button>
+              </div>
+              <div class="et-custom"><input type="number" min="0" max="9" data-et-h aria-label="Horas"> h <input type="number" min="0" max="59" data-et-m aria-label="Minutos"> min</div>
+            </div>
+            <div class="et-field"><span>Opciones</span>
+              <div class="et-checks">
+                <label data-only="timer"><input type="checkbox" data-et-opt="sound"> Sonido al terminar</label>
+                <label data-only="timer"><input type="checkbox" data-et-opt="warn"> Aviso cuando quedan 10 min</label>
+                <label><input type="checkbox" data-et-opt="lock"> Bloquear soluciones mientras corre</label>
+              </div>
+            </div>
+            <button type="button" class="et-test" data-only="timer" data-et="test">🔔 Probar sonido</button>
+          </div></div></div>
+          <div class="et-laps"></div>
+        </div>
         <div class="exam-tabs"><div class="tabs" id="tabs-p1">
     <button class="tab-btn active" onclick="switchTab('p1','parcial-v',this)">Parcial · 13/02/2026</button>
     <button class="tab-btn" onclick="switchTab('p1','recup-v',this)">Recup · 04/03/2026</button>
@@ -5104,7 +5289,7 @@ table.enun-table th{background:var(--paper-soft)}
 
 
   <!-- ═══ TAB: PARCIAL VERANO 13/02 ═══ -->
-  <div id="p1-parcial-v" class="tab-content active">
+  <div id="p1-parcial-v" class="tab-content exam-sheet active">
 
     <div class="exam-info">
       <span class="badge badge-accent">Parcial Verano</span>
@@ -5116,23 +5301,15 @@ table.enun-table th{background:var(--paper-soft)}
     <div class="exercise-block">
       <div class="exercise-header">
         <span class="exercise-number">Ejercicio 1</span>
-        <span class="exercise-title">Proceso de Poisson — Derrames de Petróleo</span>
       </div>
-      <div class="context-box">
-        En una región del océano se estudia la ocurrencia de derrames de petróleo. Las condiciones del
-        mar pueden ser <strong>calmas</strong> o <strong>agitadas</strong>. El <strong>70%</strong> del tiempo el mar está en condiciones calmas,
-        con derrames según un proceso Poisson de tasa <strong>\(\lambda_C = 0{,}5\) eventos/mes</strong>.
-        El <strong>30%</strong> del tiempo está agitado, con tasa <strong>\(\lambda_A = 2\) eventos/mes</strong>.
-        Las condiciones se mantienen constantes durante <em>un mes</em>. Sea
-        \(T\) el tiempo (en meses) hasta la ocurrencia del <em>primer</em> derrame.
-      </div>
+      <div class="context-box">En una región del océano se estudia la ocurrencia de derrames de petróleo. Las condiciones del mar pueden ser calmas o agitadas. El 70% del tiempo el mar se encuentra en condiciones calmas y, en ese caso, los derrames ocurren según un proceso de Poisson con una tasa de 0,5 derrames por mes. El 30% restante del tiempo el mar se encuentra agitado y los derrames ocurren a razón de 2 por mes. Las condiciones del mar se mantienen constantes durante un mes. Sea T el tiempo (en meses) hasta la ocurrencia del primer derrame.</div>
 
       <!-- Ítem 1a -->
       <div class="item-card">
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM a) · 1.5 pts</div>
-            <div class="item-question">Calcule la probabilidad de que ocurra <em>exactamente un derrame</em> en un mes.</div>
+            <div class="item-question">Calcule la probabilidad de que ocurra exactamente un derrame en un mes.</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -5197,7 +5374,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM b) · 1.5 pts</div>
-            <div class="item-question">Si durante todo el primer mes el mar se mantiene <em>agitado</em>, calcule la probabilidad de que el <em>tercer derrame</em> se observe antes de que transcurran los primeros <em>15 días</em>.</div>
+            <div class="item-question">Si durante todo el primer mes el mar se mantiene agitado, calcule la probabilidad de que el tercer derrame se observe antes de que transcurran los primeros 15 días.</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -5252,7 +5429,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM c) · 1.5 pts</div>
-            <div class="item-question">Sabiendo que <em>no ocurrió ningún derrame durante el primer mes</em>, calcule la probabilidad de que el primer derrame ocurra <em>después de 2 meses desde el inicio</em>.</div>
+            <div class="item-question">Sabiendo que no ocurrió ningún derrame durante el primer mes, calcule la probabilidad de que el primer derrame ocurra después de transcurridos 2 meses desde el inicio.</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -5304,7 +5481,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM d) · 1.5 pts</div>
-            <div class="item-question">Si el mar se mantuvo en condiciones calmas durante <em>todo</em> el periodo y no ocurrió ningún derrame durante el primer mes, ¿cuál es la probabilidad de que el primer derrame ocurra <em>dentro del siguiente mes y medio</em>?</div>
+            <div class="item-question">Si el mar se mantuvo en condiciones calmas durante todo el período y no ocurrió ningún derrame durante el primer mes, ¿cuál es la probabilidad de que el primer derrame ocurra dentro del mes y medio siguiente?</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -5352,23 +5529,15 @@ table.enun-table th{background:var(--paper-soft)}
     <div class="exercise-block">
       <div class="exercise-header">
         <span class="exercise-number">Ejercicio 2</span>
-        <span class="exercise-title">Variables Normales y Uniformes — Planta Industrial</span>
       </div>
-      <div class="context-box">
-        Piezas metálicas en tres etapas: <strong>corte inicial</strong>, <strong>ajuste dimensional</strong> y <strong>terminación</strong>. Material desechado:
-        <ul>
-          <li>\(X_1 \sim N(\mu=0{,}40,\;\sigma=0{,}05)\) kg — corte inicial</li>
-          <li>\(X_2 \sim N(\mu=0{,}25,\;\sigma=0{,}04)\) kg — ajuste dimensional</li>
-          <li>\(X_3 \sim U(0{,}14;\;0{,}24)\) kg — terminación</li>
-        </ul>
-      </div>
+      <div class="context-box">Una planta industrial fabrica piezas metálicas en tres etapas: corte inicial, ajuste dimensional y terminación. En cada etapa se desecha material. La cantidad de material desechado por pieza en el corte inicial se distribuye normalmente con media 0,40 kg y desvío 0,05 kg; en el ajuste dimensional, normalmente con media 0,25 kg y desvío 0,04 kg; y en la terminación, uniformemente entre 0,14 kg y 0,24 kg. Las cantidades desechadas en cada etapa y en cada pieza son independientes.</div>
 
       <!-- Ítem 2a -->
       <div class="item-card">
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM a) · 1.5 pts</div>
-            <div class="item-question">Aproxime la distribución de la cantidad <em>total</em> de material desechado en terminación durante la producción de <em>36 piezas</em>.</div>
+            <div class="item-question">Aproxime la distribución de la cantidad total de material desechado en la etapa de terminación durante la producción de 36 piezas.</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -5398,7 +5567,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM b) · 1.5 pts</div>
-            <div class="item-question">Se revisaron 5 piezas y <em>ninguna</em> tuvo desecho de terminación superior a <em>0,36 kg</em> (sin ajuste). ¿Cuál es la probabilidad de necesitar revisar <em>al menos 12 piezas más</em> para encontrar <em>3</em> cuyo desecho total (corte + ajuste + terminación) supere 0,36 kg?</div>
+            <div class="item-question">Se revisaron 5 piezas y ninguna tuvo un desecho de terminación superior a 0,36 kg (sin considerar el ajuste). ¿Cuál es la probabilidad de necesitar revisar al menos 12 piezas más para encontrar 3 cuyo desecho total (corte, ajuste y terminación) supere los 0,36 kg?</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -5444,7 +5613,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM c) · 1.5 pts</div>
-            <div class="item-question">En 6 piezas consecutivas no se observó ningún caso en que el desecho de <em>ajuste dimensional</em> supere al de <em>corte inicial</em>. ¿Probabilidad de revisar <em>al menos 14 piezas en total</em> para observar ese evento?</div>
+            <div class="item-question">En 6 piezas consecutivas no se observó ningún caso en que el desecho del ajuste dimensional superara al del corte inicial. ¿Cuál es la probabilidad de tener que revisar al menos 14 piezas en total para observar ese evento?</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -5476,7 +5645,7 @@ table.enun-table th{background:var(--paper-soft)}
   </div><!-- tab parcial-v -->
 
   <!-- ═══ TAB: RECUPERATORIO VERANO 04/03 ═══ -->
-  <div id="p1-recup-v" class="tab-content">
+  <div id="p1-recup-v" class="tab-content exam-sheet">
 
     <div class="exam-info">
       <span class="badge badge-accent">Recuperatorio Verano</span>
@@ -5487,18 +5656,15 @@ table.enun-table th{background:var(--paper-soft)}
     <div class="exercise-block">
       <div class="exercise-header">
         <span class="exercise-number">Ejercicio 1</span>
-        <span class="exercise-title">Proceso de Poisson — Derrames (condiciones fijas)</span>
       </div>
-      <div class="context-box">
-        <strong>Mismo contexto que el Parcial</strong>, pero las condiciones del mar se mantienen constantes <strong>durante todo el periodo</strong>. Si calmo → siempre calmo; si agitado → siempre agitado. Al observar eventos pasados actualizamos nuestra creencia sobre el estado del mar.
-      </div>
+      <div class="context-box">En una región del océano se estudia la ocurrencia de derrames de petróleo. Las condiciones del mar pueden ser calmas o agitadas. El 70% del tiempo el mar se encuentra en condiciones calmas y, en ese caso, los derrames ocurren según un proceso de Poisson con una tasa de 0,5 derrames por mes. El 30% restante del tiempo el mar se encuentra agitado y los derrames ocurren a razón de 2 por mes. Las condiciones del mar se mantienen constantes durante todo el período estudiado. Sea T el tiempo (en meses) hasta la ocurrencia del primer derrame.</div>
 
       <!-- R-1a -->
       <div class="item-card">
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM a) · 1.5 pts</div>
-            <div class="item-question">Calcule la probabilidad de que el <em>segundo derrame</em> ocurra <em>antes de 1 mes</em>.</div>
+            <div class="item-question">Calcule la probabilidad de que el segundo derrame ocurra antes de transcurrido 1 mes.</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -5538,7 +5704,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM b) · 1 pt</div>
-            <div class="item-question">Si el mar se mantiene en condiciones calmas, ¿cuál es el tiempo superado solamente por el <em>10% de los derrames</em>?</div>
+            <div class="item-question">Si el mar se mantiene en condiciones calmas, ¿cuál es el tiempo superado solamente por el 10% de los derrames?</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -5564,7 +5730,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM c) · 1.5 pts</div>
-            <div class="item-question">Si ocurrieron <em>al menos 3 derrames en un mes</em>, ¿cuál es la probabilidad de que el mar estuviera <em>calmo</em>?</div>
+            <div class="item-question">Si ocurrieron al menos 3 derrames en un mes, ¿cuál es la probabilidad de que el mar estuviera en condiciones calmas?</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -5598,18 +5764,15 @@ table.enun-table th{background:var(--paper-soft)}
     <div class="exercise-block">
       <div class="exercise-header">
         <span class="exercise-number">Ejercicio 2</span>
-        <span class="exercise-title">Variables Normales y Uniformes — Planta Industrial</span>
       </div>
-      <div class="context-box">
-        Mismo contexto: \(X_1 \sim N(0{,}40;\;0{,}05)\), \(X_2 \sim N(0{,}25;\;0{,}04)\), \(X_3 \sim U(0{,}14;\;0{,}24)\).
-      </div>
+      <div class="context-box">Una planta industrial fabrica piezas metálicas en tres etapas: corte inicial, ajuste dimensional y terminación. En cada etapa se desecha material. La cantidad de material desechado por pieza en el corte inicial se distribuye normalmente con media 0,40 kg y desvío 0,05 kg; en el ajuste dimensional, normalmente con media 0,25 kg y desvío 0,04 kg; y en la terminación, uniformemente entre 0,14 kg y 0,24 kg. Las cantidades desechadas en cada etapa y en cada pieza son independientes.</div>
 
       <!-- R-2a -->
       <div class="item-card">
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM a) · 1.5 pts</div>
-            <div class="item-question">¿Entre qué valores se encuentra el desecho total <em>corte + ajuste</em> para el <em>70% de las piezas</em>? (Intervalo simétrico respecto a la media.)</div>
+            <div class="item-question">¿Entre qué valores se encuentra el desecho total de corte inicial y ajuste dimensional para el 70% de las piezas? (Intervalo simétrico respecto a la media.)</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -5639,7 +5802,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM b) · 1.5 pts</div>
-            <div class="item-question">¿Probabilidad de que el desecho de <em>corte inicial</em> sea <em>al menos el triple</em> del de <em>ajuste dimensional</em>?</div>
+            <div class="item-question">¿Cuál es la probabilidad de que el desecho del corte inicial sea al menos el triple del desecho del ajuste dimensional?</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -5665,7 +5828,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM c) · 1.5 pts</div>
-            <div class="item-question">Al revisar 8 piezas, 3 tuvieron desecho superior a 0,21 kg en terminación. ¿Probabilidad de que en las <em>primeras 2</em> haya exactamente 1 éxito y en las <em>últimas 2 ninguno</em>?</div>
+            <div class="item-question">Al revisar 8 piezas, 3 tuvieron un desecho de terminación superior a 0,21 kg. ¿Cuál es la probabilidad de que entre las 2 primeras haya exactamente una con esa característica y entre las 2 últimas ninguna?</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -5688,7 +5851,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM d) · 1.5 pts</div>
-            <div class="item-question">Lotes de <em>25 piezas</em>. ¿<em>Cantidad esperada de lotes</em> para hallar 6 en los cuales el desecho total de terminación supere <em>4,8 kg</em>?</div>
+            <div class="item-question">Las piezas se agrupan en lotes de 25. ¿Cuál es la cantidad esperada de lotes que deben revisarse para hallar 6 en los cuales el desecho total de terminación supere los 4,8 kg?</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -5715,7 +5878,7 @@ table.enun-table th{background:var(--paper-soft)}
   </div><!-- tab recup-v -->
 
   <!-- ═══ TAB: PARCIAL MAYO 2026 ═══ -->
-  <div id="p1-parcial-m" class="tab-content">
+  <div id="p1-parcial-m" class="tab-content exam-sheet">
 
     <div class="exam-info">
       <span class="badge badge-accent">Primer Parcial</span>
@@ -5726,23 +5889,15 @@ table.enun-table th{background:var(--paper-soft)}
     <div class="exercise-block">
       <div class="exercise-header">
         <span class="exercise-number">Ejercicio 1</span>
-        <span class="exercise-title">Mezcla de Distribuciones — Red de Telecomunicaciones</span>
       </div>
-      <div class="context-box">
-        Red con <strong>Canal A</strong> (P = 0,6) y <strong>Canal B</strong> (P = 0,4). Tiempos de transmisión (ms):
-        <ul>
-          <li>Canal A: \(T_a \sim \text{Exp}(\lambda = 0{,}1)\)</li>
-          <li>Canal B: \(T_b \sim N(\mu = 20,\;\sigma = 4)\)</li>
-        </ul>
-        Transmisión <strong>exitosa</strong> si \(T &lt; 25\) ms.
-      </div>
+      <div class="context-box">Una red de telecomunicaciones transmite señales por dos canales. El 60% de las señales se envía por el canal A y el resto por el canal B. El tiempo de transmisión (en ms) de una señal por el canal A tiene distribución exponencial con parámetro \(\lambda = 0{,}1\), mientras que por el canal B se distribuye normalmente con media 20 ms y desvío 4 ms. Una transmisión se considera exitosa si su tiempo es menor a 25 ms.</div>
 
       <!-- M-1a -->
       <div class="item-card">
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM a)</div>
-            <div class="item-question">La empresa debe garantizar que el tiempo total de <em>40 señales por Canal A</em> no superará cierto umbral en el <em>90% de los casos</em>. ¿Cuál es el <em>tiempo máximo</em> comprometible?</div>
+            <div class="item-question">La empresa debe garantizar que el tiempo total de transmisión de 40 señales enviadas por el canal A no supere cierto umbral en el 90% de los casos. ¿Cuál es el tiempo máximo que puede comprometer?</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -5769,7 +5924,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM b)</div>
-            <div class="item-question">¿Probabilidad de que la <em>tercera señal exitosa</em> aparezca en la <em>5ta señal observada</em>?</div>
+            <div class="item-question">¿Cuál es la probabilidad de que la tercera señal exitosa sea la quinta señal observada?</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -5796,23 +5951,15 @@ table.enun-table th{background:var(--paper-soft)}
     <div class="exercise-block">
       <div class="exercise-header">
         <span class="exercise-number">Ejercicio 2</span>
-        <span class="exercise-title">Proceso de Poisson — Banco "Litoral"</span>
       </div>
-      <div class="context-box">
-        Banco <strong>"Litoral"</strong>, tres operaciones online (Proceso de Poisson independientes):
-        <ul>
-          <li>Plazos fijos: \(\lambda_{PF} = 1/30\) op/min</li>
-          <li>Moneda extranjera: \(\lambda_{ME} = 1/10\) op/min</li>
-          <li>Compra de bonos: \(\lambda_{B} = 1/15\) op/min</li>
-        </ul>
-      </div>
+      <div class="context-box">En el banco «Litoral» se realizan tres tipos de operaciones online, que ocurren según procesos de Poisson independientes: apertura de plazos fijos, a razón de 1 cada 30 minutos; compra de moneda extranjera, a razón de 1 cada 10 minutos; y compra de bonos, a razón de 1 cada 15 minutos.</div>
 
       <!-- M-2a -->
       <div class="item-card">
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM a)</div>
-            <div class="item-question">Registros de tiempo entre aperturas de PF de Litoral y Ultraville (\(U(5,25)\)). El 42% es de Ultraville. Si el tiempo <em>superó 21 min</em>, ¿probabilidad de que sea de <em>Ultraville</em>?</div>
+            <div class="item-question">Se cuenta con registros del tiempo entre aperturas de plazos fijos de los bancos Litoral y Ultraville. En Ultraville ese tiempo se distribuye uniformemente entre 5 y 25 minutos. El 42% de los registros corresponde a Ultraville. Si se toma un registro al azar y el tiempo entre aperturas superó los 21 minutos, ¿cuál es la probabilidad de que corresponda a Ultraville?</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -5837,7 +5984,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM b)</div>
-            <div class="item-question">Se cuenta con <em>24 registros</em> del tiempo hasta la <em>5ta compra de bonos</em> en Litoral. ¿Probabilidad de que <em>más de la mitad</em> sea superior a <em>75 minutos</em>?</div>
+            <div class="item-question">Se cuenta con 24 registros independientes del tiempo hasta la quinta compra de bonos en el banco Litoral. ¿Cuál es la probabilidad de que más de la mitad de estos registros sea superior a 75 minutos?</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -5863,7 +6010,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM c)</div>
-            <div class="item-question">Costo administrativo: <em>50 USD/gestión</em> de plazo fijo. ¿Probabilidad de que en <em>2 horas</em> se acumule un costo total <em>superior a 200 USD y de a lo sumo 350 USD</em>?</div>
+            <div class="item-question">Cada gestión de plazo fijo genera un costo administrativo de 50 USD. ¿Cuál es la probabilidad de que en 2 horas se acumule un costo total superior a 200 USD y de a lo sumo 350 USD?</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -5889,7 +6036,7 @@ table.enun-table th{background:var(--paper-soft)}
   </div><!-- tab parcial-m -->
 
   <!-- ═══ TAB: MODELO UNAHUR 22/09/2025 ═══ -->
-  <div id="p1-modelo-sep25" class="tab-content">
+  <div id="p1-modelo-sep25" class="tab-content exam-sheet">
 
     <div class="exam-info">
       <span class="badge badge-gold">Modelo de parcial</span>
@@ -5902,20 +6049,14 @@ table.enun-table th{background:var(--paper-soft)}
     <div class="exercise-block">
       <div class="exercise-header">
         <span class="exercise-number">Ejercicio 1</span>
-        <span class="exercise-title">V.A. continuas — Altura de olas en dos zonas</span>
       </div>
-      <div class="context-box">
-        En un estudio sobre la altura de las olas durante tormentas moderadas se consideran dos sectores de la costa: <strong>zona A</strong> y <strong>zona B</strong>.
-        Sea \(X\) la altura (m) de las olas en la zona A, con f.d.p.
-        \[f(x)=\begin{cases}\dfrac{x-1}{4} &amp; 1\le x\le 3\\[4pt] \dfrac{5-x}{4} &amp; 3&lt;x\le 5\\[4pt] 0 &amp; \text{otro caso}\end{cases}\]
-        La altura en la zona B es \(Y\sim U[1{,}1\,;\,3{,}5]\). Ambas variables se miden en metros.
-      </div>
+      <div class="context-box">En el marco de un estudio destinado a evaluar la altura de las olas durante tormentas de intensidad moderada, se consideraron dos sectores de la costa, identificados como zona A y zona B. Sea “X” la altura de las olas medidas en la zona A, que se modela mediante la siguiente f.d.p.:\[f(x)=\begin{cases}\dfrac{x-1}{4} &amp; \text{si } 1\le x\le 3\\[4pt] \dfrac{5-x}{4} &amp; \text{si } 3&lt;x\le 5\\[4pt] 0 &amp; \text{para otro caso}\end{cases}\]Por otra parte, la altura de las olas medidas en la zona B sigue una distribución Y~U[1,1 ; 3,5]. Ambas variables se miden en metros.</div>
 
       <div class="item-card">
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM a)</div>
-            <div class="item-question">El <em>63%</em> de las mediciones provienen de la zona A y el resto de la B. Si se selecciona al azar una ola registrada, ¿cuál es la probabilidad de que su altura <em>supere los 2,8 m</em>?</div>
+            <div class="item-question">El 63% de las mediciones provienen de la zona A y el resto de la B. Si se selecciona al azar una ola registrada en el estudio, ¿Cuál es la probabilidad de que su altura supere los 2,8 metros?</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -5980,7 +6121,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM b)</div>
-            <div class="item-question">Si se seleccionan <em>5 mediciones de la zona B</em> y todas superan los 2,5 m, ¿cuál es la probabilidad de que <em>alguna</em> sea mayor a 3 m?</div>
+            <div class="item-question">Si se seleccionan 5 mediciones provenientes de la zona B y todas superan los 2,5 metros, ¿Cuál es la probabilidad de que alguna sea mayor a 3 metros?</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -6037,7 +6178,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM c)</div>
-            <div class="item-question">Se aplica un ajuste en la zona A: las mediciones que originalmente <em>superan los 4 m se incrementan un 15%</em> y el resto queda igual. ¿Cuál es la altura esperada luego del ajuste?</div>
+            <div class="item-question">Si se aplica un ajuste sobre las mediciones realizadas en la zona A, tal que se incrementa el valor de aquellas que originalmente superan los 4 metros en un 15%, mientras que el resto queda igual. ¿Cuál es la altura esperada de las olas en esta zona, luego de aplicarse el ajuste?</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -6097,17 +6238,14 @@ table.enun-table th{background:var(--paper-soft)}
     <div class="exercise-block">
       <div class="exercise-header">
         <span class="exercise-number">Ejercicio 2</span>
-        <span class="exercise-title">Proceso Bernoulli — "Los guerreros del estado dorado"</span>
       </div>
-      <div class="context-box">
-        El porcentaje de victorias del equipo es históricamente del <strong>90%</strong>. Consideramos cada partido como un ensayo de Bernoulli independiente con \(p=0{,}9\).
-      </div>
+      <div class="context-box">Se sabe que el porcentaje de victorias del equipo de baloncesto “Los guerreros del estado dorado” es históricamente del 90%.</div>
 
       <div class="item-card">
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM a)</div>
-            <div class="item-question">Si en los primeros 3 partidos obtuvieron 3 victorias, ¿cuál es la probabilidad de que en los <em>próximos 4</em> obtengan <em>al menos 3 victorias</em>?</div>
+            <div class="item-question">Si durante los primeros 3 partidos de la temporada regular obtuvieron 3 victorias, ¿Cuál es la probabilidad de que en los próximos 4 partidos obtengan al menos 3 victorias?</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -6150,7 +6288,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM b)</div>
-            <div class="item-question">Si el equipo acumula una racha de <em>5 derrotas consecutivas</em>, ¿cuál es la probabilidad de que deban jugar <em>más de 2 partidos adicionales</em> hasta lograr su <em>segunda victoria</em>?</div>
+            <div class="item-question">Si el equipo acumula una racha de 5 derrotas consecutivas, ¿Cuál es la probabilidad de que deban jugar más de 2 partidos adicionales hasta lograr su segunda victoria?</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -6201,7 +6339,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM c)</div>
-            <div class="item-question">Por cada victoria el equipo recibe un premio de <em>30.000 USD</em>. ¿Cuál es la probabilidad de haber recaudado <em>al menos 210.000 USD en 10 partidos</em>?</div>
+            <div class="item-question">Por cada victoria conseguida, el equipo recibe un premio de 30.000 dólares, ¿Cuál es la probabilidad de haber recaudado al menos 210.000 usd en 10 partidos jugados?</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -6249,18 +6387,14 @@ table.enun-table th{background:var(--paper-soft)}
     <div class="exercise-block">
       <div class="exercise-header">
         <span class="exercise-number">Ejercicio 3</span>
-        <span class="exercise-title">Poisson / Exponencial y Normal — Eventos meteorológicos</span>
       </div>
-      <div class="context-box">
-        El tiempo hasta el próximo evento meteorológico en la región <strong>A</strong> es Exponencial de <strong>media 7 días</strong>.
-        En la región <strong>B</strong> el tiempo es Normal de <strong>media 10 días</strong> y <strong>desvío 2 días</strong>.
-      </div>
+      <div class="context-box">El tiempo transcurrido hasta el próximo evento meteorológico en una región planetaria ‘A’ es una variable aleatoria Exponencial de media 7 días. Mientras que en la región ‘B’ el tiempo es variable aleatoria Normal de media 10 días y desvío 2 días:</div>
 
       <div class="item-card">
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM a)</div>
-            <div class="item-question">Región A: ¿cuál es la probabilidad de que en <em>8 días</em> se produzca <em>1 evento</em> y en los <em>siguientes 10</em> al menos uno?</div>
+            <div class="item-question">En la región A: ¿Cuál es la probabilidad de que en 8 días se produzca 1 evento y en los siguientes 10 al menos uno?</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -6322,7 +6456,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM b)</div>
-            <div class="item-question">Región A: ¿cuál es la probabilidad de que el <em>cuarto evento</em> se produzca <em>luego de los 40 días</em>?</div>
+            <div class="item-question">En la región A: ¿Cuál es la probabilidad de que el cuarto evento se produzca luego de los 40 días?</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -6373,7 +6507,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM c)</div>
-            <div class="item-question">Región B: ¿cuál es la probabilidad de que transcurran <em>más de 12 días</em>, si <em>van 9 y aún no pasó nada</em>?</div>
+            <div class="item-question">En la región B: ¿Cuál es la probabilidad de que transcurran más de 12 días, si van 9 y aún no pasó nada?</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -6417,7 +6551,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM d)</div>
-            <div class="item-question">Región B: ¿cuál es la probabilidad de que transcurran <em>menos de 110 días en total</em> hasta la ocurrencia del <em>décimo evento consecutivo</em>?</div>
+            <div class="item-question">En la región B: ¿Cuál es la probabilidad de que transcurran menos de 110 días en total hasta la ocurrencia del décimo evento consecutivo?</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -6469,7 +6603,43 @@ table.enun-table th{background:var(--paper-soft)}
         <span class="u-tape">PARCIALES RESUELTOS · SEGUNDO PARCIAL</span>
         <h2 class="u-title">★ Parciales <span class="accent">reales</span> resueltos</h2>
         <p class="u-sub">Cuatro tomas reales (noviembre 2025, febrero 2026 y dos recuperatorios), con ensayos de hipótesis y bidimensionales resueltos paso a paso.</p>
-        <div class="exam-hint"><b>Cómo usarlos:</b> resolvé cada toma completa simulando parcial. En los ensayos de hipótesis, escribí tus \(H_0/H_1\) y la dirección de la región de rechazo antes de comparar con la solución: la dirección de β y el tipo de error se deciden en ese planteo inicial.</div>
+        <div class="exam-hint"><b>Cómo usarlos:</b> resolvé cada toma completa con el reloj corriendo, como en el parcial. En los ensayos de hipótesis, escribí tus \(H_0/H_1\) y la dirección de la región de rechazo antes de comparar con la solución: la dirección de β y el tipo de error se deciden en ese planteo inicial.</div>
+        <div class="exam-timer" data-timer data-mode="timer">
+          <div class="et-row">
+            <div class="et-seg" role="group" aria-label="Modo del reloj">
+              <button type="button" data-et-mode="timer" class="on">⏳ Temporizador</button>
+              <button type="button" data-et-mode="stopwatch">⏱ Cronómetro</button>
+            </div>
+            <div class="et-display"><span class="et-time">1:30:00</span><span class="et-state">listo para empezar</span></div>
+            <div class="et-ctrl">
+              <button type="button" class="et-btn et-main" data-et="toggle">▶ Empezar</button>
+              <button type="button" class="et-btn" data-et="lap" title="Marcar vuelta (cuánto tardaste en cada ejercicio)" hidden>⚑ Vuelta</button>
+              <button type="button" class="et-btn" data-et="reset" title="Reiniciar">↺</button>
+              <button type="button" class="et-btn" data-et="cfg" title="Ajustes del reloj" aria-expanded="false">⚙</button>
+            </div>
+          </div>
+          <div class="et-bar"><i></i></div>
+          <div class="et-cfg"><div><div class="et-cfg-in">
+            <div class="et-field et-dur"><span>Duración del examen</span>
+              <div class="et-presets">
+                <button type="button" class="et-chip" data-min="60">1 h</button>
+                <button type="button" class="et-chip" data-min="90">1 h 30</button>
+                <button type="button" class="et-chip" data-min="120">2 h</button>
+                <button type="button" class="et-chip" data-min="150">2 h 30</button>
+              </div>
+              <div class="et-custom"><input type="number" min="0" max="9" data-et-h aria-label="Horas"> h <input type="number" min="0" max="59" data-et-m aria-label="Minutos"> min</div>
+            </div>
+            <div class="et-field"><span>Opciones</span>
+              <div class="et-checks">
+                <label data-only="timer"><input type="checkbox" data-et-opt="sound"> Sonido al terminar</label>
+                <label data-only="timer"><input type="checkbox" data-et-opt="warn"> Aviso cuando quedan 10 min</label>
+                <label><input type="checkbox" data-et-opt="lock"> Bloquear soluciones mientras corre</label>
+              </div>
+            </div>
+            <button type="button" class="et-test" data-only="timer" data-et="test">🔔 Probar sonido</button>
+          </div></div></div>
+          <div class="et-laps"></div>
+        </div>
         <div class="exam-tabs"><div class="tabs" id="tabs-p2">
     <button class="tab-btn active" onclick="switchTab('p2','sp-nov25',this)">Parcial · 11/11/2025</button>
     <button class="tab-btn" onclick="switchTab('p2','sp-feb26',this)">Parcial · 27/02/2026</button>
@@ -6481,7 +6651,7 @@ table.enun-table th{background:var(--paper-soft)}
   <!-- ═══════════════════════════════════════
        PARCIAL 11/11/2025
   ═══════════════════════════════════════ -->
-  <div id="p2-sp-nov25" class="tab-content active">
+  <div id="p2-sp-nov25" class="tab-content exam-sheet active">
     <div class="exam-info">
       <span class="badge badge-gold">Segundo Parcial</span>
       <span class="badge badge-purple">11 noviembre 2025</span>
@@ -6491,18 +6661,15 @@ table.enun-table th{background:var(--paper-soft)}
     <div class="exercise-block">
       <div class="exercise-header">
         <span class="exercise-number">Ejercicio 1</span>
-        <span class="exercise-title">Ensayo de Hipótesis — Resistencia de Componentes Electrónicos</span>
       </div>
-      <div class="context-box">
-        Una fábrica afirma que la resistencia media de un tipo de resistor es <strong>50 Ω</strong>. Un ingeniero sospecha que, tras un cambio en el proceso de soldado, la resistencia media ha <strong>aumentado</strong>. Se toma una muestra de <strong>n = 12</strong> resistores. Resultados: <strong>\(\bar{X}_{obs} = 50{,}13\)</strong> ; <strong>\(S_{n-1} = 3{,}5\) Ω</strong>. Distribución <strong>Normal</strong>.
-      </div>
+      <div class="context-box">Una fábrica afirma que la resistencia media de un tipo de resistor es de 50 Ω. Un ingeniero sospecha que, tras un cambio en el proceso de soldado, la resistencia media aumentó. Para verificarlo toma una muestra de 12 resistores, obteniendo una resistencia media de 50,13 Ω y un desvío estándar muestral de 3,5 Ω. Se sabe que la resistencia se distribuye normalmente.</div>
 
       <!-- 1a -->
       <div class="item-card">
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM a)</div>
-            <div class="item-question">Establecer un <em>criterio de decisión</em> con <em>\(\alpha = 0{,}05\)</em> para determinar si la resistencia media ha aumentado.</div>
+            <div class="item-question">Establezca un criterio de decisión, con un nivel de significación del 5%, para determinar si la resistencia media aumentó.</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -6543,7 +6710,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM b)</div>
-            <div class="item-question">Estime la probabilidad de que, de <em>10 resistores</em>: los primeros <em>5</em> tengan resistencia <em>menor a 51 Ω</em>, los siguientes <em>3</em> tengan resistencia <em>mayor a 51 Ω</em>, y los últimos <em>2</em> tengan resistencia <em>menor a 51 Ω</em>. <em>Justifique.</em></div>
+            <div class="item-question">Estime la probabilidad de que, al revisar 10 resistores, los primeros 5 tengan una resistencia menor a 51 Ω, los 3 siguientes una resistencia mayor a 51 Ω y los últimos 2 una resistencia menor a 51 Ω. Justifique.</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -6576,7 +6743,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM c)</div>
-            <div class="item-question"><em>IC 98%</em> para la <em>varianza</em> de las resistencias.</div>
+            <div class="item-question">Construya un intervalo de confianza del 98% para la varianza de las resistencias.</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -6614,18 +6781,15 @@ table.enun-table th{background:var(--paper-soft)}
     <div class="exercise-block">
       <div class="exercise-header">
         <span class="exercise-number">Ejercicio 2</span>
-        <span class="exercise-title">Ensayo de Hipótesis — Sistema de Facturación</span>
       </div>
-      <div class="context-box">
-        Se actualizó el sistema de facturación para monotributistas. Objetivo: tiempo medio de emisión <strong>menor a 85 segundos</strong>. Usuarios dicen que no se logró. Si no se cumplió → nuevos requerimientos. Distribución <strong>normal, \(\sigma = 9\) seg</strong>.
-      </div>
+      <div class="context-box">Se actualizó el sistema de facturación para monotributistas con el objetivo de que el tiempo medio de emisión de una factura sea menor a 85 segundos. Algunos usuarios afirman que el objetivo no se logró; si no se cumplió, deberán analizarse nuevos requerimientos. Se sabe que el tiempo de emisión tiene distribución normal con un desvío de 9 segundos.</div>
 
       <!-- 2a -->
       <div class="item-card">
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM a)</div>
-            <div class="item-question">Diseñar <em>criterio completo</em>: (1) prob. mínima <em>0,975</em> de reconocer cuando haya que analizar nuevos requerimientos; (2) prob. <em>0,00649</em> de decisión incorrecta si \(\mu = 77\).</div>
+            <div class="item-question">Diseñe el criterio de decisión completo sabiendo que se desea tener una probabilidad mínima de 0,975 de reconocer cuándo hay que analizar nuevos requerimientos, y que la probabilidad de tomar una decisión incorrecta si el tiempo medio fuera de 77 segundos es de 0,00649.</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -6669,7 +6833,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM b)</div>
-            <div class="item-question">Graficar la <em>curva OC</em> con 4 puntos. Interpretar el riesgo si \(\mu = 86{,}5\).</div>
+            <div class="item-question">Grafique la curva característica de operación con al menos 4 puntos. Interprete el riesgo que se corre si el tiempo medio fuera de 86,5 segundos.</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -6697,7 +6861,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM c)</div>
-            <div class="item-question">Si <em>p-valor = 0,05</em>, ¿qué decisión? Justifique con \(\bar{X}_{obs}\).</div>
+            <div class="item-question">Si el p-valor de la muestra resultó 0,05, ¿qué decisión se toma? Justifique indicando el valor de la media muestral observada.</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -6727,7 +6891,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM d)</div>
-            <div class="item-question">Estime entre qué valores está el <em>90%</em> de los tiempos de emisión. (Intervalo simétrico.)</div>
+            <div class="item-question">Estime entre qué valores se encuentra el 90% de los tiempos de emisión (intervalo simétrico respecto de la media).</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -6754,19 +6918,15 @@ table.enun-table th{background:var(--paper-soft)}
     <div class="exercise-block">
       <div class="exercise-header">
         <span class="exercise-number">Ejercicio 3</span>
-        <span class="exercise-title">Variable Bidimensional — Película "El nuevo despertar"</span>
       </div>
-      <div class="context-box">
-        \(X\) = recaudación primera semana, \(Y\) = inversión para el rodaje (en millones de USD).
-        \[f(x,y) = \tfrac{1}{4},\quad 0 &lt; x &lt; 2y,\; 0 &lt; y &lt; 2\]
-      </div>
+      <div class="context-box">Se estudia la relación entre la recaudación de la primera semana (X) y la inversión para el rodaje (Y) de la película «El nuevo despertar», ambas en millones de dólares. La función de densidad conjunta es:\[f(x,y)=\frac{1}{4},\qquad 0&lt;x&lt;2y,\;\; 0&lt;y&lt;2\]</div>
 
       <!-- 3a -->
       <div class="item-card">
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM a)</div>
-            <div class="item-question">\(P(X &gt; 2 \,|\, Y &lt; 1{,}5)\)</div>
+            <div class="item-question">Calcule la probabilidad de que la recaudación de la primera semana supere los 2 millones, si la inversión fue menor a 1,5 millones.</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -6805,7 +6965,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM b)</div>
-            <div class="item-question">Si se invirtió <em>medio millón</em>, ¿monto medio recaudado?</div>
+            <div class="item-question">Si se invirtió medio millón de dólares en el rodaje, ¿cuál es el monto medio recaudado en la primera semana?</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -6834,7 +6994,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM c)</div>
-            <div class="item-question">Comprobar matemáticamente si \(X\) e \(Y\) son <em>independientes</em>.</div>
+            <div class="item-question">Compruebe matemáticamente si X e Y son independientes.</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -6865,7 +7025,7 @@ table.enun-table th{background:var(--paper-soft)}
   <!-- ═══════════════════════════════════════
        PARCIAL VERANO 27/02/2026
   ═══════════════════════════════════════ -->
-  <div id="p2-sp-feb26" class="tab-content">
+  <div id="p2-sp-feb26" class="tab-content exam-sheet">
     <div class="exam-info">
       <span class="badge badge-gold">Segundo Parcial Verano</span>
       <span class="badge badge-purple">27 febrero 2026</span>
@@ -6876,18 +7036,15 @@ table.enun-table th{background:var(--paper-soft)}
     <div class="exercise-block">
       <div class="exercise-header">
         <span class="exercise-number">Ejercicio 1</span>
-        <span class="exercise-title">Ensayo de Hipótesis — Refrigeración "Las Seis Niñas"</span>
       </div>
-      <div class="context-box">
-        Sistema de refrigeración. El motor funciona correctamente si la temperatura media <strong>no supera 75 °C</strong>. Se registran <strong>n = 36</strong> mediciones. Si la media no cumple → reducir uso y programar inspección. Distribución <strong>normal, \(\sigma = 4\) °C</strong>.
-      </div>
+      <div class="context-box">El sistema de refrigeración de la fábrica «Las Seis Niñas» funciona correctamente si la temperatura media del motor no supera los 75 °C. Para controlarlo se registran 36 mediciones de temperatura; si se concluye que la temperatura media no cumple con ese límite, se reducirá el uso del motor y se programará una inspección. Se sabe que la temperatura tiene distribución normal con un desvío de 4 °C.</div>
 
       <!-- 1a -->
       <div class="item-card">
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM a) · 1.5 pts</div>
-            <div class="item-question">Diseñar criterio con probabilidad <em>0,9</em> de reducir el uso si \(\mu = 77\) °C.</div>
+            <div class="item-question">Diseñe el criterio de decisión de modo que exista una probabilidad de 0,9 de reducir el uso del motor si la temperatura media fuera de 77 °C.</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -6924,7 +7081,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM b) · 1.5 pts</div>
-            <div class="item-question">"Hay prob. 0,7 de <em>no reducir</em> el uso, si \(\mu\) fuera de ___". ¿Es un riesgo?</div>
+            <div class="item-question">Complete la frase y justifique si se trata de un riesgo: «Hay una probabilidad de 0,7 de no reducir el uso del motor, si la temperatura media fuera de ______ °C».</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -6950,7 +7107,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM c) · 1.5 pts</div>
-            <div class="item-question">Graficar <em>curva OC</em> con 4 puntos. Indicar dónde aplica error tipo I y II.</div>
+            <div class="item-question">Grafique la curva característica de operación con al menos 4 puntos e indique en qué regiones corresponde hablar de error de tipo I y de tipo II.</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -6978,7 +7135,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM d) · 1.5 pts</div>
-            <div class="item-question">Si <em>p-valor = 0,075</em>, ¿decisión? Estimación puntual e <em>IC 95%</em> para \(\mu\).</div>
+            <div class="item-question">Si el p-valor de la muestra resultó 0,075, ¿qué decisión se toma? Dé una estimación puntual y un intervalo de confianza del 95% para la temperatura media.</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -7012,18 +7169,15 @@ table.enun-table th{background:var(--paper-soft)}
     <div class="exercise-block">
       <div class="exercise-header">
         <span class="exercise-number">Ejercicio 2</span>
-        <span class="exercise-title">Uniformes Independientes — Ejes Cilíndricos</span>
       </div>
-      <div class="context-box">
-        Diámetro \(X \sim U(9{,}8;\;10{,}2)\) mm. Longitud \(Y \sim U(195;\;205)\) mm. Variables <strong>independientes</strong>. Nota: \(d = 2r\).
-      </div>
+      <div class="context-box">Una empresa fabrica ejes cilíndricos. El diámetro X (en mm) se distribuye uniformemente entre 9,8 y 10,2 mm, y la longitud Y (en mm) uniformemente entre 195 y 205 mm. Ambas medidas son independientes. (Recuerde que d = 2r.)</div>
 
       <!-- 2a -->
       <div class="item-card">
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM a) · 1.5 pts</div>
-            <div class="item-question">Tolerancia: \(9{,}9 \le X \le 10{,}1\) y \(198 \le Y \le 202\). Si 5 piezas, \(P(\text{al menos 3 cumplan})\).</div>
+            <div class="item-question">Un eje cumple con la tolerancia si su diámetro está entre 9,9 y 10,1 mm y su longitud entre 198 y 202 mm. Si se seleccionan 5 ejes, ¿cuál es la probabilidad de que al menos 3 cumplan con la tolerancia?</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -7053,7 +7207,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM b) · 1 pt</div>
-            <div class="item-question">\(E[V]\) con \(V = \pi r^2 h = \frac{\pi}{4}X^2 Y\)</div>
+            <div class="item-question">Calcule el volumen esperado de un eje.</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -7081,7 +7235,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM c) · 1.5 pts</div>
-            <div class="item-question">\(P(\text{Perímetro base} &gt; 31{,}5)\) con \(P = 2\pi r = \pi X\)</div>
+            <div class="item-question">¿Cuál es la probabilidad de que el perímetro de la base de un eje supere los 31,5 mm?</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -7104,7 +7258,7 @@ table.enun-table th{background:var(--paper-soft)}
   <!-- ═══════════════════════════════════════
        RECUP VERANO 04/03/2026
   ═══════════════════════════════════════ -->
-  <div id="p2-sp-recup26" class="tab-content">
+  <div id="p2-sp-recup26" class="tab-content exam-sheet">
     <div class="exam-info">
       <span class="badge badge-gold">Recuperatorio 2do Parcial</span>
       <span class="badge badge-purple">04 marzo 2026</span>
@@ -7114,18 +7268,15 @@ table.enun-table th{background:var(--paper-soft)}
     <div class="exercise-block">
       <div class="exercise-header">
         <span class="exercise-number">Ejercicio 1</span>
-        <span class="exercise-title">Ensayo de Hipótesis — Cines "Atlantis"</span>
       </div>
-      <div class="context-box">
-        Equipo de desarrollo asegura: <strong>al menos 70%</strong> de usuarios conforme con la nueva app. Si más del <strong>64,9%</strong> en muestra → aprobar actualización. Caso contrario → postergar.
-      </div>
+      <div class="context-box">El equipo de desarrollo de la cadena de cines «Atlantis» asegura que al menos el 70% de los usuarios está conforme con la nueva versión de la aplicación. Para decidir se encuestará a una muestra de usuarios: si más del 64,9% de la muestra está conforme, se aprobará la actualización; en caso contrario, se postergará.</div>
 
       <!-- 1a -->
       <div class="item-card">
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM a) · 1.5 pts</div>
-            <div class="item-question"><em>Regla completa</em>: prob. <em>0,06</em> de aprobar si solo el <em>60%</em> estuviera conforme.</div>
+            <div class="item-question">Complete la regla de decisión sabiendo que existe una probabilidad de 0,06 de aprobar la actualización si solo el 60% de los usuarios estuviera conforme.</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -7163,7 +7314,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM b) · 1 pt</div>
-            <div class="item-question">Hallar \(P(\text{reconocer})\) cuando \(p = 0{,}68\). Interpretar riesgo.</div>
+            <div class="item-question">Halle la probabilidad de reconocer que el equipo de desarrollo se equivoca si la proporción real de usuarios conformes fuera 0,68. Interprete el riesgo.</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -7188,7 +7339,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM c) · 1.5 pts</div>
-            <div class="item-question">Curva OC con 4 puntos. Error tipo I y II.</div>
+            <div class="item-question">Grafique la curva característica de operación con al menos 4 puntos e indique dónde corresponde hablar de error de tipo I y de tipo II.</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -7216,7 +7367,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM d) · 1.5 pts</div>
-            <div class="item-question">Si p-valor = 0,05, ¿decisión? Estimar \(P(N \ge 11)\) para hallar 6 conformes.</div>
+            <div class="item-question">Si el p-valor de la muestra resultó 0,05, ¿qué decisión se toma? Con la proporción observada, estime la probabilidad de tener que encuestar al menos 11 usuarios para hallar 6 conformes.</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -7253,20 +7404,15 @@ table.enun-table th{background:var(--paper-soft)}
     <div class="exercise-block">
       <div class="exercise-header">
         <span class="exercise-number">Ejercicio 2</span>
-        <span class="exercise-title">Variable Bidimensional — Contenedores Metálicos</span>
       </div>
-      <div class="context-box">
-        Base \(X \sim U[9,\;10]\) (cm). Dado \(X=x\), la altura \(Y|X=x \sim U(0,\;2x)\) (cm).
-        <p style="margin-top:.3rem;">\(f(y|x) = \frac{1}{2x}\) para \(0 \le y \le 2x\). \(f_X(x) = 1\) para \(9 \le x \le 10\).</p>
-        <p>\(f(x,y) = \frac{1}{2x}\) para \(9 \le x \le 10,\; 0 \le y \le 2x\).</p>
-      </div>
+      <div class="context-box">La base X (en cm) de ciertos contenedores metálicos se distribuye uniformemente entre 9 y 10 cm. Dada una base x, la altura Y (en cm) del contenedor se distribuye uniformemente entre 0 y 2x.</div>
 
       <!-- 2a -->
       <div class="item-card">
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM a) · 1.5 pts</div>
-            <div class="item-question">Curva de regresión de \(Y/x\). Graficarla.</div>
+            <div class="item-question">Halle la curva de regresión de Y dado X = x y grafíquela.</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -7288,7 +7434,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM b) · 1.5 pts</div>
-            <div class="item-question">Base = 10 cm. \(P(\text{revisar} &gt; 5\) contenedores para el primero con altura \(&gt; 15\) cm).</div>
+            <div class="item-question">Si la base de los contenedores es de 10 cm, ¿cuál es la probabilidad de tener que revisar más de 5 contenedores hasta encontrar el primero con una altura mayor a 15 cm?</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -7316,7 +7462,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM c) · 1.5 pts</div>
-            <div class="item-question">\(P(18{,}5 &lt; Y &lt; 19 \,|\, X &gt; 9{,}4)\)</div>
+            <div class="item-question">Calcule la probabilidad de que la altura esté entre 18,5 y 19 cm, si la base es mayor a 9,4 cm.</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -7358,7 +7504,7 @@ table.enun-table th{background:var(--paper-soft)}
   <!-- ═══════════════════════════════════════
        RECUP 07/07/2025
   ═══════════════════════════════════════ -->
-  <div id="p2-sp-jul25" class="tab-content">
+  <div id="p2-sp-jul25" class="tab-content exam-sheet">
     <div class="exam-info">
       <span class="badge badge-gold">Recuperatorio 2do Parcial</span>
       <span class="badge badge-purple">07 julio 2025</span>
@@ -7368,18 +7514,15 @@ table.enun-table th{background:var(--paper-soft)}
     <div class="exercise-block">
       <div class="exercise-header">
         <span class="exercise-number">Ejercicio 1</span>
-        <span class="exercise-title">Ensayo de Hipótesis — Proporción de Fumadores</span>
       </div>
-      <div class="context-box">
-        Proporción histórica de fumadores: <strong>como mucho 0,3</strong>. Se sospecha que aumentó → campaña de concientización. Muestra: <strong>n = 1000</strong>, <strong>320 fuman</strong>.
-      </div>
+      <div class="context-box">Históricamente, la proporción de fumadores es como mucho de 0,3. Se sospecha que dicha proporción aumentó, en cuyo caso se realizará una campaña de concientización. Se encuestó a 1000 personas, de las cuales 320 fuman.</div>
 
       <!-- 1a -->
       <div class="item-card">
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM a)</div>
-            <div class="item-question">Diseñar criterio de decisión. Riesgo de <em>no realizar campaña = 0,1</em> cuando \(p = 0{,}35\).</div>
+            <div class="item-question">Diseñe el criterio de decisión sabiendo que el riesgo de no realizar la campaña cuando la proporción real de fumadores es 0,35 es de 0,1.</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -7417,7 +7560,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM b)</div>
-            <div class="item-question">\(P(\text{equivocarse})\) si \(p = 0{,}29\). ¿Qué tipo de error? Curva OC con 4 puntos.</div>
+            <div class="item-question">¿Cuál es la probabilidad de equivocarse si la proporción real fuera 0,29? ¿Qué tipo de error se comete? Grafique la curva característica de operación con al menos 4 puntos.</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -7448,7 +7591,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM c)</div>
-            <div class="item-question">Prob. estimada de encuestar <em>más de 8 personas</em> hasta la primera fumadora.</div>
+            <div class="item-question">Estime la probabilidad de tener que encuestar a más de 8 personas hasta encontrar la primera que fume.</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -7476,7 +7619,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM d)</div>
-            <div class="item-question"><em>IC 96%</em> para la proporción de fumadores.</div>
+            <div class="item-question">Construya un intervalo de confianza del 96% para la proporción de fumadores.</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -7500,19 +7643,15 @@ table.enun-table th{background:var(--paper-soft)}
     <div class="exercise-block">
       <div class="exercise-header">
         <span class="exercise-number">Ejercicio 2</span>
-        <span class="exercise-title">Ensayo de Hipótesis — Tiempos de Viaje en Buenos Aires</span>
       </div>
-      <div class="context-box">
-        Tiempo de viaje (min), distribución normal. <strong>n = 61</strong>. Datos: \(S/\sqrt{n} = 0{,}51978\) ; \(\sum x_i^2 = 140328{,}4758\).
-        <p style="margin-top:.3rem;">Derivados: \(S = 0{,}51978\times\sqrt{61} \approx 4{,}06\) → \(S^2 \approx 16{,}48\) → \(\bar{X} \approx 47{,}79\) min.</p>
-      </div>
+      <div class="context-box">Se registró el tiempo de viaje (en minutos) de una muestra de 61 personas en la Ciudad de Buenos Aires. Se sabe que el tiempo de viaje tiene distribución normal. De la muestra se obtuvo: \(S/\sqrt{n} = 0{,}51978\) y \(\sum x_i^2 = 140328{,}4758\).</div>
 
       <!-- 2a -->
       <div class="item-card">
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM a)</div>
-            <div class="item-question"><em>IC NC 98%</em> del tiempo medio.</div>
+            <div class="item-question">Construya un intervalo de confianza del 98% para el tiempo medio de viaje.</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -7533,7 +7672,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM b)</div>
-            <div class="item-question">¿\(\mu &lt; 49{,}2\)? Estadístico y p-valor, \(\alpha = 0{,}05\).</div>
+            <div class="item-question">¿Puede afirmarse que el tiempo medio de viaje es menor a 49,2 minutos? Calcule el estadístico de prueba y el p-valor, con α = 0,05.</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -7568,7 +7707,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM c)</div>
-            <div class="item-question">De 12 mediciones al azar, \(P(\text{más de la mitad} &gt; 50)\).</div>
+            <div class="item-question">Si se toman 12 mediciones al azar, ¿cuál es la probabilidad de que más de la mitad supere los 50 minutos?</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -7599,19 +7738,15 @@ table.enun-table th{background:var(--paper-soft)}
     <div class="exercise-block">
       <div class="exercise-header">
         <span class="exercise-number">Ejercicio 3</span>
-        <span class="exercise-title">Variable Bidimensional — Reparación de Computadoras</span>
       </div>
-      <div class="context-box">
-        \(X\) = tiempo de viaje del técnico (horas), \(X \sim U(0{,}5;\;2)\). \(Y\) = tiempo de reparación, \(Y|X=x \sim \text{Exp}(\lambda = x)\).
-        <p style="margin-top:.3rem;">\(f_X(x) = \frac{2}{3}\) para \(0{,}5 \le x \le 2\). \(f(y|x) = x\,e^{-xy}\) para \(y \ge 0\).</p>
-      </div>
+      <div class="context-box">Cuando se solicita la reparación de una computadora, el tiempo de viaje del técnico X (en horas) se distribuye uniformemente entre 0,5 y 2 horas. Dado que el viaje duró x horas, el tiempo de reparación Y (en horas) tiene distribución exponencial con parámetro λ = x.</div>
 
       <!-- 3a -->
       <div class="item-card">
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM a)</div>
-            <div class="item-question">\(P(Y &gt; 1)\) — esperar más de 1 hora por la reparación.</div>
+            <div class="item-question">¿Cuál es la probabilidad de que la reparación demore más de 1 hora?</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -7634,7 +7769,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM b)</div>
-            <div class="item-question">Curva de regresión \(E[Y|X=x]\). Interpretar \(E[Y|X=1{,}5]\).</div>
+            <div class="item-question">Halle la curva de regresión de Y dado X = x. Interprete el valor de E(Y | X = 1,5).</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -7656,7 +7791,7 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="item-header">
           <div>
             <div class="item-label">ÍTEM c)</div>
-            <div class="item-question">\(P(X &gt; Y)\) — técnico demore más en llegar que en reparar.</div>
+            <div class="item-question">¿Cuál es la probabilidad de que el técnico demore más en llegar que en realizar la reparación?</div>
           </div>
           <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
         </div>
@@ -7698,11 +7833,18 @@ table.enun-table th{background:var(--paper-soft)}
         <div class="mk-panel">
           <div class="mk-stats" id="mk-stats"></div>
           <div class="mk-tools">
+            <button class="mk-act" id="mk-random" title="Elegir uno pendiente al azar para practicar">🎲 Sortear uno</button>
+            <button class="mk-act ghost" id="mk-clear">Borrar marcas</button>
+          </div>
+          <div class="mk-progress" title="Marcados realizados"><i id="mk-prog"></i></div>
+          <div class="mk-filters">
             <button class="filtro on" data-mkf="all">Todos</button>
             <button class="filtro" data-mkf="pp">1er parcial</button>
             <button class="filtro" data-mkf="sp">2do parcial</button>
-            <button class="mk-act" id="mk-random" title="Elegir uno al azar para practicar">🎲 Sortear uno</button>
-            <button class="mk-act ghost" id="mk-clear">Borrar marcas</button>
+            <span class="sep"></span>
+            <button class="filtro on" data-mke="all">Cualquier estado</button>
+            <button class="filtro" data-mke="pend">○ Pendientes</button>
+            <button class="filtro" data-mke="done">✓ Realizados</button>
           </div>
         </div>
         <div id="mk-list"></div>
@@ -7790,8 +7932,28 @@ function refreshProgress(){
 }
 refreshProgress();
 
+
+/* confirmación en dos toques (sin confirm(), que algunos visores bloquean) */
+function armConfirm(btn, label, onOk){
+  if (btn.dataset.armed === '1'){
+    clearTimeout(btn._armT); btn.dataset.armed = ''; btn.classList.remove('armed');
+    if (btn._orig !== undefined) btn.innerHTML = btn._orig;
+    onOk(); return;
+  }
+  btn._orig = btn.innerHTML; btn.dataset.armed = '1'; btn.classList.add('armed');
+  btn.innerHTML = label;
+  btn._armT = setTimeout(() => { btn.dataset.armed = ''; btn.classList.remove('armed'); btn.innerHTML = btn._orig; }, 3000);
+}
 /* ---- estado "hecho": sincroniza original y copias en Marcados ---- */
-const syncDone = () => document.querySelectorAll('.ej[data-key]').forEach(ej => ej.classList.toggle('done', doneSet.has(ej.dataset.key)));
+const syncDone = () => {
+  document.querySelectorAll('.ej[data-key]').forEach(ej => ej.classList.toggle('done', doneSet.has(ej.dataset.key)));
+  document.querySelectorAll('.item-card[data-mk]').forEach(c => c.classList.toggle('done', doneSet.has(c.dataset.mk)));
+  document.querySelectorAll('.mk-entry').forEach(en => {
+    const on = doneSet.has(en.dataset.for);
+    en.classList.toggle('is-done', on);
+    const b = en.querySelector('.mk-done-btn'); if (b) b.setAttribute('aria-pressed', on);
+  });
+};
 syncDone();
 
 /* ============================================================
@@ -7903,26 +8065,32 @@ function toggleMark(k, fromEl){
 }
 
 /* ---- hoja de marcados ---- */
-let mkFilter = 'all';
+let mkFilter = 'all', mkEstado = 'all';
+const CHECK_SVG = '<svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.5 3.5L13 5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+function renderStats(){
+  const marked = MARKABLES.filter(m => markSet.has(m.key));
+  const nEj = marked.filter(m => m.kind === 'ej').length;
+  const hechos = marked.filter(m => doneSet.has(m.key)).length;
+  document.getElementById('mk-stats').innerHTML =
+    '<div class="mk-stat hot"><b>' + marked.length + '</b><span>marcados</span></div>' +
+    '<div class="mk-stat"><b>' + nEj + '</b><span>de la guía</span></div>' +
+    '<div class="mk-stat"><b>' + (marked.length - nEj) + '</b><span>de parciales</span></div>' +
+    '<div class="mk-stat"><b style="color:var(--pen-green)">' + hechos + '/' + marked.length + '</b><span>realizados</span></div>';
+  document.getElementById('mk-prog').style.width = marked.length ? (100 * hechos / marked.length) + '%' : '0%';
+  document.getElementById('mk-random').disabled = !marked.length;
+  document.getElementById('mk-clear').disabled = !marked.length;
+}
 const unitInfo = id => UNIDADES.find(u => u.id === id) || {};
 function renderMarcados(){
   const list = document.getElementById('mk-list');
   const marked = MARKABLES.filter(m => markSet.has(m.key));
-  const nEj = marked.filter(m => m.kind === 'ej');
-  const hechos = nEj.filter(m => doneSet.has(m.key)).length;
-  document.getElementById('mk-stats').innerHTML =
-    '<div class="mk-stat hot"><b>' + marked.length + '</b><span>marcados</span></div>' +
-    '<div class="mk-stat"><b>' + nEj.length + '</b><span>de la guía</span></div>' +
-    '<div class="mk-stat"><b>' + (marked.length - nEj.length) + '</b><span>de parciales</span></div>' +
-    '<div class="mk-stat"><b>' + hechos + '/' + nEj.length + '</b><span>resueltos</span></div>';
-  document.getElementById('mk-random').disabled = !marked.length;
-  document.getElementById('mk-clear').disabled = !marked.length;
-
-  const shown = marked.filter(m => mkFilter === 'all' || unitInfo(m.unit).parcial === mkFilter);
+  renderStats();
+  const shown = marked.filter(m => (mkFilter === 'all' || unitInfo(m.unit).parcial === mkFilter)
+    && (mkEstado === 'all' || (mkEstado === 'done') === doneSet.has(m.key)));
   list.innerHTML = '';
   if (!shown.length){
     list.innerHTML = '<div class="blank mk-empty"><span class="stamp">' +
-      (marked.length ? 'Nada marcado en este parcial' : 'Todavía no marcaste nada') +
+      (!marked.length ? 'Todavía no marcaste nada' : mkEstado === 'pend' ? '¡Todo realizado!' : mkEstado === 'done' ? 'Ninguno realizado todavía' : 'Nada marcado en este parcial') +
       '</span><p>Mientras recorrés las unidades o los parciales resueltos, tocá <span class="mk-btn demo">' + MK_ICON +
       '<span>Marcar</span></span> en cualquier ejercicio que te parezca bueno para practicar. Se subraya con resaltador, le aparece una pestañita amarilla y queda juntado acá.</p></div>';
     return;
@@ -7948,7 +8116,15 @@ function renderMarcados(){
     const goBtn = document.createElement('button'); goBtn.type = 'button'; goBtn.textContent = '↗ ir al original';
     goBtn.addEventListener('click', () => jumpTo(m));
     origin.appendChild(goBtn);
+    const doneBtn = document.createElement('button');
+    doneBtn.type = 'button'; doneBtn.className = 'mk-done-btn';
+    doneBtn.innerHTML = '<span class="box">' + CHECK_SVG + '</span><span class="lbl"></span>';
+    origin.appendChild(doneBtn);
     entry.appendChild(origin);
+    const wrap = document.createElement('div');
+    wrap.className = 'mk-card-wrap';
+    wrap.innerHTML = '<span class="mk-stamp" aria-hidden="true">RESUELTO</span>';
+    entry.appendChild(wrap);
 
     if (m.kind === 'ej'){
       const c = m.el.cloneNode(true);
@@ -7956,10 +8132,10 @@ function renderMarcados(){
       c.dataset.clone = '1';
       const t = c.querySelector('.sol-toggle span'); if (t) t.textContent = 'Ver resolución';
       c.querySelectorAll('.corrector.open').forEach(x => x.classList.remove('open'));
-      entry.appendChild(c);
+      wrap.appendChild(c);
     } else {
       const card = document.createElement('div');
-      card.className = 'mk-examcard clip';
+      card.className = 'mk-examcard clip exam-sheet';
       if (m.block){
         const num = (m.block.querySelector('.exercise-number')||{}).textContent || '';
         const tit = (m.block.querySelector('.exercise-title')||{}).textContent || '';
@@ -7973,7 +8149,7 @@ function renderMarcados(){
       const p = ic.querySelector('.solution-panel'); if (p) p.classList.remove('open');
       const tb = ic.querySelector('.toggle-btn'); if (tb){ tb.classList.remove('open'); tb.textContent = '▶ Solución'; }
       card.appendChild(ic);
-      entry.appendChild(card);
+      wrap.appendChild(card);
     }
     list.appendChild(entry);
   });
@@ -7995,12 +8171,18 @@ function jumpTo(m){
   });
 }
 
+document.querySelectorAll('[data-mke]').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('[data-mke]').forEach(x => x.classList.toggle('on', x === b));
+  mkEstado = b.dataset.mke; renderMarcados();
+}));
 document.querySelectorAll('[data-mkf]').forEach(b => b.addEventListener('click', () => {
   document.querySelectorAll('[data-mkf]').forEach(x => x.classList.toggle('on', x === b));
   mkFilter = b.dataset.mkf; renderMarcados();
 }));
 document.getElementById('mk-random').addEventListener('click', () => {
-  const entries = [...document.querySelectorAll('#mk-list .mk-entry')];
+  const all = [...document.querySelectorAll('#mk-list .mk-entry')];
+  const pend = all.filter(x => !x.classList.contains('is-done'));
+  const entries = pend.length ? pend : all;
   if (!entries.length) return;
   const e = entries[Math.floor(Math.random() * entries.length)];
   e.querySelectorAll('.ej.open').forEach(x => { x.classList.remove('open'); const s = x.querySelector('.sol-toggle span'); if (s) s.textContent = 'Ver resolución'; });
@@ -8009,10 +8191,9 @@ document.getElementById('mk-random').addEventListener('click', () => {
   e.scrollIntoView({ behavior:'smooth', block:'center' });
   const tgt = e.querySelector('.clip'); if (tgt){ tgt.classList.remove('mk-pulse'); void tgt.offsetWidth; tgt.classList.add('mk-pulse'); }
 });
-document.getElementById('mk-clear').addEventListener('click', () => {
+document.getElementById('mk-clear').addEventListener('click', e => {
   if (!markSet.size) return;
-  if (!confirm('¿Borrar las ' + markSet.size + ' marcas? No se puede deshacer.')) return;
-  markSet.clear(); saveMarks(); syncMarks(); renderMarcados();
+  armConfirm(e.currentTarget, '¿Seguro? Tocá de nuevo', () => { markSet.clear(); saveMarks(); syncMarks(); renderMarcados(); showToast('Marcas borradas', false); });
 });
 
 /* ---- clicks delegados: funcionan igual en el original y en las copias ---- */
@@ -8024,17 +8205,23 @@ document.addEventListener('click', e => {
     if (host) toggleMark(host.dataset.mk, mk);
     return;
   }
+  const db = e.target.closest('.mk-done-btn');
+  if (db){
+    const entry = db.closest('.mk-entry'), k = entry.dataset.for;
+    const adding = !doneSet.has(k);
+    adding ? doneSet.add(k) : doneSet.delete(k);
+    saveDone(); syncDone(); refreshProgress(); renderStats();
+    if (adding){ showToast('✓ Marcado como realizado', false); }
+    if (mkEstado !== 'all'){ setTimeout(() => { entry.classList.add('leaving'); setTimeout(renderMarcados, 240); }, 450); }
+    return;
+  }
   const chk = e.target.closest('.ej-check');
   if (chk){
     e.stopPropagation();
     const k = chk.closest('.ej').dataset.key;
     doneSet.has(k) ? doneSet.delete(k) : doneSet.add(k);
     saveDone(); syncDone(); refreshProgress();
-    if (document.getElementById('hoja-mk').classList.contains('visible')) {
-      const st = document.querySelectorAll('#mk-stats .mk-stat b')[3];
-      const ejs = MARKABLES.filter(m => m.kind === 'ej' && markSet.has(m.key));
-      if (st) st.textContent = ejs.filter(m => doneSet.has(m.key)).length + '/' + ejs.length;
-    }
+    if (document.getElementById('hoja-mk').classList.contains('visible')) renderStats();
     return;
   }
   const t = e.target.closest('.sol-toggle');
@@ -8081,6 +8268,177 @@ function toggle(btn){
   btn.textContent = open ? '▶ Solución' : '▼ Ocultar';
   if (!open && window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([panel]);
 }
+
+/* ============================================================
+   RELOJ DE EXAMEN — temporizador / cronómetro compartido
+   ============================================================ */
+(() => {
+  const TKEY = 'cuaderno-reloj';
+  let saved = {};
+  try { saved = JSON.parse(store.get(TKEY) || '{}'); } catch(e){}
+  const T = Object.assign({ mode:'timer', dur:90*60, acc:0, start:null, laps:[], sound:true, warn:true, lock:true, warned:false, ended:false }, saved);
+  const save = () => store.set(TKEY, JSON.stringify(T));
+  const timers = [...document.querySelectorAll('[data-timer]')];
+  const baseTitle = document.title;
+  const elapsed = () => T.acc + (T.start ? (Date.now() - T.start) / 1000 : 0);
+  const remaining = () => Math.max(0, T.dur - elapsed());
+  const fmt = (s, long) => {
+    s = Math.max(0, Math.round(s));
+    const h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), x = s % 60;
+    const mm = String(m).padStart(2,'0'), ss = String(x).padStart(2,'0');
+    return (h || long) ? h + ':' + mm + ':' + ss : mm + ':' + ss;
+  };
+
+  /* ---- sonido (Web Audio, sin archivos) ---- */
+  let actx = null;
+  const ctx = () => {
+    if (!actx){ const C = window.AudioContext || window.webkitAudioContext; if (!C) return null; actx = new C(); }
+    if (actx.state === 'suspended') actx.resume();
+    return actx;
+  };
+  const tone = (c, f, t0, dur, vol, type) => {
+    const o = c.createOscillator(), g = c.createGain();
+    o.type = type || 'sine'; o.frequency.value = f;
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.exponentialRampToValueAtTime(vol, t0 + 0.015);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    o.connect(g); g.connect(c.destination); o.start(t0); o.stop(t0 + dur + 0.05);
+  };
+  const bell = (c, f, t) => { tone(c, f, t, 1.6, .22); tone(c, f * 2.01, t, .9, .07); tone(c, f * 3.02, t, .5, .035, 'triangle'); };
+  const ring = (reps) => {
+    const c = ctx(); if (!c) return;
+    const t = c.currentTime + .05;
+    for (let r = 0; r < (reps || 3); r++){ const b = t + r * 1.6; bell(c, 880, b); bell(c, 659.25, b + .3); bell(c, 1046.5, b + .6); }
+  };
+  const ping = () => { const c = ctx(); if (!c) return; const t = c.currentTime + .05; bell(c, 784, t); bell(c, 1046.5, t + .22); };
+
+  /* ---- acciones ---- */
+  let iv = null;
+  const run = () => { if (!iv) iv = setInterval(tick, 250); };
+  const halt = () => { clearInterval(iv); iv = null; };
+  function reset(){ T.acc = 0; T.start = null; T.laps = []; T.warned = false; T.ended = false; halt(); save(); render(); }
+  function toggleRun(){
+    if (T.ended){ reset(); return; }
+    ctx();
+    if (T.start){ T.acc = elapsed(); T.start = null; halt(); }
+    else {
+      if (T.mode === 'timer' && T.dur <= 0){ showToast('Elegí una duración en ⚙', false); openCfg(true); return; }
+      T.start = Date.now(); run();
+    }
+    save(); render();
+  }
+  function finish(silent){
+    T.ended = true; T.acc = T.dur; T.start = null; halt(); save(); render();
+    if (!silent){
+      if (T.sound) ring(3);
+      if (navigator.vibrate) navigator.vibrate([400, 180, 400, 180, 600]);
+      showToast('⏰ ¡Tiempo! Terminó el examen — ya podés corregir', false);
+    }
+  }
+  function tick(){
+    if (T.mode === 'timer' && T.start){
+      const r = remaining();
+      if (T.warn && !T.warned && T.dur > 600 && r <= 600 && r > 0){
+        T.warned = true; save();
+        if (T.sound) ping();
+        showToast('Quedan 10 minutos', false);
+      }
+      if (r <= 0){ finish(false); return; }
+    }
+    render();
+  }
+  function openCfg(force){
+    const open = force === undefined ? !timers[0].classList.contains('cfg-open') : force;
+    timers.forEach(t => { t.classList.toggle('cfg-open', open); t.querySelector('[data-et="cfg"]').setAttribute('aria-expanded', open); });
+  }
+
+  /* ---- dibujar todas las copias ---- */
+  function render(){
+    const el = elapsed(), running = !!T.start;
+    const isT = T.mode === 'timer';
+    const shown = isT ? remaining() : el;
+    const long = isT ? T.dur >= 3600 : el >= 3600;
+    const idle = el === 0 && !running;
+    let state = idle ? 'listo para empezar' : running ? (isT ? 'examen en curso' : 'corriendo') : 'en pausa';
+    if (T.ended) state = '¡tiempo!';
+    const main = T.ended ? '↺ Otra vez' : running ? '❚❚ Pausar' : idle ? '▶ Empezar' : '▶ Seguir';
+    const frac = isT ? (T.dur ? remaining() / T.dur : 0) : (el % 3600) / 3600;
+    const r = remaining();
+    timers.forEach(t => {
+      t.dataset.mode = T.mode;
+      t.querySelectorAll('[data-et-mode]').forEach(b => b.classList.toggle('on', b.dataset.etMode === T.mode));
+      t.querySelector('.et-time').textContent = T.ended ? '0:00' : fmt(shown, long);
+      t.querySelector('.et-state').textContent = state;
+      t.querySelector('[data-et="toggle"]').textContent = main;
+      t.querySelectorAll('[data-et-mode]').forEach(b => { if (b.dataset.armed !== '1' && b._orig !== undefined) b.innerHTML = b._orig; });
+      t.querySelector('[data-et="lap"]').hidden = isT;
+      t.querySelector('.et-bar i').style.transform = 'scaleX(' + Math.max(0, Math.min(1, frac)) + ')';
+      t.classList.toggle('warn', isT && !idle && !T.ended && r <= 600 && r > 60);
+      t.classList.toggle('crit', isT && !idle && !T.ended && r <= 60);
+      t.classList.toggle('ended', T.ended);
+      t.querySelector('.et-dur').style.display = isT ? '' : 'none';
+      t.querySelectorAll('.et-chip').forEach(c => c.classList.toggle('on', +c.dataset.min * 60 === T.dur));
+      const h = t.querySelector('[data-et-h]'), m = t.querySelector('[data-et-m]');
+      if (document.activeElement !== h) h.value = Math.floor(T.dur / 3600);
+      if (document.activeElement !== m) m.value = Math.floor(T.dur % 3600 / 60);
+      t.querySelectorAll('[data-et-opt]').forEach(c => c.checked = !!T[c.dataset.etOpt]);
+      const laps = t.querySelector('.et-laps');
+      t.classList.toggle('has-laps', !isT && T.laps.length > 0);
+      laps.innerHTML = T.laps.map((v, i) => '<span class="et-lap"><b>V' + (i + 1) + '</b>' + fmt(v - (T.laps[i - 1] || 0)) + '</span>').join('');
+    });
+    document.body.classList.toggle('exam-lock', running && T.lock);
+    document.title = (running || (!idle && !T.ended)) ? (isT ? '⏳ ' : '⏱ ') + fmt(shown, long) + ' · ' + baseTitle : baseTitle;
+  }
+
+  /* ---- eventos ---- */
+  timers.forEach(t => {
+    t.addEventListener('click', e => {
+      const b = e.target.closest('button'); if (!b) return;
+      if (b.dataset.etMode){
+        if (b.dataset.etMode === T.mode) return;
+        const change = () => { T.mode = b.dataset.etMode; reset(); };
+        if (elapsed() > 0 && !T.ended){ armConfirm(b, '¿Reiniciar y cambiar?', change); showToast('Tocá de nuevo para cambiar de modo (se reinicia el reloj)', false); return; }
+        change(); return;
+      }
+      if (b.dataset.min){ T.dur = +b.dataset.min * 60; T.warned = false; if (T.ended) T.ended = false; save(); render(); return; }
+      const act = b.dataset.et;
+      if (act === 'toggle') toggleRun();
+      else if (act === 'reset'){
+        if (elapsed() > 0 && !T.ended){ armConfirm(b, '¿Reiniciar?', () => { reset(); showToast('Reloj reiniciado', false); }); return; }
+        reset();
+      }
+      else if (act === 'lap'){ if (!T.start) return; T.laps.push(elapsed()); save(); render(); }
+      else if (act === 'cfg') openCfg();
+      else if (act === 'test') ring(1);
+    });
+    t.addEventListener('change', e => {
+      const c = e.target;
+      if (c.dataset.etOpt){ T[c.dataset.etOpt] = c.checked; save(); render(); return; }
+      if (c.matches('[data-et-h],[data-et-m]')){
+        const h = Math.max(0, Math.min(9, parseInt(t.querySelector('[data-et-h]').value) || 0));
+        const m = Math.max(0, Math.min(59, parseInt(t.querySelector('[data-et-m]').value) || 0));
+        T.dur = h * 3600 + m * 60; T.warned = false; if (T.ended) T.ended = false; save(); render();
+      }
+    });
+  });
+
+  /* bloquear soluciones del examen mientras corre */
+  const origToggle = toggle;
+  toggle = function(btn){
+    if (document.body.classList.contains('exam-lock') && btn.closest('.tab-content')){
+      showToast('🔒 Soluciones bloqueadas mientras corre el reloj', false);
+      return;
+    }
+    origToggle(btn);
+  };
+
+  /* restaurar al recargar */
+  if (T.start){
+    if (T.mode === 'timer' && remaining() <= 0) finish(true);
+    else run();
+  }
+  render();
+})();
 </script>
 </body>
 </html>
