@@ -931,6 +931,15 @@ details.eg-new summary .eg-t::before{content:'';display:inline-block;width:8px;h
 details.eg-old summary .eg-t::before{content:'';display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--pen-amber);margin-right:8px;vertical-align:middle}
 .eg-body{display:flex;flex-wrap:wrap;gap:10px 8px;padding:2px 14px 14px;border-top:1px dashed var(--grid-strong);padding-top:12px}
 .eg-empty{font-size:.86rem;color:var(--ink-faint);font-style:italic}
+
+/* Mis marcados: el círculo de "hecho" de la unidad no se muestra en las copias; ahí manda "Realizado" */
+#mk-list .ej-check{display:none}
+/* grupo "Este cuatrimestre" */
+details.eg-now{grid-column:1/-1;border-color:var(--pen-green-line);background:var(--pen-green-dim)}
+details.eg-now[open]{border-color:var(--pen-green)}
+details.eg-now summary .eg-t::before{content:'';display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--pen-green);margin-right:8px;vertical-align:middle;box-shadow:0 0 0 3px rgba(44,110,74,.22)}
+details.eg-now .eg-s{color:var(--pen-green)}
+.badge-now{color:#fff;background:var(--pen-green);border-color:var(--pen-green)}
 </style>
 </head>
 <body>
@@ -5329,6 +5338,7 @@ details.eg-old summary .eg-t::before{content:'';display:inline-block;width:8px;h
           <div class="et-laps"></div>
         </div>
         <div class="exam-tabs"><div class="tabs exam-groups" id="tabs-p1">
+    
     <details class="eg eg-new" open><summary><span class="eg-t">Parciales nuevos</span><span class="eg-s">2025 – 2026 · 4 tomas</span><svg class="chev" width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><div class="eg-body">
       <button class="tab-btn" onclick="switchTab('p1','parcial-m',this)">Parcial · 13/05/2026</button>
       <button class="tab-btn" onclick="switchTab('p1','recup-v',this)">Recup · 04/03/2026</button>
@@ -6655,7 +6665,7 @@ details.eg-old summary .eg-t::before{content:'';display:inline-block;width:8px;h
       <section class="unidad" id="px2" data-parcial="sp">
         <span class="u-tape">PARCIALES RESUELTOS · SEGUNDO PARCIAL</span>
         <h2 class="u-title">★ Parciales <span class="accent">reales</span> resueltos</h2>
-        <p class="u-sub">Ocho tomas reales de la cátedra (2023 a 2026: parciales y recuperatorios), con ensayos de hipótesis, intervalos de confianza y bidimensionales resueltos paso a paso.</p>
+        <p class="u-sub">Diez tomas reales de la cátedra (2023 a 2026, incluidas las dos de este cuatrimestre), con ensayos de hipótesis, intervalos de confianza y bidimensionales resueltos paso a paso.</p>
         <div class="exam-hint"><b>Cómo usarlos:</b> resolvé cada toma completa con el reloj corriendo, como en el parcial. En los ensayos de hipótesis, escribí tus \(H_0/H_1\) y la dirección de la región de rechazo antes de comparar con la solución: la dirección de β y el tipo de error se deciden en ese planteo inicial.</div>
         <div class="exam-timer" data-timer data-mode="timer">
           <div class="et-row">
@@ -6694,6 +6704,10 @@ details.eg-old summary .eg-t::before{content:'';display:inline-block;width:8px;h
           <div class="et-laps"></div>
         </div>
         <div class="exam-tabs"><div class="tabs exam-groups" id="tabs-p2">
+    <details class="eg eg-now" open><summary><span class="eg-t">Este cuatrimestre</span><span class="eg-s">2do cuatrimestre 2026 · 2 tomas</span><svg class="chev" width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><div class="eg-body">
+      <button class="tab-btn" onclick="switchTab('p2','sp-c2-vie26',this)">Parcial · 13/11/2026</button>
+      <button class="tab-btn" onclick="switchTab('p2','sp-c2-mar26',this)">Parcial · 10/11/2026</button>
+    </div></details>
     <details class="eg eg-new" open><summary><span class="eg-t">Parciales nuevos</span><span class="eg-s">2025 – 2026 · 5 tomas</span><svg class="chev" width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><div class="eg-body">
       <button class="tab-btn" onclick="switchTab('p2','sp-recup26',this)">Recup · 04/03/2026</button>
       <button class="tab-btn" onclick="switchTab('p2','sp-feb26',this)">Parcial · 27/02/2026</button>
@@ -8651,6 +8665,226 @@ details.eg-old summary .eg-t::before{content:'';display:inline-block;width:8px;h
       </div>
     </div>
   </div>
+
+  <!-- ═══ p2-sp-c2-vie26 ═══ -->
+  <div id="p2-sp-c2-vie26" class="tab-content exam-sheet">
+    <div class="exam-info"><span class="badge badge-now">● Este cuatrimestre</span><span class="badge badge-gold">Segundo Parcial</span><span class="badge badge-purple">viernes 13/11/2026</span><span class="badge badge-green">resolución de alumno cargada</span></div>
+    <div class="exam-indic"><b>Indicaciones:</b> Definir claramente los sucesos, las variables aleatorias y sus respectivas distribuciones de probabilidad. Priorizar la claridad y el detalle en los procedimientos, las justificaciones y el planteo de las operaciones a realizar (sumatorias, integrales, etc.), por sobre la obtención del resultado numérico final.</div>
+
+    <div class="exercise-block">
+      <div class="exercise-header"><span class="exercise-number">Ejercicio 1</span></div>
+      <div class="context-box">Un grupo de programadores lanzará en breve CODI.KIDS, una plataforma gratuita que le permitirá a los niños aprender a programar mientras diseñan sus propios juegos. Los programadores aseguran que más del 75% de los usuarios estará conforme con la experiencia ofrecida por la herramienta y, para verificar este supuesto, se seleccionará una muestra de usuarios que utilizarán la plataforma y luego responderán una breve encuesta. Si más del 80,9% de los usuarios <i>de la muestra</i> indican estar conformes, se concluirá que los programadores están en lo cierto y se aprobará el lanzamiento. En caso contrario, se suspenderá el lanzamiento para incorporar nuevas funcionalidades que mejoren la experiencia de uso de la plataforma. En este contexto, se <i>pide</i>:</div>
+
+      <div class="item-card">
+        <div class="item-header">
+          <div>
+            <div class="item-label">ÍTEM a)</div>
+            <div class="item-question">Diseñar un criterio <b>completo</b> que permita tomar decisiones, considerando una probabilidad igual a 0,0459 de concluir que los programadores no están en lo cierto cuando, en realidad, la proporción de usuarios conformes es del 85%.</div>
+          </div>
+          <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
+        </div>
+        <div class="solution-panel"><div class="sol-inner">
+<div class="sol-section sec-vars"><div class="sol-section-header">📐 VARIABLES ALEATORIAS</div><div class="sol-section-body"><p>\(R\) = cantidad de usuarios conformes con la plataforma, en \(n\) encuestados \(\sim Bi(n=\,?\,;\ p=\,?)\).</p></div></div>
+<div class="sol-section sec-sucesos"><div class="sol-section-header">🎯 PARÁMETRO E HIPÓTESIS</div><div class="sol-section-body"><p><b>Afirmación:</b> "más del 75% de los usuarios estará conforme con la plataforma". No tiene igualdad → va en \(H_1\):</p>
+        <div class="formula-block">\[H_0:\ p\le0{,}75\qquad H_1:\ p&gt;0{,}75\]</div>
+        <ul><li><span class="hl-blue">R\(H_0\)</span> ⟺ \(\hat p_{obs}&gt;0{,}809\): los programadores están en lo cierto → <b>se aprueba el lanzamiento</b>.</li>
+        <li><span class="hl-green">NR\(H_0\)</span> ⟺ \(\hat p_{obs}\le0{,}809\): no están en lo cierto → <b>se suspende el lanzamiento</b>.</li></ul>
+        <p>El punto crítico ya viene dado: \(P_C=0{,}809\). Falta el tamaño de muestra \(n\) y los riesgos.</p></div></div>
+<div class="sol-section sec-vars"><div class="sol-section-header">📐 VARIABLE Y ESTADÍSTICO DE PRUEBA</div><div class="sol-section-body"><p><b>Variable de decisión:</b> \(\hat p=\dfrac Rn\approx\text{Normal}\left(\mu_{\hat p}=p\,;\ \sigma_{\hat p}=\sqrt{\dfrac{p(1-p)}{n}}\right)\).</p></div></div>
+<div class="sol-section sec-resol"><div class="sol-section-header">🔢 CRITERIO DE DECISIÓN</div><div class="sol-section-body"><div class="step"><div class="step-n">Paso 1 – Condición dada: \(P(NRH_0/p=0{,}85)=0{,}0459\) (es un β)</div>
+          \[P(\hat p&lt;0{,}809\,/\,p=0{,}85)=F\!\left(Z=\frac{0{,}809-0{,}85}{\sqrt{\dfrac{0{,}85\,(1-0{,}85)}{n}}}\right)=0{,}0459\]
+          \[\frac{0{,}809-0{,}85}{\sqrt{\dfrac{0{,}85\cdot0{,}15}{n}}}=-1{,}686\ \Rightarrow\ \sqrt n=\frac{1{,}686\cdot\sqrt{0{,}1275}}{0{,}041}=14{,}68\ \Rightarrow\ n=215{,}6\approx216\]</div><div class="step"><div class="step-n">Paso 2 – Nivel de significación α (riesgo máximo, en el borde p = 0,75)</div>
+          \[\alpha=P(\hat p&gt;0{,}809\,/\,p=0{,}75)=1-F\!\left(Z=\frac{0{,}809-0{,}75}{\sqrt{\dfrac{0{,}75\,(1-0{,}75)}{216}}}\right)=1-F(2)=1-0{,}97725=0{,}02275\]
+          <p>En términos del estadístico: \(Z_c=2\).</p></div><div class="step"><div class="step-n">Paso 3 – Gráfico del criterio</div><p>Dos campanas de \(\hat p\): una centrada en \(p=0{,}75\) (borde de \(H_0\)) y otra en \(p=0{,}85\). A la derecha de \(P_C=0{,}809\) bajo la primera queda \(\alpha=0{,}02275\); a la izquierda de \(P_C\) bajo la segunda, \(\beta(0{,}85)=0{,}0459\).</p><figure class="fig fig-wide"><svg class="fig-svg" viewBox="0 0 460 210" role="img" xmlns="http://www.w3.org/2000/svg"><polygon points="239.8,164.0 241.5,145.4 243.6,146.9 245.8,148.4 247.9,149.8 250.0,151.0 252.2,152.2 254.3,153.3 256.4,154.3 258.6,155.2 260.7,156.1 262.8,156.8 264.9,157.5 267.1,158.2 269.2,158.8 271.3,159.3 273.5,159.8 275.6,160.3 277.7,160.7 279.9,161.1 282.0,161.4 284.1,161.7 286.2,162.0 288.4,162.2 290.5,162.4 292.6,162.6 294.8,162.8 296.9,162.9 299.0,163.1 301.2,163.2 303.3,163.3 305.4,163.4 307.6,163.5 309.7,163.5 311.8,163.6 313.9,163.7 316.1,163.7 318.2,163.7 320.3,163.8 322.5,163.8 324.6,163.8 326.7,163.9 328.9,163.9 331.0,163.9 333.1,163.9 335.2,163.9 337.4,163.9 339.5,163.9 341.6,164.0 343.8,164.0 345.9,164.0 348.0,164.0 350.1,164.0 352.3,164.0 354.4,164.0 356.5,164.0 358.7,164.0 360.8,164.0 362.9,164.0 365.1,164.0 367.2,164.0 369.3,164.0 371.4,164.0 373.6,164.0 375.7,164.0 377.8,164.0 380.0,164.0 382.1,164.0 384.2,164.0 386.4,164.0 388.5,164.0 390.6,164.0 392.8,164.0 394.9,164.0 397.0,164.0 399.1,164.0 401.3,164.0 403.4,164.0 405.5,164.0 407.7,164.0 409.8,164.0 411.9,164.0 414.1,164.0 416.2,164.0 418.3,164.0 420.4,164.0 422.6,164.0 424.7,164.0 426.8,164.0 429.0,164.0 431.1,164.0 433.2,164.0 435.4,164.0 437.5,164.0 439.6,164.0 441.7,164.0 443.9,164.0 446.0,164.0 446.0,164.0" style="fill:var(--pen-red);fill-opacity:.45"/><polygon points="20.0,164.0 20.0,164.0 22.1,164.0 24.3,164.0 26.4,164.0 28.5,164.0 30.6,164.0 32.8,164.0 34.9,164.0 37.0,164.0 39.2,164.0 41.3,164.0 43.4,164.0 45.6,164.0 47.7,164.0 49.8,164.0 52.0,164.0 54.1,164.0 56.2,164.0 58.3,164.0 60.5,164.0 62.6,164.0 64.7,164.0 66.9,164.0 69.0,164.0 71.1,164.0 73.2,164.0 75.4,164.0 77.5,164.0 79.6,164.0 81.8,164.0 83.9,164.0 86.0,164.0 88.2,164.0 90.3,164.0 92.4,164.0 94.5,164.0 96.7,164.0 98.8,164.0 100.9,164.0 103.1,164.0 105.2,164.0 107.3,164.0 109.5,164.0 111.6,164.0 113.7,164.0 115.9,164.0 118.0,164.0 120.1,164.0 122.2,164.0 124.4,164.0 126.5,164.0 128.6,164.0 130.8,164.0 132.9,164.0 135.0,164.0 137.1,164.0 139.3,164.0 141.4,164.0 143.5,163.9 145.7,163.9 147.8,163.9 149.9,163.9 152.1,163.9 154.2,163.8 156.3,163.8 158.5,163.8 160.6,163.7 162.7,163.7 164.8,163.6 167.0,163.5 169.1,163.4 171.2,163.3 173.4,163.2 175.5,163.1 177.6,162.9 179.8,162.7 181.9,162.5 184.0,162.2 186.1,161.9 188.3,161.6 190.4,161.2 192.5,160.7 194.7,160.2 196.8,159.6 198.9,159.0 201.0,158.3 203.2,157.4 205.3,156.5 207.4,155.5 209.6,154.4 211.7,153.1 213.8,151.7 216.0,150.2 218.1,148.5 220.2,146.6 222.4,144.6 224.5,142.4 226.6,140.0 228.7,137.5 230.9,134.7 233.0,131.7 235.1,128.5 237.3,125.1 239.4,121.5 239.8,164.0" style="fill:var(--pen-green);fill-opacity:.45"/><polyline points="20.0,155.2 22.1,154.3 24.3,153.3 26.4,152.2 28.5,151.0 30.6,149.8 32.8,148.4 34.9,146.9 37.0,145.4 39.2,143.7 41.3,142.0 43.4,140.1 45.6,138.1 47.7,136.0 49.8,133.7 52.0,131.4 54.1,128.9 56.2,126.4 58.3,123.6 60.5,120.8 62.6,117.9 64.7,114.9 66.9,111.7 69.0,108.5 71.1,105.1 73.2,101.7 75.4,98.2 77.5,94.6 79.6,90.9 81.8,87.2 83.9,83.5 86.0,79.7 88.2,75.9 90.3,72.1 92.4,68.3 94.5,64.5 96.7,60.7 98.8,57.1 100.9,53.4 103.1,49.9 105.2,46.5 107.3,43.1 109.5,39.9 111.6,36.9 113.7,34.0 115.9,31.3 118.0,28.7 120.1,26.4 122.2,24.3 124.4,22.4 126.5,20.7 128.6,19.3 130.8,18.1 132.9,17.2 135.0,16.5 137.1,16.1 139.3,16.0 141.4,16.1 143.5,16.5 145.7,17.2 147.8,18.1 149.9,19.3 152.1,20.7 154.2,22.4 156.3,24.3 158.5,26.4 160.6,28.7 162.7,31.3 164.8,34.0 167.0,36.9 169.1,39.9 171.2,43.1 173.4,46.5 175.5,49.9 177.6,53.4 179.8,57.1 181.9,60.7 184.0,64.5 186.1,68.3 188.3,72.1 190.4,75.9 192.5,79.7 194.7,83.5 196.8,87.2 198.9,90.9 201.0,94.6 203.2,98.2 205.3,101.7 207.4,105.1 209.6,108.5 211.7,111.7 213.8,114.9 216.0,117.9 218.1,120.8 220.2,123.6 222.4,126.4 224.5,128.9 226.6,131.4 228.7,133.7 230.9,136.0 233.0,138.1 235.1,140.1 237.3,142.0 239.4,143.7 241.5,145.4 243.6,146.9 245.8,148.4 247.9,149.8 250.0,151.0 252.2,152.2 254.3,153.3 256.4,154.3 258.6,155.2 260.7,156.1 262.8,156.8 264.9,157.5 267.1,158.2 269.2,158.8 271.3,159.3 273.5,159.8 275.6,160.3 277.7,160.7 279.9,161.1 282.0,161.4 284.1,161.7 286.2,162.0 288.4,162.2 290.5,162.4 292.6,162.6 294.8,162.8 296.9,162.9 299.0,163.1 301.2,163.2 303.3,163.3 305.4,163.4 307.6,163.5 309.7,163.5 311.8,163.6 313.9,163.7 316.1,163.7 318.2,163.7 320.3,163.8 322.5,163.8 324.6,163.8 326.7,163.9 328.9,163.9 331.0,163.9 333.1,163.9 335.2,163.9 337.4,163.9 339.5,163.9 341.6,164.0 343.8,164.0 345.9,164.0 348.0,164.0 350.1,164.0 352.3,164.0 354.4,164.0 356.5,164.0 358.7,164.0 360.8,164.0 362.9,164.0 365.1,164.0 367.2,164.0 369.3,164.0 371.4,164.0 373.6,164.0 375.7,164.0 377.8,164.0 380.0,164.0 382.1,164.0 384.2,164.0 386.4,164.0 388.5,164.0 390.6,164.0 392.8,164.0 394.9,164.0 397.0,164.0 399.1,164.0 401.3,164.0 403.4,164.0 405.5,164.0 407.7,164.0 409.8,164.0 411.9,164.0 414.1,164.0 416.2,164.0 418.3,164.0 420.4,164.0 422.6,164.0 424.7,164.0 426.8,164.0 429.0,164.0 431.1,164.0 433.2,164.0 435.4,164.0 437.5,164.0 439.6,164.0 441.7,164.0 443.9,164.0 446.0,164.0" style="fill:none;stroke:var(--ink);stroke-width:1.6"/><line x1="139.3" y1="164.0" x2="139.3" y2="16.0" style="stroke:var(--ink-faint);stroke-dasharray:3 3"/><polyline points="20.0,164.0 22.1,164.0 24.3,164.0 26.4,164.0 28.5,164.0 30.6,164.0 32.8,164.0 34.9,164.0 37.0,164.0 39.2,164.0 41.3,164.0 43.4,164.0 45.6,164.0 47.7,164.0 49.8,164.0 52.0,164.0 54.1,164.0 56.2,164.0 58.3,164.0 60.5,164.0 62.6,164.0 64.7,164.0 66.9,164.0 69.0,164.0 71.1,164.0 73.2,164.0 75.4,164.0 77.5,164.0 79.6,164.0 81.8,164.0 83.9,164.0 86.0,164.0 88.2,164.0 90.3,164.0 92.4,164.0 94.5,164.0 96.7,164.0 98.8,164.0 100.9,164.0 103.1,164.0 105.2,164.0 107.3,164.0 109.5,164.0 111.6,164.0 113.7,164.0 115.9,164.0 118.0,164.0 120.1,164.0 122.2,164.0 124.4,164.0 126.5,164.0 128.6,164.0 130.8,164.0 132.9,164.0 135.0,164.0 137.1,164.0 139.3,164.0 141.4,164.0 143.5,163.9 145.7,163.9 147.8,163.9 149.9,163.9 152.1,163.9 154.2,163.8 156.3,163.8 158.5,163.8 160.6,163.7 162.7,163.7 164.8,163.6 167.0,163.5 169.1,163.4 171.2,163.3 173.4,163.2 175.5,163.1 177.6,162.9 179.8,162.7 181.9,162.5 184.0,162.2 186.1,161.9 188.3,161.6 190.4,161.2 192.5,160.7 194.7,160.2 196.8,159.6 198.9,159.0 201.0,158.3 203.2,157.4 205.3,156.5 207.4,155.5 209.6,154.4 211.7,153.1 213.8,151.7 216.0,150.2 218.1,148.5 220.2,146.6 222.4,144.6 224.5,142.4 226.6,140.0 228.7,137.5 230.9,134.7 233.0,131.7 235.1,128.5 237.3,125.1 239.4,121.5 241.5,117.7 243.6,113.7 245.8,109.5 247.9,105.0 250.0,100.4 252.2,95.6 254.3,90.6 256.4,85.5 258.6,80.3 260.7,74.9 262.8,69.4 264.9,63.9 267.1,58.3 269.2,52.7 271.3,47.1 273.5,41.6 275.6,36.1 277.7,30.7 279.9,25.5 282.0,20.5 284.1,15.7 286.2,11.1 288.4,6.8 290.5,2.8 292.6,-0.9 294.8,-4.2 296.9,-7.1 299.0,-9.6 301.2,-11.7 303.3,-13.4 305.4,-14.5 307.6,-15.2 309.7,-15.5 311.8,-15.2 313.9,-14.5 316.1,-13.4 318.2,-11.7 320.3,-9.6 322.5,-7.1 324.6,-4.2 326.7,-0.9 328.9,2.8 331.0,6.8 333.1,11.1 335.2,15.7 337.4,20.5 339.5,25.5 341.6,30.7 343.8,36.1 345.9,41.6 348.0,47.1 350.1,52.7 352.3,58.3 354.4,63.9 356.5,69.4 358.7,74.9 360.8,80.3 362.9,85.5 365.1,90.6 367.2,95.6 369.3,100.4 371.4,105.0 373.6,109.5 375.7,113.7 377.8,117.7 380.0,121.5 382.1,125.1 384.2,128.5 386.4,131.7 388.5,134.7 390.6,137.5 392.8,140.0 394.9,142.4 397.0,144.6 399.1,146.6 401.3,148.5 403.4,150.2 405.5,151.7 407.7,153.1 409.8,154.4 411.9,155.5 414.1,156.5 416.2,157.4 418.3,158.3 420.4,159.0 422.6,159.6 424.7,160.2 426.8,160.7 429.0,161.2 431.1,161.6 433.2,161.9 435.4,162.2 437.5,162.5 439.6,162.7 441.7,162.9 443.9,163.1 446.0,163.2" style="fill:none;stroke:var(--ink);stroke-width:1.6"/><line x1="309.7" y1="164.0" x2="309.7" y2="-15.5" style="stroke:var(--ink-faint);stroke-dasharray:3 3"/><line x1="239.8" y1="16" x2="239.8" y2="170.0" style="stroke:var(--ink);stroke-width:1.4"/><line x1="20" y1="164.0" x2="446" y2="164.0" style="stroke:var(--ink);stroke-width:1.3"/><text x="139.3" y="178.0" text-anchor="middle" style="fill:var(--ink);font:600 10.5px var(--font-mono)">μ=0,75</text><text x="239.8" y="178.0" text-anchor="middle" style="fill:var(--ink);font:600 10.5px var(--font-mono)">PC=0,809</text><text x="309.7" y="178.0" text-anchor="middle" style="fill:var(--ink);font:600 10.5px var(--font-mono)">μ=0,85</text><text x="54.1" y="196.0" text-anchor="start" style="fill:var(--pen-green);font:600 10.5px var(--font-mono)">← NRH₀: se suspende</text><text x="420.4" y="196.0" text-anchor="end" style="fill:var(--pen-red);font:600 10.5px var(--font-mono)">RH₀: se aprueba →</text><text x="275.6" y="140.1" text-anchor="start" style="fill:var(--pen-red);font:600 10.5px var(--font-mono)">α = 0,02275</text><text x="207.4" y="116.8" text-anchor="end" style="fill:var(--pen-green);font:600 10.5px var(--font-mono)">β = 0,0459</text><text x="446" y="158" text-anchor="end" style="fill:var(--ink);font:italic 13px var(--font-print)">p̂</text></svg><figcaption>Criterio de decisión: α bajo la campana de \(p=0{,}75\) a la derecha de \(P_C\); β bajo la de \(p=0{,}85\) a la izquierda.</figcaption></figure></div><div class="note informe"><b>Informe:</b> <p>Tomar una muestra de <b>216 usuarios</b> y calcular la proporción observada de usuarios conformes \(\hat p_{obs}\).</p>
+          <ul><li>Si \(\hat p_{obs}\le0{,}809\) (o \(Z_{obs}\le2\)) → <b>no hay evidencia para rechazar</b> que la proporción de usuarios conformes en la población es \(\le0{,}75\): decimos que los programadores no están en lo cierto y <b>no se aprueba el lanzamiento</b>.</li>
+          <li>Si \(\hat p_{obs}&gt;0{,}809\) (o \(Z_{obs}&gt;2\)) → <b>hay evidencia para rechazar</b> que la proporción es \(\le0{,}75\): decimos que los programadores tienen razón y <b>se aprueba el lanzamiento</b>.</li>
+          <li>Hay una probabilidad de 0,02275 de decir que la proporción de usuarios conformes <b>no</b> es \(\le0{,}75\) (se realiza el lanzamiento) cuando en realidad es de 0,75; y de 0,0459 de suspender el lanzamiento cuando en realidad la proporción es del 85%.</li></ul></div><div class="result-box">✔ \(n=216\); RH\(_0\) si \(\hat p_{obs}&gt;0{,}809\); \(\alpha=0{,}02275\)</div></div></div>
+        </div></div>
+      </div>
+
+      <div class="item-card">
+        <div class="item-header">
+          <div>
+            <div class="item-label">ÍTEM b)</div>
+            <div class="item-question">Calcule e informe la probabilidad de tomar una decisión incorrecta, utilizando el criterio presentado, si la proporción de usuarios conformes fuera del 72%. Grafique la curva característica señalando todos los puntos conocidos hasta esta instancia e indicando para qué valores del parámetro estudiado analizaría probabilidades de error de tipo I y II.</div>
+          </div>
+          <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
+        </div>
+        <div class="solution-panel"><div class="sol-inner">
+<div class="sol-section sec-sucesos"><div class="sol-section-header">🎯 PARÁMETRO E HIPÓTESIS</div><div class="sol-section-body"><p>Si \(p=0{,}72\le0{,}75\) → \(H_0\) es <b>verdadera</b>. La decisión incorrecta es <b>rechazarla</b>: error de tipo I.</p></div></div>
+<div class="sol-section sec-resol"><div class="sol-section-header">🔢 RESOLUCIÓN</div><div class="sol-section-body"><div class="step"><div class="step-n">Probabilidad de error en p = 0,72</div>
+          \[P(\hat p&gt;0{,}809\,/\,p=0{,}72)=1-F\!\left(Z=\frac{0{,}809-0{,}72}{\sqrt{\dfrac{0{,}72\,(1-0{,}72)}{216}}}\right)=1-F(2{,}91)=1-0{,}99819=0{,}00181\]</div><div class="note informe"><b>Informe:</b> Hay una probabilidad de 0,00181 de decir que la proporción de usuarios conformes <b>no</b> es \(\le0{,}75\) (se le da la razón a los programadores y se lanza la plataforma) cuando en realidad es de 0,72.</div><div class="step"><div class="step-n">Curva característica con los puntos conocidos</div><p>\(P(NRH_0/p)=P(\hat p\le0{,}809/p)\):</p>
+          <table class="mini-t"><tr><th>\(p\)</th><th>\(P(NRH_0/p)\)</th><th>De dónde sale</th></tr>
+          <tr><td>0,72</td><td>\(1-0{,}00181=0{,}99819\)</td><td>ítem b</td></tr>
+          <tr><td>0,75</td><td>\(1-\alpha=0{,}97725\)</td><td>ítem a</td></tr>
+          <tr><td>0,809</td><td>0,5</td><td>en \(p=P_C\) la campana queda partida al medio</td></tr>
+          <tr><td>0,85</td><td>0,0459</td><td>dato (β)</td></tr></table><figure class="fig fig-wide"><svg class="fig-svg" viewBox="0 0 430 230" role="img" xmlns="http://www.w3.org/2000/svg"><rect x="40.0" y="18" width="112.8" height="178.0" style="fill:var(--pen-green);fill-opacity:.07"/><rect x="152.8" y="18" width="263.2" height="178.0" style="fill:var(--pen-red);fill-opacity:.06"/><line x1="40" y1="196.0" x2="416" y2="196.0" style="stroke:var(--ink-faint);stroke-opacity:.25"/><text x="35" y="199.5" text-anchor="end" style="fill:var(--ink-soft);font:10px var(--font-mono)">0</text><line x1="40" y1="151.5" x2="416" y2="151.5" style="stroke:var(--ink-faint);stroke-opacity:.25"/><text x="35" y="155.0" text-anchor="end" style="fill:var(--ink-soft);font:10px var(--font-mono)">0,25</text><line x1="40" y1="107.0" x2="416" y2="107.0" style="stroke:var(--ink-faint);stroke-opacity:.25"/><text x="35" y="110.5" text-anchor="end" style="fill:var(--ink-soft);font:10px var(--font-mono)">0,5</text><line x1="40" y1="62.5" x2="416" y2="62.5" style="stroke:var(--ink-faint);stroke-opacity:.25"/><text x="35" y="66.0" text-anchor="end" style="fill:var(--ink-soft);font:10px var(--font-mono)">0,75</text><line x1="40" y1="18.0" x2="416" y2="18.0" style="stroke:var(--ink-faint);stroke-opacity:.25"/><text x="35" y="21.5" text-anchor="end" style="fill:var(--ink-soft);font:10px var(--font-mono)">1</text><line x1="152.8" y1="18" x2="152.8" y2="196.0" style="stroke:var(--ink);stroke-dasharray:4 3;stroke-width:1.1"/><polyline points="40.0,18.0 43.1,18.0 46.3,18.0 49.4,18.0 52.5,18.0 55.7,18.0 58.8,18.0 61.9,18.1 65.1,18.1 68.2,18.1 71.3,18.1 74.5,18.1 77.6,18.1 80.7,18.1 83.9,18.2 87.0,18.2 90.1,18.2 93.3,18.3 96.4,18.3 99.5,18.4 102.7,18.4 105.8,18.5 108.9,18.6 112.1,18.7 115.2,18.8 118.3,18.9 121.5,19.1 124.6,19.2 127.7,19.4 130.9,19.6 134.0,19.9 137.1,20.1 140.3,20.4 143.4,20.8 146.5,21.1 149.7,21.6 152.8,22.0 155.9,22.6 159.1,23.2 162.2,23.8 165.3,24.5 168.5,25.3 171.6,26.2 174.7,27.2 177.9,28.2 181.0,29.4 184.1,30.6 187.3,32.0 190.4,33.4 193.5,35.1 196.7,36.8 199.8,38.6 202.9,40.6 206.1,42.8 209.2,45.1 212.3,47.5 215.5,50.1 218.6,52.8 221.7,55.7 224.9,58.7 228.0,61.9 231.1,65.2 234.3,68.7 237.4,72.3 240.5,76.1 243.7,80.0 246.8,84.0 249.9,88.1 253.1,92.2 256.2,96.5 259.3,100.8 262.5,105.2 265.6,109.7 268.7,114.1 271.9,118.5 275.0,123.0 278.1,127.4 281.3,131.7 284.4,136.0 287.5,140.2 290.7,144.3 293.8,148.3 296.9,152.1 300.1,155.8 303.2,159.4 306.3,162.7 309.5,165.9 312.6,169.0 315.7,171.8 318.9,174.5 322.0,176.9 325.1,179.2 328.3,181.3 331.4,183.2 334.5,184.9 337.7,186.4 340.8,187.8 343.9,189.1 347.1,190.1 350.2,191.1 353.3,191.9 356.5,192.6 359.6,193.2 362.7,193.8 365.9,194.2 369.0,194.6 372.1,194.9 375.3,195.1 378.4,195.3 381.5,195.5 384.7,195.6 387.8,195.7 390.9,195.8 394.1,195.8 397.2,195.9 400.3,195.9 403.5,195.9 406.6,196.0 409.7,196.0 412.9,196.0 416.0,196.0" style="fill:none;stroke:var(--pen-blue);stroke-width:2.2"/><circle cx="96.4" cy="18.3" r="3.6" style="fill:var(--pen-red)"/><text x="102.4" y="34.3" style="fill:var(--ink);font:600 10.5px var(--font-mono)">0,9982</text><circle cx="152.8" cy="22.0" r="3.6" style="fill:var(--pen-red)"/><text x="158.8" y="38.0" style="fill:var(--ink);font:600 10.5px var(--font-mono)">0,97725</text><circle cx="263.7" cy="107.0" r="3.6" style="fill:var(--pen-red)"/><text x="269.7" y="99.0" style="fill:var(--ink);font:600 10.5px var(--font-mono)">0,5</text><circle cx="340.8" cy="187.8" r="3.6" style="fill:var(--pen-red)"/><text x="346.8" y="179.8" style="fill:var(--ink);font:600 10.5px var(--font-mono)">0,0459</text><line x1="40" y1="196.0" x2="416" y2="196.0" style="stroke:var(--ink);stroke-width:1.3"/><line x1="40" y1="18" x2="40" y2="196.0" style="stroke:var(--ink);stroke-width:1.3"/><text x="58.8" y="210.0" text-anchor="middle" style="fill:var(--ink-soft);font:10px var(--font-mono)">0,7</text><text x="96.4" y="210.0" text-anchor="middle" style="fill:var(--ink-soft);font:10px var(--font-mono)">0,72</text><text x="152.8" y="210.0" text-anchor="middle" style="fill:var(--ink-soft);font:10px var(--font-mono)">0,75</text><text x="263.7" y="210.0" text-anchor="middle" style="fill:var(--ink-soft);font:10px var(--font-mono)">0,81</text><text x="340.8" y="210.0" text-anchor="middle" style="fill:var(--ink-soft);font:10px var(--font-mono)">0,85</text><text x="397.2" y="210.0" text-anchor="middle" style="fill:var(--ink-soft);font:10px var(--font-mono)">0,88</text><text x="416" y="227" text-anchor="end" style="fill:var(--ink);font:italic 13px var(--font-print)">p</text><text x="44" y="13" style="fill:var(--ink);font:11px var(--font-print)">P(No rechazar H₀ / p)</text></svg><div class="fig-leg"><span><i class="sw s-h0"></i>\(H_0\) verdadera: \(1-\)curva = error tipo I</span><span><i class="sw s-h1"></i>\(H_0\) falsa: curva = β (error tipo II)</span></div><figcaption>\(P(NRH_0/p)=P(\hat p\le0{,}809/p)=F\!\left(Z=\dfrac{0{,}809-p}{\sqrt{\dfrac{p(1-p)}{216}}}\right)\)</figcaption></figure></div><div class="note"><b>Para \(p\le0{,}75\)</b> (\(H_0\) verdadera) se analiza el error de <b>tipo I</b>: su probabilidad es \(1-P(NRH_0/p)\), y su máximo es \(\alpha=0{,}02275\) en \(p=0{,}75\).<br>
+          <b>Para \(p&gt;0{,}75\)</b> (\(H_0\) falsa) se analiza el error de <b>tipo II</b>: su probabilidad es la curva misma, \(\beta(p)=P(NRH_0/p)\).</div><div class="result-box">✔ \(P(RH_0/p=0{,}72)=0{,}00181\): error de tipo I</div></div></div>
+        </div></div>
+      </div>
+
+      <div class="item-card">
+        <div class="item-header">
+          <div>
+            <div class="item-label">ÍTEM c)</div>
+            <div class="item-question">A partir de una muestra que cumple con las características de este ensayo, se estimó la probabilidad de que, al elegir a 3 usuarios al azar, alguno se encuentre conforme con la experiencia ofrecida por la plataforma, siendo de 0,9901. Con esta información y basándose en el criterio propuesto, ¿considera que se decidirá lanzar la plataforma? <i>Justifique utilizando el p-valor.</i></div>
+          </div>
+          <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
+        </div>
+        <div class="solution-panel"><div class="sol-inner">
+<div class="sol-section sec-vars"><div class="sol-section-header">📐 VARIABLES ALEATORIAS</div><div class="sol-section-body"><p>\(R_3\) = cantidad de usuarios conformes entre 3 elegidos al azar \(\sim Bi(n=3;\ p)\), con \(p\) estimado por \(\hat p_{obs}\).</p></div></div>
+<div class="sol-section sec-resol"><div class="sol-section-header">🔢 RESOLUCIÓN</div><div class="sol-section-body"><div class="step"><div class="step-n">Paso 1 – Despejar \(\hat p_{obs}\) del dato</div>
+          \[P(R_3\ge1)=0{,}9901\ \Rightarrow\ P(R_3=0)=\binom30\hat p^{\,0}(1-\hat p)^3=0{,}0099\ \Rightarrow\ 1-\hat p=\sqrt[3]{0{,}0099}=0{,}2147\]
+          \[\hat p_{obs}=0{,}7853\]</div><div class="step"><div class="step-n">Paso 2 – Estadístico y p-valor (unilateral derecho)</div>
+          \[Z_{obs}=\frac{0{,}7853-0{,}75}{\sqrt{\dfrac{0{,}75\,(1-0{,}75)}{216}}}=1{,}197\approx1{,}20\]
+          \[p\text{-valor}=P(Z&gt;Z_{obs})=1-F(1{,}20)=1-0{,}8849=0{,}1151\]</div><div class="note">Como \(p\text{-valor}=0{,}1151&gt;\alpha=0{,}02275\) → <b>no hay evidencia</b> para rechazar que la proporción de usuarios conformes es \(\le0{,}75\). Coincide con el criterio: \(\hat p_{obs}=0{,}7853\le0{,}809\).</div><div class="result-box">✔ NRH\(_0\): <b>se suspende el lanzamiento</b> de la plataforma</div></div></div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-header"><span class="exercise-number">Ejercicio 2</span></div>
+      <div class="context-box">Sean X e Y variables aleatorias continuas con la siguiente función densidad de probabilidad conjunta:\[f(x,y)=\begin{cases}10xy^2, &amp; 0&lt;x&lt;y&lt;1,\\[4pt] 0, &amp; \text{en cualquier otro caso.}\end{cases}\]</div>
+
+      <div class="item-card">
+        <div class="item-header">
+          <div>
+            <div class="item-label">ÍTEM a)</div>
+            <div class="item-question">Hallar la E(X/y).</div>
+          </div>
+          <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
+        </div>
+        <div class="solution-panel"><div class="sol-inner">
+<div class="sol-section sec-vars"><div class="sol-section-header">📐 VARIABLES ALEATORIAS</div><div class="sol-section-body"><p>Soporte: triángulo \(0&lt;x&lt;y&lt;1\) (por encima de la diagonal). Para un \(y\) fijo, \(x\) va de 0 a \(y\).</p></div></div>
+<div class="sol-section sec-dist"><div class="sol-section-header">📊 DISTRIBUCIONES</div><div class="sol-section-body"><div class="step"><div class="step-n">Marginal de Y</div>\[f(y)=\int_{x=0}^{x=y}10xy^2\,dx=10y^2\left.\frac{x^2}{2}\right|_0^y=5y^4\qquad f(y)=\begin{cases}5y^4 &amp; 0&lt;y&lt;1\\ 0 &amp; \text{otro caso}\end{cases}\]</div><div class="step"><div class="step-n">Condicional de X dado Y = y</div>\[f(x/y)=\frac{f(x,y)}{f(y)}=\frac{10xy^2}{5y^4}=\begin{cases}\dfrac{2x}{y^2} &amp; 0&lt;x&lt;y\\[4pt] 0 &amp; \text{otro caso}\end{cases}\qquad(\text{siendo }y\text{ un parámetro entre 0 y 1})\]</div></div></div>
+<div class="sol-section sec-resol"><div class="sol-section-header">🔢 RESOLUCIÓN</div><div class="sol-section-body">\[E(X/y)=\int_{x=0}^{x=y}x\cdot\frac{2x}{y^2}\,dx=\frac{1}{y^2}\left.\frac{2x^3}{3}\right|_0^y=\frac{1}{y^2}\cdot\frac23y^3=\frac23\,y,\qquad0&lt;y&lt;1\]<figure class="fig fig-wide"><svg class="fig-svg" viewBox="0 0 360 230" role="img" xmlns="http://www.w3.org/2000/svg"><line x1="40.0" y1="200.0" x2="40.0" y2="18.0" style="stroke:var(--ink-faint);stroke-opacity:.25"/><text x="40.0" y="214.0" text-anchor="middle" style="fill:var(--ink-soft);font:10px var(--font-mono)">0</text><line x1="178.2" y1="200.0" x2="178.2" y2="18.0" style="stroke:var(--ink-faint);stroke-opacity:.25"/><text x="178.2" y="214.0" text-anchor="middle" style="fill:var(--ink-soft);font:10px var(--font-mono)">0,5</text><line x1="247.3" y1="200.0" x2="247.3" y2="18.0" style="stroke:var(--ink-faint);stroke-opacity:.25"/><text x="247.3" y="214.0" text-anchor="middle" style="fill:var(--ink-soft);font:10px var(--font-mono)">0,75</text><line x1="316.4" y1="200.0" x2="316.4" y2="18.0" style="stroke:var(--ink-faint);stroke-opacity:.25"/><text x="316.4" y="214.0" text-anchor="middle" style="fill:var(--ink-soft);font:10px var(--font-mono)">1</text><line x1="40.0" y1="200.0" x2="344.0" y2="200.0" style="stroke:var(--ink-faint);stroke-opacity:.25"/><text x="35.0" y="203.5" text-anchor="end" style="fill:var(--ink-soft);font:10px var(--font-mono)">0</text><line x1="40.0" y1="119.1" x2="344.0" y2="119.1" style="stroke:var(--ink-faint);stroke-opacity:.25"/><text x="35.0" y="122.6" text-anchor="end" style="fill:var(--ink-soft);font:10px var(--font-mono)">0,33</text><line x1="40.0" y1="78.7" x2="344.0" y2="78.7" style="stroke:var(--ink-faint);stroke-opacity:.25"/><text x="35.0" y="82.2" text-anchor="end" style="fill:var(--ink-soft);font:10px var(--font-mono)">0,5</text><line x1="40.0" y1="38.2" x2="344.0" y2="38.2" style="stroke:var(--ink-faint);stroke-opacity:.25"/><text x="35.0" y="41.7" text-anchor="end" style="fill:var(--ink-soft);font:10px var(--font-mono)">0,67</text><rect x="40.0" y="18" width="276.4" height="182.0" style="fill:var(--pen-blue);fill-opacity:.06"/><polyline points="40.0,200.0 42.8,198.4 45.5,196.8 48.3,195.1 51.1,193.5 53.8,191.9 56.6,190.3 59.3,188.7 62.1,187.1 64.9,185.4 67.6,183.8 70.4,182.2 73.2,180.6 75.9,179.0 78.7,177.4 81.5,175.7 84.2,174.1 87.0,172.5 89.7,170.9 92.5,169.3 95.3,167.6 98.0,166.0 100.8,164.4 103.6,162.8 106.3,161.2 109.1,159.6 111.9,157.9 114.6,156.3 117.4,154.7 120.1,153.1 122.9,151.5 125.7,149.8 128.4,148.2 131.2,146.6 134.0,145.0 136.7,143.4 139.5,141.8 142.3,140.1 145.0,138.5 147.8,136.9 150.5,135.3 153.3,133.7 156.1,132.1 158.8,130.4 161.6,128.8 164.4,127.2 167.1,125.6 169.9,124.0 172.7,122.3 175.4,120.7 178.2,119.1 180.9,117.5 183.7,115.9 186.5,114.3 189.2,112.6 192.0,111.0 194.8,109.4 197.5,107.8 200.3,106.2 203.1,104.6 205.8,102.9 208.6,101.3 211.3,99.7 214.1,98.1 216.9,96.5 219.6,94.8 222.4,93.2 225.2,91.6 227.9,90.0 230.7,88.4 233.5,86.8 236.2,85.1 239.0,83.5 241.7,81.9 244.5,80.3 247.3,78.7 250.0,77.0 252.8,75.4 255.6,73.8 258.3,72.2 261.1,70.6 263.9,69.0 266.6,67.3 269.4,65.7 272.1,64.1 274.9,62.5 277.7,60.9 280.4,59.3 283.2,57.6 286.0,56.0 288.7,54.4 291.5,52.8 294.3,51.2 297.0,49.5 299.8,47.9 302.5,46.3 305.3,44.7 308.1,43.1 310.8,41.5 313.6,39.8 316.4,38.2" style="fill:none;stroke:var(--pen-blue);stroke-width:2.4"/><line x1="178.2" y1="119.1" x2="178.2" y2="200.0" style="stroke:var(--pen-red);stroke-dasharray:3 3;stroke-opacity:.6"/><circle cx="178.2" cy="119.1" r="3.6" style="fill:var(--pen-red)"/><text x="184.2" y="112.1" style="fill:var(--ink);font:600 10.5px var(--font-mono)">(0,5 ; 1/3)</text><line x1="247.3" y1="78.7" x2="247.3" y2="200.0" style="stroke:var(--pen-red);stroke-dasharray:3 3;stroke-opacity:.6"/><circle cx="247.3" cy="78.7" r="3.6" style="fill:var(--pen-red)"/><text x="253.3" y="71.7" style="fill:var(--ink);font:600 10.5px var(--font-mono)">(0,75 ; 0,5)</text><line x1="316.4" y1="38.2" x2="316.4" y2="200.0" style="stroke:var(--pen-red);stroke-dasharray:3 3;stroke-opacity:.6"/><circle cx="316.4" cy="38.2" r="3.6" style="fill:var(--pen-red)"/><text x="322.4" y="31.2" style="fill:var(--ink);font:600 10.5px var(--font-mono)">(1 ; 2/3)</text><line x1="40.0" y1="200.0" x2="344.0" y2="200.0" style="stroke:var(--ink);stroke-width:1.3"/><line x1="40.0" y1="200.0" x2="40.0" y2="18.0" style="stroke:var(--ink);stroke-width:1.3"/><text x="344" y="227" text-anchor="end" style="fill:var(--ink);font:italic 13px var(--font-print)">y</text><text x="45.0" y="14" style="fill:var(--ink);font:italic 12px var(--font-print)">E(X/y)</text></svg><figcaption>Curva de regresión \(E(X/Y=y)=\tfrac23y\): recta por el origen, definida en \(0&lt;y&lt;1\).</figcaption></figure><div class="result-box">✔ \(E(X/Y=y)=\tfrac23\,y\), para \(0&lt;y&lt;1\)</div></div></div>
+        </div></div>
+      </div>
+
+      <div class="item-card">
+        <div class="item-header">
+          <div>
+            <div class="item-label">ÍTEM b)</div>
+            <div class="item-question">Calcular la P(Y&gt;0.5/x=0.25).</div>
+          </div>
+          <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
+        </div>
+        <div class="solution-panel"><div class="sol-inner">
+<div class="sol-section sec-sucesos"><div class="sol-section-header">🎯 SUCESOS</div><div class="sol-section-body"><p>Condición por <b>valor exacto</b> (\(X=0{,}25\)) → se usa la densidad condicional \(f(y/x)\) evaluada en \(x=0{,}25\).</p><figure class="fig"><svg class="fig-svg" viewBox="0 0 250 220" role="img" xmlns="http://www.w3.org/2000/svg"><line x1="34.0" y1="190.0" x2="34.0" y2="14.0" style="stroke:var(--ink-faint);stroke-opacity:.25;stroke-width:1"/><line x1="80.8" y1="190.0" x2="80.8" y2="14.0" style="stroke:var(--ink-faint);stroke-opacity:.25;stroke-width:1"/><line x1="127.5" y1="190.0" x2="127.5" y2="14.0" style="stroke:var(--ink-faint);stroke-opacity:.25;stroke-width:1"/><line x1="221.0" y1="190.0" x2="221.0" y2="14.0" style="stroke:var(--ink-faint);stroke-opacity:.25;stroke-width:1"/><line x1="34.0" y1="190.0" x2="236.0" y2="190.0" style="stroke:var(--ink-faint);stroke-opacity:.25;stroke-width:1"/><line x1="34.0" y1="149.3" x2="236.0" y2="149.3" style="stroke:var(--ink-faint);stroke-opacity:.25;stroke-width:1"/><line x1="34.0" y1="108.5" x2="236.0" y2="108.5" style="stroke:var(--ink-faint);stroke-opacity:.25;stroke-width:1"/><line x1="34.0" y1="27.0" x2="236.0" y2="27.0" style="stroke:var(--ink-faint);stroke-opacity:.25;stroke-width:1"/><polygon points="34.0,190.0 221.0,27.0 34.0,27.0" style="fill:var(--pen-blue);fill-opacity:.10;stroke:var(--pen-blue);stroke-width:1.6"/><polygon points="78.0,108.5 83.6,108.5 83.6,27.0 78.0,27.0" style="fill:var(--pen-red);fill-opacity:.32;stroke:var(--pen-red);stroke-width:1.2"/><polyline points="34.0,190.0 228.5,20.5" style="fill:none;stroke:var(--ink);stroke-width:1.4;stroke-dasharray:5 3"/><text x="164.9" y="92.2" style="fill:var(--ink);font:italic 11.5px var(--font-print)">y = x</text><polyline points="34.0,108.5 221.0,108.5" style="fill:none;stroke:var(--ink);stroke-width:1.4;stroke-dasharray:5 3"/><text x="136.9" y="119.9" style="fill:var(--ink);font:italic 11.5px var(--font-print)">y = 0,5</text><line x1="34.0" y1="190.0" x2="242.0" y2="190.0" style="stroke:var(--ink);stroke-width:1.3"/><line x1="34.0" y1="190.0" x2="34.0" y2="8.0" style="stroke:var(--ink);stroke-width:1.3"/><text x="238.0" y="185.0" style="fill:var(--ink);font:italic 13px var(--font-print)">x</text><text x="39.0" y="18.0" style="fill:var(--ink);font:italic 13px var(--font-print)">y</text><text x="34.0" y="204.0" text-anchor="middle" style="fill:var(--ink-soft);font:10.5px var(--font-mono)">0</text><text x="80.8" y="204.0" text-anchor="middle" style="fill:var(--ink-soft);font:10.5px var(--font-mono)">0,25</text><text x="127.5" y="204.0" text-anchor="middle" style="fill:var(--ink-soft);font:10.5px var(--font-mono)">0,5</text><text x="221.0" y="204.0" text-anchor="middle" style="fill:var(--ink-soft);font:10.5px var(--font-mono)">1</text><text x="29.0" y="193.5" text-anchor="end" style="fill:var(--ink-soft);font:10.5px var(--font-mono)">0</text><text x="29.0" y="152.8" text-anchor="end" style="fill:var(--ink-soft);font:10.5px var(--font-mono)">0,25</text><text x="29.0" y="112.0" text-anchor="end" style="fill:var(--ink-soft);font:10.5px var(--font-mono)">0,5</text><text x="29.0" y="30.5" text-anchor="end" style="fill:var(--ink-soft);font:10.5px var(--font-mono)">1</text><line x1="80.8" y1="149.3" x2="80.8" y2="27.0" style="stroke:var(--pen-green);stroke-width:2.4"/><polygon points="76.3,34.0 85.3,34.0 80.8,27.0" style="fill:var(--pen-green)"/><circle cx="80.8" cy="149.3" r="3" style="fill:var(--pen-green)"/><text x="86.8" y="88.1" style="fill:var(--pen-green);font:600 11px var(--font-print)">x = 0,25</text></svg><div class="fig-leg"><span><i class="sw s-sup"></i>soporte \(0&lt;x&lt;y&lt;1\)</span><span><i class="sw s-reg"></i>b): sobre \(x=0{,}25\), \(y&gt;0{,}5\)</span></div></figure></div></div>
+<div class="sol-section sec-dist"><div class="sol-section-header">📊 DISTRIBUCIONES</div><div class="sol-section-body"><div class="step"><div class="step-n">Marginal de X</div>\[f(x)=\int_{y=x}^{y=1}10xy^2\,dy=10x\left.\frac{y^3}{3}\right|_x^1=\frac{10x\,(1-x^3)}{3},\qquad0&lt;x&lt;1\]</div><div class="step"><div class="step-n">Condicional de Y dado X = x</div>\[f(y/x)=\frac{f(x,y)}{f(x)}=\frac{10xy^2}{\frac{10x(1-x^3)}{3}}=\frac{3y^2}{1-x^3},\qquad x&lt;y&lt;1\ \ (x\text{ parámetro entre 0 y 1})\]
+          \[f(y/x=0{,}25)=\frac{3y^2}{1-0{,}25^3}=\frac{3y^2}{\frac{63}{64}}=\frac{64}{21}\,y^2,\qquad0{,}25&lt;y&lt;1\]</div></div></div>
+<div class="sol-section sec-resol"><div class="sol-section-header">🔢 RESOLUCIÓN</div><div class="sol-section-body">\[P(Y&gt;0{,}5/x=0{,}25)=\int_{y=0{,}5}^{y=1}\frac{64}{21}\,y^2\,dy=\frac{64}{21}\left.\frac{y^3}{3}\right|_{0{,}5}^{1}=\frac{64}{63}\,(1-0{,}125)=\frac{56}{63}\]<div class="result-box">✔ \(P(Y&gt;0{,}5/X=0{,}25)=\tfrac89\approx0{,}8889\)</div></div></div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ p2-sp-c2-mar26 ═══ -->
+  <div id="p2-sp-c2-mar26" class="tab-content exam-sheet">
+    <div class="exam-info"><span class="badge badge-now">● Este cuatrimestre</span><span class="badge badge-gold">Segundo Parcial</span><span class="badge badge-purple">martes 10/11/2026</span><span class="badge badge-accent">UNLaM</span></div>
+    <div class="exam-indic"><b>Indicaciones:</b> Definir claramente los sucesos, las variables aleatorias y sus respectivas distribuciones de probabilidad. Priorizar la claridad y el detalle en los procedimientos, las justificaciones y el planteo de las operaciones a realizar (sumatorias, integrales, etc.), por sobre la obtención del resultado numérico final.</div>
+
+    <div class="exercise-block">
+      <div class="exercise-header"><span class="exercise-number">Ejercicio 1</span></div>
+      <div class="context-box">Se está estudiando el tiempo de vida de ciertos primates que habitan una vasta región del Amazonas. Los investigadores, a priori, creen que la esperanza de vida no supera los 70 años. Una muestra aleatoria de 100 individuos de esta población arrojó un tiempo medio de 71.8 años y un desvío de 8.7 años. Se asume que la población de estudio es Normal con desvío poblacional de 8.9 años.</div>
+
+      <div class="item-card">
+        <div class="item-header">
+          <div>
+            <div class="item-label">ÍTEM a)</div>
+            <div class="item-question">Establecer una regla de decisión que le permita a los investigadores concluir acerca de su creencia, asumiendo un riesgo máximo de 0.05 de creer que la esperanza de vida es mayor a 70 años, cuando no lo es. ¿Para qué media del tiempo de vida es ese riesgo máximo?</div>
+          </div>
+          <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
+        </div>
+        <div class="solution-panel"><div class="sol-inner">
+<div class="sol-section sec-vars"><div class="sol-section-header">📐 VARIABLES ALEATORIAS</div><div class="sol-section-body"><p>\(X\) = tiempo de vida (años) de un primate \(\sim N(\mu_X;\ \sigma=8{,}9)\).</p></div></div>
+<div class="sol-section sec-sucesos"><div class="sol-section-header">🎯 PARÁMETRO E HIPÓTESIS</div><div class="sol-section-body"><p>Parámetro: \(\mu_X\) = esperanza de vida de los primates de la región. La creencia "no supera los 70" tiene igualdad → \(H_0\):</p>
+        <div class="formula-block">\[H_0:\ \mu_X\le70\qquad H_1:\ \mu_X&gt;70\quad(\text{unilateral derecha})\]</div>
+        <p>"Creer que es mayor a 70 cuando no lo es" = rechazar \(H_0\) siendo verdadera = error de tipo I → \(\alpha=0{,}05\).</p></div></div>
+<div class="sol-section sec-vars"><div class="sol-section-header">📐 VARIABLE Y ESTADÍSTICO DE PRUEBA</div><div class="sol-section-body"><p>σ <b>conocido</b> (8,9) → \(\bar X\sim N\!\left(\mu_X;\ \dfrac{8{,}9}{\sqrt{100}}=0{,}89\right)\). (El desvío muestral 8,7 sobra: el enunciado puede tener datos de más.)</p></div></div>
+<div class="sol-section sec-resol"><div class="sol-section-header">🔢 CRITERIO DE DECISIÓN</div><div class="sol-section-body"><div class="step"><div class="step-n">Punto crítico</div>\[P(\bar X&gt;P_C\,/\,\mu=70)=0{,}05\ \Rightarrow\ 1-F\!\left(Z=\frac{P_C-70}{0{,}89}\right)=0{,}05\ \Rightarrow\ \frac{P_C-70}{0{,}89}=1{,}645\ \Rightarrow\ P_C=71{,}464\]</div><div class="step"><div class="step-n">Regla de decisión</div><p>Tomar 100 primates y calcular \(\bar x_{obs}\):</p>
+          <ul><li>Si \(\bar x_{obs}&gt;71{,}464\) (o \(Z_{obs}&gt;1{,}645\)) → hay evidencia para RECHAZAR \(H_0\): la esperanza de vida es mayor a 70 años.</li>
+          <li>Si \(\bar x_{obs}\le71{,}464\) → NO hay evidencia para rechazar \(H_0\): se mantiene la creencia de que no supera los 70.</li></ul></div><div class="step"><div class="step-n">¿Para qué media es máximo el riesgo?</div><p>Para \(\mu\le70\), \(P(RH_0/\mu)=1-F\!\left(\frac{71{,}464-\mu}{0{,}89}\right)\) <b>crece</b> a medida que \(\mu\) se acerca a 70. El máximo se alcanza en el borde de \(H_0\): <b>\(\mu=70\) años</b>, donde vale exactamente 0,05.</p></div><div class="step"><div class="step-n">Con la muestra</div>\(\bar x_{obs}=71{,}8&gt;71{,}464\) → RH\(_0\).</div><div class="note informe"><b>Informe:</b> Hay un riesgo máximo del 5% (cuando la esperanza de vida es de 70 años) de concluir que los primates viven en promedio más de 70 años cuando en realidad no es así.</div><div class="result-box">✔ RH\(_0\) si \(\bar x_{obs}&gt;71{,}464\); riesgo máximo en \(\mu=70\). Con la muestra: RH\(_0\)</div></div></div>
+        </div></div>
+      </div>
+
+      <div class="item-card">
+        <div class="item-header">
+          <div>
+            <div class="item-label">ÍTEM b)</div>
+            <div class="item-question">Calcular la probabilidad de llegar a una conclusión correcta cuando el tiempo medio de vida de los primates del Amazonas es 73 años. Trazar la curva característica de operación con al menos 3 puntos.</div>
+          </div>
+          <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
+        </div>
+        <div class="solution-panel"><div class="sol-inner">
+<div class="sol-section sec-sucesos"><div class="sol-section-header">🎯 PARÁMETRO E HIPÓTESIS</div><div class="sol-section-body"><p>\(\mu=73&gt;70\) → \(H_0\) falsa. La conclusión correcta es <b>rechazarla</b> (potencia).</p></div></div>
+<div class="sol-section sec-resol"><div class="sol-section-header">🔢 RESOLUCIÓN</div><div class="sol-section-body"><div class="step"><div class="step-n">Probabilidad de conclusión correcta</div>\[P(RH_0/\mu=73)=P(\bar X&gt;71{,}464\,/\,\mu=73)=1-F\!\left(Z=\frac{71{,}464-73}{0{,}89}\right)=1-F(-1{,}73)=1-0{,}0418=0{,}9582\]</div><div class="note informe"><b>Informe:</b> Si la esperanza de vida fuera de 73 años, hay una probabilidad de 0,9582 de concluir correctamente que supera los 70 años; el riesgo de no detectarlo es \(\beta(73)=0{,}0418\).</div><div class="step"><div class="step-n">Curva característica</div><p>\(P(NRH_0/\mu)=F\!\left(Z=\dfrac{71{,}464-\mu}{0{,}89}\right)\)</p>
+          <table class="mini-t"><tr><th>\(\mu\)</th><th>\(Z\)</th><th>\(P(NRH_0/\mu)\)</th></tr>
+          <tr><td>70</td><td>1,645</td><td>0,95 \((1-\alpha)\)</td></tr>
+          <tr><td>71,464</td><td>0</td><td>0,5</td></tr>
+          <tr><td>72</td><td>−0,60</td><td>0,2743</td></tr>
+          <tr><td>73</td><td>−1,73</td><td>0,0418 (β)</td></tr></table><figure class="fig fig-wide"><svg class="fig-svg" viewBox="0 0 430 230" role="img" xmlns="http://www.w3.org/2000/svg"><rect x="40.0" y="18" width="94.0" height="178.0" style="fill:var(--pen-green);fill-opacity:.07"/><rect x="134.0" y="18" width="282.0" height="178.0" style="fill:var(--pen-red);fill-opacity:.06"/><line x1="40" y1="196.0" x2="416" y2="196.0" style="stroke:var(--ink-faint);stroke-opacity:.25"/><text x="35" y="199.5" text-anchor="end" style="fill:var(--ink-soft);font:10px var(--font-mono)">0</text><line x1="40" y1="151.5" x2="416" y2="151.5" style="stroke:var(--ink-faint);stroke-opacity:.25"/><text x="35" y="155.0" text-anchor="end" style="fill:var(--ink-soft);font:10px var(--font-mono)">0,25</text><line x1="40" y1="107.0" x2="416" y2="107.0" style="stroke:var(--ink-faint);stroke-opacity:.25"/><text x="35" y="110.5" text-anchor="end" style="fill:var(--ink-soft);font:10px var(--font-mono)">0,5</text><line x1="40" y1="62.5" x2="416" y2="62.5" style="stroke:var(--ink-faint);stroke-opacity:.25"/><text x="35" y="66.0" text-anchor="end" style="fill:var(--ink-soft);font:10px var(--font-mono)">0,75</text><line x1="40" y1="18.0" x2="416" y2="18.0" style="stroke:var(--ink-faint);stroke-opacity:.25"/><text x="35" y="21.5" text-anchor="end" style="fill:var(--ink-soft);font:10px var(--font-mono)">1</text><line x1="134.0" y1="18" x2="134.0" y2="196.0" style="stroke:var(--ink);stroke-dasharray:4 3;stroke-width:1.1"/><polyline points="40.0,18.1 43.1,18.1 46.3,18.1 49.4,18.1 52.5,18.2 55.7,18.2 58.8,18.2 61.9,18.3 65.1,18.4 68.2,18.4 71.3,18.5 74.5,18.6 77.6,18.7 80.7,18.8 83.9,19.0 87.0,19.1 90.1,19.3 93.3,19.6 96.4,19.8 99.5,20.1 102.7,20.4 105.8,20.8 108.9,21.2 112.1,21.7 115.2,22.2 118.3,22.8 121.5,23.5 124.6,24.2 127.7,25.0 130.9,25.9 134.0,26.9 137.1,28.0 140.3,29.2 143.4,30.4 146.5,31.8 149.7,33.4 152.8,35.0 155.9,36.8 159.1,38.6 162.2,40.7 165.3,42.8 168.5,45.1 171.6,47.5 174.7,50.1 177.9,52.8 181.0,55.6 184.1,58.6 187.3,61.6 190.4,64.8 193.5,68.2 196.7,71.6 199.8,75.1 202.9,78.7 206.1,82.5 209.2,86.2 212.3,90.1 215.5,94.0 218.6,97.9 221.7,101.9 224.9,105.9 228.0,109.9 231.1,113.9 234.3,117.8 237.4,121.7 240.5,125.6 243.7,129.4 246.8,133.2 249.9,136.9 253.1,140.4 256.2,143.9 259.3,147.3 262.5,150.6 265.6,153.7 268.7,156.8 271.9,159.7 275.0,162.4 278.1,165.1 281.3,167.6 284.4,169.9 287.5,172.2 290.7,174.2 293.8,176.2 296.9,178.0 300.1,179.7 303.2,181.3 306.3,182.8 309.5,184.1 312.6,185.4 315.7,186.5 318.9,187.5 322.0,188.5 325.1,189.3 328.3,190.1 331.4,190.8 334.5,191.5 337.7,192.0 340.8,192.5 343.9,193.0 347.1,193.4 350.2,193.7 353.3,194.0 356.5,194.3 359.6,194.5 362.7,194.8 365.9,194.9 369.0,195.1 372.1,195.2 375.3,195.3 378.4,195.4 381.5,195.5 384.7,195.6 387.8,195.7 390.9,195.7 394.1,195.8 397.2,195.8 400.3,195.8 403.5,195.9 406.6,195.9 409.7,195.9 412.9,195.9 416.0,195.9" style="fill:none;stroke:var(--pen-blue);stroke-width:2.2"/><circle cx="134.0" cy="26.9" r="3.6" style="fill:var(--pen-red)"/><text x="140.0" y="42.9" style="fill:var(--ink);font:600 10.5px var(--font-mono)">0,95</text><circle cx="225.7" cy="107.0" r="3.6" style="fill:var(--pen-red)"/><text x="231.7" y="99.0" style="fill:var(--ink);font:600 10.5px var(--font-mono)">0,5</text><circle cx="259.3" cy="147.3" r="3.6" style="fill:var(--pen-red)"/><text x="265.3" y="139.3" style="fill:var(--ink);font:600 10.5px var(--font-mono)">0,27</text><circle cx="322.0" cy="188.5" r="3.6" style="fill:var(--pen-red)"/><text x="328.0" y="180.5" style="fill:var(--ink);font:600 10.5px var(--font-mono)">0,042</text><line x1="40" y1="196.0" x2="416" y2="196.0" style="stroke:var(--ink);stroke-width:1.3"/><line x1="40" y1="18" x2="40" y2="196.0" style="stroke:var(--ink);stroke-width:1.3"/><text x="71.3" y="210.0" text-anchor="middle" style="fill:var(--ink-soft);font:10px var(--font-mono)">69</text><text x="134.0" y="210.0" text-anchor="middle" style="fill:var(--ink-soft);font:10px var(--font-mono)">70</text><text x="225.7" y="210.0" text-anchor="middle" style="fill:var(--ink-soft);font:10px var(--font-mono)">71,46</text><text x="322.0" y="210.0" text-anchor="middle" style="fill:var(--ink-soft);font:10px var(--font-mono)">73</text><text x="384.7" y="210.0" text-anchor="middle" style="fill:var(--ink-soft);font:10px var(--font-mono)">74</text><text x="416" y="227" text-anchor="end" style="fill:var(--ink);font:italic 13px var(--font-print)">μ</text><text x="44" y="13" style="fill:var(--ink);font:11px var(--font-print)">P(No rechazar H₀ / μ)</text></svg><div class="fig-leg"><span><i class="sw s-h0"></i>\(H_0\) verdadera: \(1-\)curva = error tipo I</span><span><i class="sw s-h1"></i>\(H_0\) falsa: curva = β (error tipo II)</span></div><figcaption>\(P(NRH_0/\mu)=P(\bar X\le71{,}464/\mu)=F\!\left(Z=\dfrac{71{,}464-\mu}{0{,}89}\right)\)</figcaption></figure></div><div class="result-box">✔ \(P(RH_0/\mu=73)\approx0{,}9582\)</div></div></div>
+        </div></div>
+      </div>
+
+      <div class="item-card">
+        <div class="item-header">
+          <div>
+            <div class="item-label">ÍTEM c)</div>
+            <div class="item-question">Hacer el ítem a) <b>sin desvío poblacional conocido</b>, calcular el p-valor y concluir.</div>
+          </div>
+          <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
+        </div>
+        <div class="solution-panel"><div class="sol-inner">
+<div class="sol-section sec-vars"><div class="sol-section-header">📐 VARIABLE Y ESTADÍSTICO DE PRUEBA</div><div class="sol-section-body"><p>σ <b>desconocido</b> → se usa el desvío muestral \(S=8{,}7\) y el estadístico \(T=\dfrac{\bar X-70}{S/\sqrt n}\sim t_{n-1=99}\). \(\frac{S}{\sqrt n}=\frac{8{,}7}{10}=0{,}87\).</p></div></div>
+<div class="sol-section sec-resol"><div class="sol-section-header">🔢 CRITERIO DE DECISIÓN</div><div class="sol-section-body"><div class="step"><div class="step-n">Valor crítico y regla</div>\[P(T&gt;T_c)=0{,}05\ \Rightarrow\ T_c=t_{99;\,0{,}05}\approx1{,}66\]
+          <ul><li>Si \(T_{obs}&gt;1{,}66\) (equivale a \(\bar x_{obs}&gt;70+1{,}66\cdot0{,}87=71{,}44\)) → RH\(_0\).</li>
+          <li>Si \(T_{obs}\le1{,}66\) → NRH\(_0\).</li></ul></div><div class="step"><div class="step-n">Estadístico observado y p-valor</div>\[T_{obs}=\frac{71{,}8-70}{0{,}87}=2{,}07\]
+          <p>Unilateral derecha: \(p\text{-valor}=P(T_{99}&gt;2{,}07)\). En la tabla de \(t\) con 99 gl: \(t_{0{,}025}=1{,}984&lt;2{,}07&lt;t_{0{,}01}=2{,}364\) → \(0{,}01&lt;p\text{-valor}&lt;0{,}025\) (≈ 0,02).</p></div><div class="note">\(p\text{-valor}&lt;\alpha=0{,}05\) y \(T_{obs}=2{,}07&gt;1{,}66\): hay evidencia para rechazar \(H_0\).</div><div class="result-box">✔ RH\(_0\): la esperanza de vida de los primates <b>supera los 70 años</b></div></div></div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-header"><span class="exercise-number">Ejercicio 2</span></div>
+      <div class="context-box">Un data center tiene un UPS que sostiene los servidores cuando se corta la energía de la red. Ante un corte, la autonomía X del UPS (en min) se modela como una variable exponencial de media 10 min (el estado de las baterías hace que la autonomía sea muy variable). La duración Y del corte (en min) es una variable exponencial de media 12 min. Si el corte dura más que la autonomía, los servidores se apagan. <b><i>Asumir las hipótesis correspondientes.</i></b><br><i>Nota: para ambos ítems: si los rangos de las variables están mal escritos, el ejercicio está mal resuelto.</i></div>
+
+      <div class="item-card">
+        <div class="item-header">
+          <div>
+            <div class="item-label">ÍTEM a)</div>
+            <div class="item-question">Escribir la función densidad de probabilidad conjunta de (X, Y). Calcular la probabilidad de que, en un corte, la autonomía sea menor a 7 min y el corte dure más de 15 min.</div>
+          </div>
+          <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
+        </div>
+        <div class="solution-panel"><div class="sol-inner">
+<div class="sol-section sec-sucesos"><div class="sol-section-header">🎯 SUCESOS</div><div class="sol-section-body"><p><span class="hl-red">A</span> = "la autonomía es menor a 7 min" = \(\{X&lt;7\}\); <span class="hl-red">B</span> = "el corte dura más de 15 min" = \(\{Y&gt;15\}\). Se pide \(P(A\cap B)\).</p></div></div>
+<div class="sol-section sec-vars"><div class="sol-section-header">📐 VARIABLES ALEATORIAS</div><div class="sol-section-body"><ul><li>\(X\) = autonomía del UPS (min) \(\sim Exp\big(\lambda_X=\tfrac1{10}\big)\): \(f(x)=\tfrac1{10}e^{-x/10}\), \(x&gt;0\).</li>
+        <li>\(Y\) = duración del corte (min) \(\sim Exp\big(\lambda_Y=\tfrac1{12}\big)\): \(f(y)=\tfrac1{12}e^{-y/12}\), \(y&gt;0\).</li></ul></div></div>
+<div class="sol-section sec-dist"><div class="sol-section-header">📊 DISTRIBUCIONES</div><div class="sol-section-body"><p><b>Hipótesis asumida:</b> la autonomía depende del estado de las baterías y la duración del corte depende de la red: \(X\) e \(Y\) son <b>independientes</b>. Entonces \(f(x,y)=f(x)\,f(y)\):</p>
+        \[f(x,y)=\begin{cases}\dfrac{1}{120}\,e^{-\frac{x}{10}-\frac{y}{12}} &amp; x&gt;0,\ y&gt;0\\[6pt] 0 &amp; \text{otro }(x,y)\end{cases}\]<figure class="fig"><svg class="fig-svg" viewBox="0 0 250 220" role="img" xmlns="http://www.w3.org/2000/svg"><line x1="34.0" y1="190.0" x2="34.0" y2="14.0" style="stroke:var(--ink-faint);stroke-opacity:.25;stroke-width:1"/><line x1="88.4" y1="190.0" x2="88.4" y2="14.0" style="stroke:var(--ink-faint);stroke-opacity:.25;stroke-width:1"/><line x1="150.5" y1="190.0" x2="150.5" y2="14.0" style="stroke:var(--ink-faint);stroke-opacity:.25;stroke-width:1"/><line x1="228.2" y1="190.0" x2="228.2" y2="14.0" style="stroke:var(--ink-faint);stroke-opacity:.25;stroke-width:1"/><line x1="34.0" y1="190.0" x2="236.0" y2="190.0" style="stroke:var(--ink-faint);stroke-opacity:.25;stroke-width:1"/><line x1="34.0" y1="88.5" x2="236.0" y2="88.5" style="stroke:var(--ink-faint);stroke-opacity:.25;stroke-width:1"/><line x1="34.0" y1="20.8" x2="236.0" y2="20.8" style="stroke:var(--ink-faint);stroke-opacity:.25;stroke-width:1"/><polygon points="34.0,190.0 228.2,190.0 228.2,20.8 34.0,20.8" style="fill:var(--pen-blue);fill-opacity:.10;stroke:var(--pen-blue);stroke-width:1.6"/><polygon points="34.0,88.5 88.4,88.5 88.4,20.8 34.0,20.8" style="fill:var(--pen-red);fill-opacity:.32;stroke:var(--pen-red);stroke-width:1.2"/><polyline points="88.4,190.0 88.4,17.4" style="fill:none;stroke:var(--ink);stroke-width:1.4;stroke-dasharray:5 3"/><text x="93.0" y="156.2" style="fill:var(--ink);font:italic 11.5px var(--font-print)">x = 7</text><polyline points="34.0,88.5 232.1,88.5" style="fill:none;stroke:var(--ink);stroke-width:1.4;stroke-dasharray:5 3"/><text x="166.1" y="83.0" style="fill:var(--ink);font:italic 11.5px var(--font-print)">y = 15</text><line x1="34.0" y1="190.0" x2="242.0" y2="190.0" style="stroke:var(--ink);stroke-width:1.3"/><line x1="34.0" y1="190.0" x2="34.0" y2="8.0" style="stroke:var(--ink);stroke-width:1.3"/><text x="238.0" y="185.0" style="fill:var(--ink);font:italic 13px var(--font-print)">x</text><text x="39.0" y="18.0" style="fill:var(--ink);font:italic 13px var(--font-print)">y</text><text x="34.0" y="204.0" text-anchor="middle" style="fill:var(--ink-soft);font:10.5px var(--font-mono)">0</text><text x="88.4" y="204.0" text-anchor="middle" style="fill:var(--ink-soft);font:10.5px var(--font-mono)">7</text><text x="150.5" y="204.0" text-anchor="middle" style="fill:var(--ink-soft);font:10.5px var(--font-mono)">15</text><text x="228.2" y="204.0" text-anchor="middle" style="fill:var(--ink-soft);font:10.5px var(--font-mono)">25</text><text x="29.0" y="193.5" text-anchor="end" style="fill:var(--ink-soft);font:10.5px var(--font-mono)">0</text><text x="29.0" y="92.0" text-anchor="end" style="fill:var(--ink-soft);font:10.5px var(--font-mono)">15</text><text x="29.0" y="24.3" text-anchor="end" style="fill:var(--ink-soft);font:10.5px var(--font-mono)">25</text></svg><div class="fig-leg"><span><i class="sw s-sup"></i>soporte \(x&gt;0,\ y&gt;0\) (sigue al infinito)</span><span><i class="sw s-reg"></i>\(X&lt;7\cap Y&gt;15\)</span></div></figure></div></div>
+<div class="sol-section sec-resol"><div class="sol-section-header">🔢 RESOLUCIÓN</div><div class="sol-section-body"><p>La región es un rectángulo (\(0&lt;x&lt;7\), \(15&lt;y&lt;\infty\)) y hay independencia: la doble integral se separa.</p>
+        \[P(X&lt;7\cap Y&gt;15)=\int_{x=0}^{7}\!\int_{y=15}^{\infty}\frac{1}{120}e^{-\frac x{10}-\frac y{12}}\,dy\,dx=\underbrace{\left(1-e^{-0{,}7}\right)}_{P(X&lt;7)=0{,}5034}\cdot\underbrace{e^{-1{,}25}}_{P(Y&gt;15)=0{,}2865}\]<div class="result-box">✔ \(P(X&lt;7\cap Y&gt;15)\approx0{,}1442\)</div></div></div>
+        </div></div>
+      </div>
+
+      <div class="item-card">
+        <div class="item-header">
+          <div>
+            <div class="item-label">ÍTEM b)</div>
+            <div class="item-question">Calcular la probabilidad de que los servidores se apaguen. <i>Podés dejar expresadas las integrales.</i></div>
+          </div>
+          <button class="toggle-btn" onclick="toggle(this)">▶ Solución</button>
+        </div>
+        <div class="solution-panel"><div class="sol-inner">
+<div class="sol-section sec-sucesos"><div class="sol-section-header">🎯 SUCESOS</div><div class="sol-section-body"><p><span class="hl-red">C</span> = "los servidores se apagan" = "el corte dura más que la autonomía" = \(\{Y&gt;X\}\).</p><figure class="fig"><svg class="fig-svg" viewBox="0 0 250 220" role="img" xmlns="http://www.w3.org/2000/svg"><line x1="34.0" y1="190.0" x2="34.0" y2="14.0" style="stroke:var(--ink-faint);stroke-opacity:.25;stroke-width:1"/><line x1="228.2" y1="190.0" x2="228.2" y2="14.0" style="stroke:var(--ink-faint);stroke-opacity:.25;stroke-width:1"/><line x1="34.0" y1="190.0" x2="236.0" y2="190.0" style="stroke:var(--ink-faint);stroke-opacity:.25;stroke-width:1"/><line x1="34.0" y1="20.8" x2="236.0" y2="20.8" style="stroke:var(--ink-faint);stroke-opacity:.25;stroke-width:1"/><polygon points="34.0,190.0 228.2,190.0 228.2,20.8 34.0,20.8" style="fill:var(--pen-blue);fill-opacity:.10;stroke:var(--pen-blue);stroke-width:1.6"/><polygon points="34.0,190.0 228.2,20.8 34.0,20.8" style="fill:var(--pen-red);fill-opacity:.32;stroke:var(--pen-red);stroke-width:1.2"/><polyline points="34.0,190.0 232.1,17.4" style="fill:none;stroke:var(--ink);stroke-width:1.4;stroke-dasharray:5 3"/><text x="173.8" y="88.5" style="fill:var(--ink);font:italic 11.5px var(--font-print)">y = x</text><line x1="34.0" y1="190.0" x2="242.0" y2="190.0" style="stroke:var(--ink);stroke-width:1.3"/><line x1="34.0" y1="190.0" x2="34.0" y2="8.0" style="stroke:var(--ink);stroke-width:1.3"/><text x="238.0" y="185.0" style="fill:var(--ink);font:italic 13px var(--font-print)">x</text><text x="39.0" y="18.0" style="fill:var(--ink);font:italic 13px var(--font-print)">y</text><text x="34.0" y="204.0" text-anchor="middle" style="fill:var(--ink-soft);font:10.5px var(--font-mono)">0</text><text x="228.2" y="204.0" text-anchor="middle" style="fill:var(--ink-soft);font:10.5px var(--font-mono)">25</text><text x="29.0" y="193.5" text-anchor="end" style="fill:var(--ink-soft);font:10.5px var(--font-mono)">0</text><text x="29.0" y="24.3" text-anchor="end" style="fill:var(--ink-soft);font:10.5px var(--font-mono)">25</text><line x1="103.9" y1="129.1" x2="103.9" y2="20.8" style="stroke:var(--pen-green);stroke-width:2.4"/><polygon points="99.4,27.8 108.4,27.8 103.9,20.8" style="fill:var(--pen-green)"/><circle cx="103.9" cy="129.1" r="3" style="fill:var(--pen-green)"/><text x="109.9" y="74.9" style="fill:var(--pen-green);font:600 11px var(--font-print)">y de x a ∞</text></svg><div class="fig-leg"><span><i class="sw s-reg"></i>se apagan: \(Y&gt;X\)</span></div></figure></div></div>
+<div class="sol-section sec-resol"><div class="sol-section-header">🔢 RESOLUCIÓN</div><div class="sol-section-body"><p>Del dibujo: \(x\) recorre \((0,\infty)\); para cada \(x\), \(y\) va de la recta \(y=x\) a \(\infty\).</p>
+        \[P(Y&gt;X)=\int_{x=0}^{\infty}\int_{y=x}^{\infty}\frac{1}{120}\,e^{-\frac x{10}}\,e^{-\frac y{12}}\,dy\,dx=\int_0^{\infty}\frac{1}{10}\,e^{-\frac x{10}}\cdot e^{-\frac x{12}}\,dx\]
+        \[=\frac1{10}\int_0^{\infty}e^{-\frac{11}{60}x}\,dx=\frac{1}{10}\cdot\frac{60}{11}=\frac{6}{11}\]<div class="note">La integral de adentro es \(P(Y&gt;x)=e^{-x/12}\) (supervivencia de la exponencial). El planteo con los rangos bien escritos es lo que exige la nota del enunciado.</div><div class="result-box">✔ \(P(Y&gt;X)=\tfrac{6}{11}\approx0{,}5455\)</div></div></div>
+        </div></div>
+      </div>
+    </div>
+  </div>
 </section>
     </div>
     <div class="hoja" id="hoja-mk">
@@ -8772,12 +9006,23 @@ function armConfirm(btn, label, onOk){
   btn.innerHTML = label;
   btn._armT = setTimeout(() => { btn.dataset.armed = ''; btn.classList.remove('armed'); btn.innerHTML = btn._orig; }, 3000);
 }
-/* ---- estado "hecho": sincroniza original y copias en Marcados ---- */
+/* ---- dos estados independientes:
+   doneSet   = "hecho" en las unidades (el círculo de cada ejercicio, alimenta el progreso de la pestaña)
+   mkDoneSet = "realizado" dentro de Mis marcados (repaso), no toca el progreso de las unidades ---- */
+const mkDoneSet = (() => {
+  let raw = null; try { raw = store.get('cuaderno-marcados-hechos'); } catch(e){}
+  if (raw !== null && raw !== undefined) { try { return new Set(JSON.parse(raw || '[]')); } catch(e){ return new Set(); } }
+  // migración única: los ítems de parciales (x:…) solo se marcaban desde Mis marcados
+  const s = new Set([...doneSet].filter(k => k.startsWith('x:')));
+  s.forEach(k => doneSet.delete(k));
+  store.set('cuaderno-marcados-hechos', JSON.stringify([...s])); saveDone();
+  return s;
+})();
+const saveMkDone = () => store.set('cuaderno-marcados-hechos', JSON.stringify([...mkDoneSet]));
 const syncDone = () => {
-  document.querySelectorAll('.ej[data-key]').forEach(ej => ej.classList.toggle('done', doneSet.has(ej.dataset.key)));
-  document.querySelectorAll('.item-card[data-mk]').forEach(c => c.classList.toggle('done', doneSet.has(c.dataset.mk)));
+  document.querySelectorAll('.ej[data-key]').forEach(ej => { if (!ej.closest('#mk-list')) ej.classList.toggle('done', doneSet.has(ej.dataset.key)); });
   document.querySelectorAll('.mk-entry').forEach(en => {
-    const on = doneSet.has(en.dataset.for);
+    const on = mkDoneSet.has(en.dataset.for);
     en.classList.toggle('is-done', on);
     const b = en.querySelector('.mk-done-btn'); if (b) b.setAttribute('aria-pressed', on);
   });
@@ -8878,6 +9123,7 @@ function showToast(msg, withLink){
 function toggleMark(k, fromEl){
   const adding = !markSet.has(k);
   adding ? markSet.add(k) : markSet.delete(k);
+  if (!adding && mkDoneSet.delete(k)) saveMkDone();
   saveMarks();
   const entry = fromEl && fromEl.closest('.mk-entry');
   if (!adding && entry){
@@ -8898,7 +9144,7 @@ const CHECK_SVG = '<svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.5 3.5L
 function renderStats(){
   const marked = MARKABLES.filter(m => markSet.has(m.key));
   const nEj = marked.filter(m => m.kind === 'ej').length;
-  const hechos = marked.filter(m => doneSet.has(m.key)).length;
+  const hechos = marked.filter(m => mkDoneSet.has(m.key)).length;
   document.getElementById('mk-stats').innerHTML =
     '<div class="mk-stat hot"><b>' + marked.length + '</b><span>marcados</span></div>' +
     '<div class="mk-stat"><b>' + nEj + '</b><span>de la guía</span></div>' +
@@ -8914,7 +9160,7 @@ function renderMarcados(){
   const marked = MARKABLES.filter(m => markSet.has(m.key));
   renderStats();
   const shown = marked.filter(m => (mkFilter === 'all' || unitInfo(m.unit).parcial === mkFilter)
-    && (mkEstado === 'all' || (mkEstado === 'done') === doneSet.has(m.key)));
+    && (mkEstado === 'all' || (mkEstado === 'done') === mkDoneSet.has(m.key)));
   list.innerHTML = '';
   if (!shown.length){
     list.innerHTML = '<div class="blank mk-empty"><span class="stamp">' +
@@ -9021,7 +9267,7 @@ document.getElementById('mk-random').addEventListener('click', () => {
 });
 document.getElementById('mk-clear').addEventListener('click', e => {
   if (!markSet.size) return;
-  armConfirm(e.currentTarget, '¿Seguro? Tocá de nuevo', () => { markSet.clear(); saveMarks(); syncMarks(); renderMarcados(); showToast('Marcas borradas', false); });
+  armConfirm(e.currentTarget, '¿Seguro? Tocá de nuevo', () => { markSet.clear(); saveMarks(); mkDoneSet.clear(); saveMkDone(); syncMarks(); renderMarcados(); showToast('Marcas borradas', false); });
 });
 
 /* ---- clicks delegados: funcionan igual en el original y en las copias ---- */
@@ -9036,9 +9282,9 @@ document.addEventListener('click', e => {
   const db = e.target.closest('.mk-done-btn');
   if (db){
     const entry = db.closest('.mk-entry'), k = entry.dataset.for;
-    const adding = !doneSet.has(k);
-    adding ? doneSet.add(k) : doneSet.delete(k);
-    saveDone(); syncDone(); refreshProgress(); renderStats();
+    const adding = !mkDoneSet.has(k);
+    adding ? mkDoneSet.add(k) : mkDoneSet.delete(k);
+    saveMkDone(); syncDone(); renderStats();
     if (adding){ showToast('✓ Marcado como realizado', false); }
     if (mkEstado !== 'all'){ setTimeout(() => { entry.classList.add('leaving'); setTimeout(renderMarcados, 240); }, 450); }
     return;
